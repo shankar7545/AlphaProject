@@ -165,7 +165,6 @@ public class Signup_Activity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         progressBar.setVisibility(View.GONE);
 
-
                                         //UsersDB
 
                                         mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(mName);

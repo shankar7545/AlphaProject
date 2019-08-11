@@ -78,7 +78,7 @@ public class MeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mRef = FirebaseDatabase.getInstance().getReference();
-       /* mRef.addValueEventListener(new ValueEventListener() {
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
@@ -97,31 +97,9 @@ public class MeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        }); */
+        });
 
 
-       noteRef.get()
-               .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                   @Override
-                   public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                       if(documentSnapshot.exists()){
-
-                           String name = documentSnapshot.get("name").toString();
-
-
-                           profileName.setText(name);
-                       }
-                       else{
-                       }
-                   }
-               })
-               .addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-
-                   }
-               });
 
 
     }
