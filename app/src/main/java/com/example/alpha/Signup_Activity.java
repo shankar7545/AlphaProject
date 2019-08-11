@@ -243,7 +243,7 @@ public class Signup_Activity extends AppCompatActivity {
                     next.setVisibility(View.VISIBLE);
 
                     progressBar.setVisibility(View.GONE);
-                    editTextReferCode.setError("Invalid Refer");
+                    editTextReferCode.setError("Invalid ReferCode");
                     editTextReferCode.requestFocus();
                 }
             }
