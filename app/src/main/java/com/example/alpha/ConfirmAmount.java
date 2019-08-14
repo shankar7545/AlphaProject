@@ -42,7 +42,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     String id= UUID.randomUUID().toString();
     String custid="", mid,customer="";
     int liveorderid,uniqueid;
-    DatabaseReference paytmchangedb ,mWallet;
+    DatabaseReference paytmchangedb ,mWallet ,mTrasaction , mUser;
 
 
     @Override
@@ -180,8 +180,13 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         if (response.equals("Txn Success") || responsecode.equals("01"))
         {
             mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
+            mTrasaction = FirebaseDatabase.getInstance().getReference("Transactions");
+            mUser = FirebaseDatabase.getInstance().getReference("Users");
+
 
             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("50");
+
+            mUser.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("true");
             finish();
         }else
         {

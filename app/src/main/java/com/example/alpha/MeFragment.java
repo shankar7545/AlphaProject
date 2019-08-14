@@ -60,6 +60,7 @@ public class MeFragment extends Fragment {
                FirebaseAuth.getInstance().signOut();
                 Intent intent=new Intent(getContext(),MainActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
 
         });
@@ -69,6 +70,9 @@ public class MeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent=new Intent(getContext(),MyProfile.class);
                 startActivity(intent);
+
+
+
             }
         });
         return mView;

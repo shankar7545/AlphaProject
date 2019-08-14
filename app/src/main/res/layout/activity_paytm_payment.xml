@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_5"
-    tools:context=".HomeFragment">
-
-
-
+    android:orientation="vertical"
+    tools:context=".PaytmPayment">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/amount"
+        android:text="1"        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginTop="50dp"
         android:id="@+id/pay50"
         android:layout_height="150dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:background="@color/white">
 
@@ -39,13 +43,5 @@
 
 
     </LinearLayout>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:id="@+id/amount"
-        android:text="1"        />
 
-
-
-</FrameLayout>
+</LinearLayout>

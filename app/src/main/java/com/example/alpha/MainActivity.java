@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     public LinearLayout login_Relative;
     public TextView forgetPasswrod;
+    DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!login_email.isEmpty() && !login_password.isEmpty()) {
                     signin.setAlpha(0f);
-                    progressBar.setVisibility(View.VISIBLE);
+
 
                     startLogin(login_email, login_password);
                 } else {
@@ -102,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
                 }
             }
         };
@@ -114,9 +117,42 @@ public class MainActivity extends AppCompatActivity {
         logAuth.signInWithEmailAndPassword(login_email,login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                mRef = FirebaseDatabase.getInstance().getReference();
+                mRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String payment = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").getValue().toString();
+                        String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
+
+                        if(payment.equals("false")){
+
+                            startActivity(new Intent(MainActivity.this, PaytmPayment.class));
+
+                            finish();
+                        }
+
+                        else if(state.equals("false")){
+                            startActivity(new Intent(MainActivity.this, ReferCodeAcitvity.class));
+                            finish();
+                        }
+                        else {
+
+                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            finish();
+                        }
+
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {

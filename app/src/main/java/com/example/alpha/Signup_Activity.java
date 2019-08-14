@@ -1,6 +1,8 @@
 package com.example.alpha;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +49,7 @@ public class Signup_Activity extends AppCompatActivity {
         editTextName = findViewById(R.id.name);
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
-        editTextReferCode = findViewById(R.id.referCode);
+
 
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -72,9 +74,10 @@ public class Signup_Activity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               registerUser();
+                progressBar.setVisibility(View.VISIBLE);
+                next.setVisibility(View.GONE);
 
-
+                registerUser();
 
             }
 
@@ -82,20 +85,15 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (mAuth.getCurrentUser() != null){
-
-        }
-    }
 
     private void registerUser(){
+
+        progressBar.setVisibility(View.VISIBLE);
+
+
         final String mName = editTextName.getText().toString().trim();
         final String mEmail = editTextEmail.getText().toString().trim();
         final String mPassword = editTextPassword.getText().toString().trim();
-        final String mReferCode = editTextReferCode.getText().toString().trim();
 
 
 
@@ -109,12 +107,15 @@ public class Signup_Activity extends AppCompatActivity {
             editTextName.requestFocus();
             next.setVisibility(View.VISIBLE);
 
+
+
             return;
         }
         if(mEmail.isEmpty()){
             editTextEmail.setError("Enter Email");
             editTextEmail.requestFocus();
             next.setVisibility(View.VISIBLE);
+
 
             return;
 
@@ -126,6 +127,7 @@ public class Signup_Activity extends AppCompatActivity {
             editTextPassword.requestFocus();
             next.setVisibility(View.VISIBLE);
 
+
             return;
         }
 
@@ -134,127 +136,91 @@ public class Signup_Activity extends AppCompatActivity {
             editTextPassword.requestFocus();
             next.setVisibility(View.VISIBLE);
 
+
             return;
         }
 
-        if(mReferCode.isEmpty()){
-            editTextReferCode.setError("Enter ReferCode");
-            editTextReferCode.requestFocus();
-            next.setVisibility(View.VISIBLE);
-
-            return;
-
-        }
 
 
-        final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
-        promodb.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
-                next.setVisibility(View.GONE);
+        mAuth.createUserWithEmailAndPassword(mEmail,mPassword)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                progressBar.setVisibility(View.VISIBLE);
+                        if(task.isSuccessful()){
 
-                if(checkdataSnapshot.hasChild(mReferCode))
-                {
-                    mAuth.createUserWithEmailAndPassword(mEmail,mPassword)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                            //UsersDB
+
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(mName);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(mEmail);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("password").setValue(mPassword);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").setValue(mUserName);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("false");
+
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
+
+
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").setValue("false");
+
+
+
+
+
+
+
+                            //WalletDB
+
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("trans").setValue("0");
+
+
+
+                            //Level
+
+                            mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
+
+
+
+
+
+
+                            //ReferDB
+
+                            mReferDB.child(mUserName).child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            mReferDB.child(mUserName).child("username").setValue(mUserName);
+                            mReferDB.child(mUserName).child("child").setValue("0");
+
+
+                            new Handler().postDelayed(new Runnable() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                public void run() {
+                                    progressBar.setVisibility(View.GONE);
 
-                                    if(task.isSuccessful()){
-                                        progressBar.setVisibility(View.GONE);
-
-                                        //UsersDB
-
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(mName);
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(mEmail);
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("password").setValue(mPassword);
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").setValue(mUserName);
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("refercode").setValue(mReferCode);
-
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
-
-
-
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("state").setValue("false");
-                                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").setValue("false");
-
-
-
-
-
-
-
-                                        //WalletDB
-
-                                        mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
-                                        mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
-
-
-
-                                        //Level
-
-                                        mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
-
-
-
-                                        //Transactions
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T1").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T2").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T3").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T4").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T5").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T6").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T7").setValue("0");
-                                        mTransactions.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("T8").setValue("0");
-
-
-
-                                        //ReferDB
-
-                                        mReferDB.child(mUserName).child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                        mReferDB.child(mUserName).child("username").setValue(mUserName);
-
-
-                                    }else {
-                                        Toast.makeText(Signup_Activity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
+                                    startActivity(new Intent(Signup_Activity.this, PaytmPayment.class));
+                                    finish();
                                 }
-                            });
-                }
+                            },3000);
 
-                else{
-                    next.setVisibility(View.VISIBLE);
+                        }else {
+                            Toast.makeText(Signup_Activity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            next.setVisibility(View.VISIBLE);
 
-                    progressBar.setVisibility(View.GONE);
-                    editTextReferCode.setError("Invalid ReferCode");
-                    editTextReferCode.requestFocus();
-                }
-            }
+                        }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+                    }
+                });
 
 
 
