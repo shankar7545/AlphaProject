@@ -48,13 +48,11 @@ public class MyProfile extends AppCompatActivity {
                 String name = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
                 String email = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString();
                 String username = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").getValue().toString();
-                String referCode = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("refercode").getValue().toString();
 
                 mName.setText(name);
                 mEmail.setText(email);
                 mUserName.setText(username);
-                mReferCode.setText(referCode);
-                mReferCode.setTextColor(getResources().getColor(R.color.red_600));
+
                 mEmail.setTextColor(getResources().getColor(R.color.red_600));
                 mUserName.setTextColor(getResources().getColor(R.color.red_600));
                 mName.setTextColor(getResources().getColor(R.color.green_700));

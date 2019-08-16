@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent registration = new Intent(MainActivity.this, self_details.class);
                 startActivity(registration);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
 
             }
         });
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
                 mRef = FirebaseDatabase.getInstance().getReference();
-                mRef.addValueEventListener(new ValueEventListener() {
+                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String payment = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").getValue().toString();
@@ -136,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                         else if(state.equals("false")){
                             startActivity(new Intent(MainActivity.this, ReferCodeAcitvity.class));
                             finish();
+
+
                         }
                         else {
 
@@ -188,7 +191,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 
 }

@@ -201,6 +201,7 @@ public class HomeFragment extends Fragment {
 
                          if (t1.equals("1")) {
                              mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("1");
+                             Toast.makeText(getActivity(), "Upgraded to LevelOne", Toast.LENGTH_SHORT).show();
 
                          }
 

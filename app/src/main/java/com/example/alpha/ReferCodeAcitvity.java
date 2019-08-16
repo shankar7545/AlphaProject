@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,15 +19,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+import java.util.Random;
+
 public class ReferCodeAcitvity extends AppCompatActivity {
 
     public EditText editTextReferCode;
     Button finish;
+    TextView textViewReferCode;
     private static long back_pressed;
     public ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebase;
-    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
+    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mUsers,questionsRef;
 
 
 
@@ -37,14 +41,48 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         setContentView(R.layout.activity_refer_code_acitvity);
 
         editTextReferCode = findViewById(R.id.referCode);
-
+        textViewReferCode = findViewById(R.id.fetchReferCode);
         mFirebase = FirebaseDatabase.getInstance().getReference("Users");
+        mRef = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
-
         finish = findViewById(R.id.finsh);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+
+
+
+        textViewReferCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
+                        String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
+
+
+                        int end = Integer.parseInt(mEnd);
+
+                        int start = Integer.parseInt(mStart);
+                        final int random = new Random().nextInt((end-start)+1) + start;
+
+                        final String autoReferCode = "user"+random;
+                        String referCode = dataSnapshot.child("AutoReferCode").child(autoReferCode).child("refercode").getValue().toString();
+
+                        editTextReferCode.setText(referCode);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +101,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
                         if (checkdataSnapshot.hasChild(mReferCode)) {
 
-                            referDetails();
+                            Child();
                             progressBar.setVisibility(View.GONE);
                             finish.setVisibility(View.VISIBLE);
 
@@ -95,6 +133,49 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         });
     }
 
+    private void Child(){
+        mRef = FirebaseDatabase.getInstance().getReference();
+
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String mReferCode = editTextReferCode.getText().toString().trim();
+                String referUid = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
+                String count = dataSnapshot.child("Users").child(referUid).child("child").child("count").getValue().toString();
+
+
+                if(count.equals("0")){
+
+                    referDetails();
+                    mRef.child("Users").child(referUid).child("child").child("rchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mRef.child("Users").child(referUid).child("child").child("count").setValue("1");
+
+                }
+                else if(count.equals("1")){
+                    referDetails();
+                    mRef.child("Users").child(referUid).child("child").child("lchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mRef.child("Users").child(referUid).child("child").child("count").setValue("2");
+
+                }
+                else{
+                    editTextReferCode.setError("Limit Exceeded");
+                    editTextReferCode.requestFocus();
+                    finish.setVisibility(View.VISIBLE);
+                    Toast.makeText(ReferCodeAcitvity.this, "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
     private void referDetails(){
         try {
             mRef = FirebaseDatabase.getInstance().getReference();
@@ -102,6 +183,24 @@ public class ReferCodeAcitvity extends AppCompatActivity {
             mRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                    long childrenCount = dataSnapshot.getChildrenCount();
+                    int count = (int) childrenCount;
+                    int randomNumber = new Random().nextInt(count);
+                    int i=0;
+                    String themeTune; //Your random themeTune will be stored here
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                        if(i == randomNumber) {
+                            themeTune = snap.getValue(String.class);
+                            break;
+                        }
+                        i++;
+                    }
+                    referDetails();
+
 
                     String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
 
