@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     Button finish;
     TextView textViewReferCode;
     private static long back_pressed;
-    public ProgressBar progressBar;
+    public ProgressBar progressBar ,progressBar2;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebase;
     DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mUsers,questionsRef;
@@ -48,6 +49,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         finish = findViewById(R.id.finsh);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar2 = (ProgressBar) findViewById(R.id.progress_bar2);
 
 
 
@@ -55,31 +57,47 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         textViewReferCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
-                        String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
+                textViewReferCode.setVisibility(View.GONE);
+                progressBar2.setVisibility(View.VISIBLE);
 
 
-                        int end = Integer.parseInt(mEnd);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
+                                        String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
 
-                        int start = Integer.parseInt(mStart);
-                        final int random = new Random().nextInt((end-start)+1) + start;
 
-                        final String autoReferCode = "user"+random;
-                        String referCode = dataSnapshot.child("AutoReferCode").child(autoReferCode).child("refercode").getValue().toString();
+                                        int end = Integer.parseInt(mEnd);
 
-                        editTextReferCode.setText(referCode);
+                                        int start = Integer.parseInt(mStart);
+                                        final int random = new Random().nextInt((end-start)+1) + start;
 
-                    }
+                                        final String autoReferCode = "user"+random;
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        String referCode = dataSnapshot.child("AutoReferCode").child(autoReferCode).child("refercode").getValue().toString();
 
-                    }
-                });
+                                        editTextReferCode.setText(referCode);
+                                        textViewReferCode.setVisibility(View.VISIBLE);
+                                        progressBar2.setVisibility(View.GONE);
+
+
+
+
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+                        },2000);
 
             }
         });
@@ -184,22 +202,6 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-
-
-                    long childrenCount = dataSnapshot.getChildrenCount();
-                    int count = (int) childrenCount;
-                    int randomNumber = new Random().nextInt(count);
-                    int i=0;
-                    String themeTune; //Your random themeTune will be stored here
-                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                        if(i == randomNumber) {
-                            themeTune = snap.getValue(String.class);
-                            break;
-                        }
-                        i++;
-                    }
-                    referDetails();
 
 
                     String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
