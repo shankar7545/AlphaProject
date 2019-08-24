@@ -157,6 +157,7 @@ public class Signup_Activity extends AppCompatActivity {
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("password").setValue(mPassword);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").setValue(mUserName);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("false");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("child").child("count").setValue("0");
 
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").setValue("0");
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").setValue("0");

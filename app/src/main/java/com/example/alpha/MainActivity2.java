@@ -11,9 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,10 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
 
     TextView sign_up;
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         signin = (LinearLayout) findViewById(R.id.fab);
         sign_up = (TextView) findViewById(R.id.sign_up);
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     signin.setAlpha(1f);
                     progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(MainActivity.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity2.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -101,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent registration = new Intent(MainActivity.this, self_details.class);
+                Intent registration = new Intent(MainActivity2.this, self_details.class);
                 startActivity(registration);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
@@ -112,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
+                    startActivity(new Intent(MainActivity2.this, FigerPrintActivity.class));
                     finish();
                 }
             }
@@ -120,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void startLogin(String login_email, String login_password) {
         logAuth.signInWithEmailAndPassword(login_email,login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -136,20 +133,20 @@ public class MainActivity extends AppCompatActivity {
 
                         if(payment.equals("false")){
 
-                            startActivity(new Intent(MainActivity.this, PaytmPayment.class));
+                            startActivity(new Intent(MainActivity2.this, PaytmPayment.class));
 
                             finish();
                         }
 
                         else if(state.equals("false")){
-                            startActivity(new Intent(MainActivity.this, ReferCodeAcitvity.class));
+                            startActivity(new Intent(MainActivity2.this, ReferCodeAcitvity.class));
                             finish();
 
 
                         }
                         else {
 
-                            startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
+                            startActivity(new Intent(MainActivity2.this, FigerPrintActivity.class));
                             finish();
                         }
 
@@ -171,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(login_Relative,e.getMessage(),Snackbar.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
                 signin.setAlpha(1f);
+
             }
         });
     }
@@ -192,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        logAuth.addAuthStateListener(mAuthListener);
+       // logAuth.addAuthStateListener(mAuthListener);
+
 
     }
 

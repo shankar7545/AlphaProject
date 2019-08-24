@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTransactionCallback {
@@ -42,7 +43,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     String id= UUID.randomUUID().toString();
     String custid="", mid,customer="";
     int liveorderid,uniqueid;
-    DatabaseReference paytmchangedb ,mWallet ,mTrasaction , mUser;
+    DatabaseReference paytmchangedb ,mWallet ,mTrasaction , mUser , mRef ,mAutoReferCode;
 
 
     @Override
@@ -51,8 +52,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         setContentView(R.layout.activity_confirm_amount);
 
 
-        {
 
+        {
 
             Intent intent=getIntent();
             amount=intent.getExtras().getString("Amount");
@@ -187,6 +188,24 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("50");
 
             mUser.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("true");
+            mRef = FirebaseDatabase.getInstance().getReference();
+
+            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+
+
+
             finish();
         }else
         {

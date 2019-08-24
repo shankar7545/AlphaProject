@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,8 +35,6 @@ public class MeFragment extends Fragment {
     public FirebaseAuth mAuth ,mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private DocumentReference noteRef = db.document("Users/NrZMhC49o5OpplMjzinO7Ik5pFF3");
-
 
 
     @Override
@@ -58,9 +57,11 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                FirebaseAuth.getInstance().signOut();
-                Intent intent=new Intent(getContext(),MainActivity.class);
+                Intent intent=new Intent(getContext(),MainActivity2.class);
                 startActivity(intent);
                 getActivity().finish();
+                ActivityCompat.finishAffinity(getActivity());
+
             }
 
         });
@@ -102,9 +103,6 @@ public class MeFragment extends Fragment {
 
             }
         });
-
-
-
 
     }
 

@@ -1,11 +1,15 @@
 package com.example.alpha;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import static com.paytm.pgsdk.easypay.manager.PaytmAssist.getContext;
 
 public class PaytmPayment extends AppCompatActivity {
-    LinearLayout pay50, referLayout;
-    Button paytm;
+    LinearLayout pay50 , SuccessLayout;
+    AppCompatButton paytm;
     public EditText mAmount;
     private static long back_pressed;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
@@ -34,6 +38,8 @@ public class PaytmPayment extends AppCompatActivity {
         setContentView(R.layout.activity_paytm_payment);
 
         pay50 = (LinearLayout)findViewById(R.id.pay50);
+
+        SuccessLayout = findViewById(R.id.payment_success);
 
         paytm = findViewById(R.id.paytm);
         mAmount = findViewById(R.id.amount);
@@ -94,20 +100,30 @@ public class PaytmPayment extends AppCompatActivity {
 
                 if(payment.equals("true")){
 
+                    SuccessLayout.setVisibility(View.VISIBLE);
 
-                    String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
+                    final String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
 
-                    if(state.equals("false")){
-                        Intent intent = new Intent(PaytmPayment.this, ReferCodeAcitvity.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if(state.equals("false")){
+                                Intent intent = new Intent(PaytmPayment.this, ReferCodeAcitvity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            if(state.equals("true")){
+                                Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    },2000);
 
 
                 }
-                else {
-                    Toast.makeText(PaytmPayment.this, "You need to Complete Payment", Toast.LENGTH_SHORT).show();
-                }
+
 
             }
 
@@ -120,15 +136,20 @@ public class PaytmPayment extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
-
-        }
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent=new Intent(PaytmPayment.this,MainActivity2.class);
+                        startActivity(intent);
+                        finish();
+                                }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
+
+
 }

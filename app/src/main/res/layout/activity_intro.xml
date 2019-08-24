@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    tools:context=".IntroActivity">
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_dark_40" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            android:layout_marginTop="90dp"
+            android:visibility="gone"
+            android:src="@drawable/paytm_assist_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAISA VASOOL"
+                android:layout_marginTop="50dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangle_splash"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:padding="10dp"/>
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmallInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/ProgressBar.White"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:layout_marginTop="4dp"/>
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

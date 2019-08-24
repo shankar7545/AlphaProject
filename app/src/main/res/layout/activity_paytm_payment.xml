@@ -1,47 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/grey_10"
     tools:context=".PaytmPayment">
+
+
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:id="@+id/amount"
+        android:visibility="gone"
         android:text="1"        />
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
-        android:id="@+id/pay50"
-        android:layout_height="150dp"
-        android:visibility="visible"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:scrollingCache="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/payment_success"
             android:gravity="center"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="Add 50 rupees to get upgrade"
-            android:textColor="@color/grey_800"
-            />
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="58dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="center"
+            android:visibility="gone">
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_gravity="center_vertical"
+                android:tint="@android:color/white"
+                app:lottie_fileName="success3.json"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_middle"
+        android:paddingBottom="@dimen/spacing_medium"
+        android:paddingLeft="@dimen/spacing_mlarge"
+        android:paddingRight="@dimen/spacing_mlarge">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_middle"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_80"
+                app:fontFamily="sans-serif-medium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/grey_900"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_20" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/paytm"
-            android:background="@drawable/btn_rounded_red"
-            android:textColor="@color/white"
-            android:text="Pay"/>
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/btn_rounded_green"
+            android:paddingLeft="@dimen/spacing_mlarge"
+            android:paddingRight="@dimen/spacing_mlarge"
+            android:text="PAY"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
 
 
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".ReferCodeAcitvity"></activity>
+        <activity android:name=".FigerPrintActivity"></activity>
+        <activity android:name=".ReferCodeAcitvity" />
         <activity android:name=".PaytmPayment" />
         <activity android:name=".MyProfile" />
         <activity android:name=".Signup_Activity" />
@@ -26,7 +28,15 @@
         <activity android:name=".verificaton_phone" />
         <activity android:name=".verification_code" />
         <activity android:name=".ConfirmAmount" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity2">
+
+
+        </activity>
+
+        <activity
+            android:name=".IntroActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

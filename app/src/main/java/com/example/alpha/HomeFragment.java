@@ -1,6 +1,7 @@
 package com.example.alpha;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -10,13 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +42,12 @@ public class HomeFragment extends Fragment {
     View mView;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
     public ProgressBar progressBar;
+    LinearLayout imageScroll;
+    RelativeLayout homeFrag;
+    TextView profileName,wallet_bal,level , withdrawable;
+
+    private TabLayout tab_layout;
+    private NestedScrollView nested_scroll_view;
 
 
     public HomeFragment() {
@@ -46,20 +58,20 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
-
         pay50 = (LinearLayout) mView.findViewById(R.id.pay50);
-
         paytm = mView.findViewById(R.id.paytm);
-
-
+        homeFrag = mView.findViewById(R.id.homeFrag);
         next = (Button) mView.findViewById(R.id.next);
         editTextReferCode = mView.findViewById(R.id.referCode);
-        progressBar = (ProgressBar) mView.findViewById(R.id.progress_bar);
-
+        progressBar = (ProgressBar) mView.findViewById(R.id.progress_bar4);
+        mAmount = mView.findViewById(R.id.amount);
+        profileName =(TextView)mView.findViewById(R.id.usernameH);
+        wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
+        level =(TextView)mView.findViewById(R.id.levelH);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
 
-        mAmount = mView.findViewById(R.id.amount);
 
+        initToolbar();
 
         //Paytm add money
 
@@ -121,12 +133,17 @@ public class HomeFragment extends Fragment {
         scoresRef.keepSynced(true);
 
 
-
         return mView;
 
 
     }
 
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) mView.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+
+    }
 
 
 
@@ -145,9 +162,20 @@ public class HomeFragment extends Fragment {
              mRef = FirebaseDatabase.getInstance().getReference();
 
 
-             mRef.addValueEventListener(new ValueEventListener() {
+             mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                     //details
+                     String nameH = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
+                     String balanceH = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
+                     String value_count = dataSnapshot.child("Level").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
+
+                     profileName.setText(nameH);
+                     wallet_bal.setText(balanceH);
+                     level.setText("LEVEL "+value_count);
+
+                     //detailsEnd
 
                      String value = dataSnapshot.child("Level").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
@@ -267,7 +295,7 @@ public class HomeFragment extends Fragment {
                  }
              });
          }
-     }, 2000);
+     }, 0);
 
 
 

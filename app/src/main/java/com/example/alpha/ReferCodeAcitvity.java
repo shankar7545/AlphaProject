@@ -32,7 +32,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     public ProgressBar progressBar ,progressBar2;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebase;
-    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mUsers,questionsRef;
+    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mUsers,questionsRef ,mAutoReferCode;
 
 
 
@@ -52,7 +52,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         progressBar2 = (ProgressBar) findViewById(R.id.progress_bar2);
 
 
-
+        mAutoReferCode = FirebaseDatabase.getInstance().getReference("AutoReferCode");
 
         textViewReferCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,21 +72,31 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                                         String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
 
 
-                                        int end = Integer.parseInt(mEnd);
+                                        if(mEnd.equals("1")&& mStart.equals("1")){
 
-                                        int start = Integer.parseInt(mStart);
-                                        final int random = new Random().nextInt((end-start)+1) + start;
+                                            Toast.makeText(ReferCodeAcitvity.this, "Sorry", Toast.LENGTH_SHORT).show();
+                                            textViewReferCode.setVisibility(View.VISIBLE);
+                                            progressBar2.setVisibility(View.GONE);
+                                        }
+                                        else {
+                                            int end = Integer.parseInt(mEnd);
 
-                                        final String autoReferCode = "user"+random;
-
-                                        String referCode = dataSnapshot.child("AutoReferCode").child(autoReferCode).child("refercode").getValue().toString();
-
-                                        editTextReferCode.setText(referCode);
-                                        textViewReferCode.setVisibility(View.VISIBLE);
-                                        progressBar2.setVisibility(View.GONE);
+                                            int start = Integer.parseInt(mStart);
 
 
+                                            final int random = new Random().nextInt((end-start)) + start;
 
+                                            final String autoReferCode = "user"+random;
+
+                                            String referCode = dataSnapshot.child("AutoReferCode").child(autoReferCode).child("refercode").getValue().toString();
+
+
+                                            editTextReferCode.setText(referCode);
+                                            textViewReferCode.setVisibility(View.VISIBLE);
+                                            progressBar2.setVisibility(View.GONE);
+
+
+                                        }
 
                                     }
                                     @Override
@@ -106,38 +116,33 @@ public class ReferCodeAcitvity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                finish.setVisibility(View.GONE);
 
-                progressBar.setVisibility(View.VISIBLE);
                 final String mReferCode = editTextReferCode.getText().toString().trim();
 
                 final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
-                promodb.addListenerForSingleValueEvent(new ValueEventListener() {
+                promodb.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
+                        if (mReferCode.isEmpty()) {
+                            editTextReferCode.setError("Enter ReferCode");
+                            editTextReferCode.requestFocus();
 
-                        if (checkdataSnapshot.hasChild(mReferCode)) {
+                            return;
+                        }
+                        else if (checkdataSnapshot.hasChild(mReferCode)) {
 
                             Child();
-                            progressBar.setVisibility(View.GONE);
-                            finish.setVisibility(View.VISIBLE);
 
 
                         }
                         else if(!checkdataSnapshot.hasChild(mReferCode))
                         {
-                            editTextReferCode.setError("Invalid Username");
+                            editTextReferCode.setError("Invalid ReferCode");
                             editTextReferCode.requestFocus();
-                            finish.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
+
                         }
-                        if (mReferCode.isEmpty()) {
-                            editTextReferCode.setError("Enter ReferCode");
-                            editTextReferCode.requestFocus();
-                            finish.setVisibility(View.VISIBLE);
-                            return;
-                        }
+
 
                     }
 
@@ -174,11 +179,12 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                     mRef.child("Users").child(referUid).child("child").child("lchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mRef.child("Users").child(referUid).child("child").child("count").setValue("2");
 
+
                 }
                 else{
                     editTextReferCode.setError("Limit Exceeded");
                     editTextReferCode.requestFocus();
-                    finish.setVisibility(View.VISIBLE);
+
                     Toast.makeText(ReferCodeAcitvity.this, "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -198,11 +204,9 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         try {
             mRef = FirebaseDatabase.getInstance().getReference();
 
-            mRef.addValueEventListener(new ValueEventListener() {
+            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
 
                     String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
 
@@ -255,6 +259,21 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                         //p8
                         mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue(uid_p8);
                         mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("state").setValue("true");
+
+
+
+                        //AutoReferCode
+                        String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
+                        String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
+                        String mUsername = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").getValue().toString();
+
+                        int i = Integer.parseInt(mEnd);
+                        mAutoReferCode.child("user" + i).child("refercode").setValue(mUsername);
+
+                        String endCount = Integer.toString(i + 1);
+
+                        mAutoReferCode.child("end").setValue(endCount);
+                        //AutoReferCodeEnd
 
 
                         Toast.makeText(ReferCodeAcitvity.this, "Success", Toast.LENGTH_SHORT).show();
