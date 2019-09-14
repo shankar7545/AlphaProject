@@ -3,6 +3,7 @@ package com.example.alpha;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -174,24 +175,20 @@ public class Signup_Activity extends AppCompatActivity {
 
 
 
-
-
-
-
                             //WalletDB
 
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("trans").setValue("0");
-
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("50*2").child("state").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("100*4").child("state").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("400*8").child("state").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("3000*16").child("state").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("40000*32").child("state").setValue("0");
 
 
                             //Level
 
                             mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
-
-
-
 
 
 
@@ -218,7 +215,6 @@ public class Signup_Activity extends AppCompatActivity {
                             next.setVisibility(View.VISIBLE);
 
                         }
-
 
                     }
                 });

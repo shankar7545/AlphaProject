@@ -34,7 +34,7 @@
             app:lottie_loop="true"
             android:layout_gravity="center_vertical"
             android:tint="@android:color/white"
-            app:lottie_fileName="success2.json"/>
+            app:lottie_fileName="success.json"/>
 
     </LinearLayout>
 
