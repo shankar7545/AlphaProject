@@ -68,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:id="@+id/walletLayout"
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_large">
 
@@ -290,7 +291,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:clickable="true"
-                        android:id="@+id/mystatistics"
+                        android:id="@+id/chain"
                         android:background="?attr/selectableItemBackground"
                         android:paddingLeft="@dimen/spacing_large"
                         android:paddingRight="@dimen/spacing_large">

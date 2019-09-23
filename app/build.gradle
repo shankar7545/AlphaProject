@@ -40,6 +40,9 @@ dependencies {
 
     implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view
 
+
+    implementation 'com.firebaseui:firebase-ui-database:3.2.1'
+
     implementation 'com.google.firebase:firebase-database:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
@@ -67,4 +70,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:+'
     implementation 'androidx.constraintlayout:constraintlayout:+'
 
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'androidx.constraintlayout:constraintlayout:+'
 }

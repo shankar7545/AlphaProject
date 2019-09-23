@@ -8,27 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 
 public class MeFragment extends Fragment {
-    LinearLayout logout ,myProfile;
+    LinearLayout logout ,myProfile,myWallet, walletLayout , chainActivity;
     TextView profileName,wallet_bal,recieved , withdrawable;
     View mView;
     DatabaseReference mRef;
@@ -47,6 +42,12 @@ public class MeFragment extends Fragment {
         wallet_bal =(TextView)mView.findViewById(R.id.wallet_bal);
         recieved =(TextView)mView.findViewById(R.id.level);
         withdrawable =(TextView)mView.findViewById(R.id.withdrawable);
+
+        myWallet=(LinearLayout) mView.findViewById(R.id.mywallet);
+        walletLayout=(LinearLayout) mView.findViewById(R.id.walletLayout);
+        chainActivity=(LinearLayout) mView.findViewById(R.id.chain);
+
+
 
         logout=(LinearLayout) mView.findViewById(R.id.logout);
         myProfile=(LinearLayout) mView.findViewById(R.id.myprofile);
@@ -72,8 +73,29 @@ public class MeFragment extends Fragment {
                 Intent intent=new Intent(getContext(),MyProfile.class);
                 startActivity(intent);
 
+            }
+        });
 
+        myWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),walletActivity.class);
+                startActivity(intent);
 
+            }
+        });
+        walletLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),walletActivity.class);
+                startActivity(intent);
+            }
+        });
+        chainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),ChainActivity.class);
+                startActivity(intent);
             }
         });
         return mView;

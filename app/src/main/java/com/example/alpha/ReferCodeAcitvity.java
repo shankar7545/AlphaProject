@@ -1,9 +1,5 @@
 package com.example.alpha;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 import java.util.Random;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class ReferCodeAcitvity extends AppCompatActivity {
 
@@ -120,7 +120,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                 final String mReferCode = editTextReferCode.getText().toString().trim();
 
                 final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
-                promodb.addValueEventListener(new ValueEventListener() {
+                promodb.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
@@ -168,15 +168,14 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
 
                 if(count.equals("0")){
-
                     referDetails();
-                    mRef.child("Users").child(referUid).child("child").child("rchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mRef.child("Users").child(referUid).child("child").child("lchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mRef.child("Users").child(referUid).child("child").child("count").setValue("1");
 
                 }
                 else if(count.equals("1")){
                     referDetails();
-                    mRef.child("Users").child(referUid).child("child").child("lchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mRef.child("Users").child(referUid).child("child").child("rchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mRef.child("Users").child(referUid).child("child").child("count").setValue("2");
 
 
@@ -184,12 +183,9 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                 else{
                     editTextReferCode.setError("Limit Exceeded");
                     editTextReferCode.requestFocus();
-
                     Toast.makeText(ReferCodeAcitvity.this, "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
 
             }
             @Override
@@ -262,7 +258,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
 
 
-                        //AutoReferCode
+                        /*AutoReferCode
                         String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
                         String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
                         String mUsername = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").getValue().toString();
@@ -273,7 +269,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                         String endCount = Integer.toString(i + 1);
 
                         mAutoReferCode.child("end").setValue(endCount);
-                        //AutoReferCodeEnd
+                        //AutoReferCodeEnd  */
 
 
                         Toast.makeText(ReferCodeAcitvity.this, "Success", Toast.LENGTH_SHORT).show();

@@ -3,14 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alpha">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".FigerPrintActivity"></activity>
+        <activity android:name=".ChainActivity"></activity>
+        <activity android:name=".Transactions" />
+        <activity android:name=".FigerPrintActivity" />
         <activity android:name=".ReferCodeAcitvity" />
         <activity android:name=".PaytmPayment" />
         <activity android:name=".MyProfile" />
@@ -29,12 +23,9 @@
         <activity android:name=".verificaton_phone" />
         <activity android:name=".verification_code" />
         <activity android:name=".ConfirmAmount" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".MainActivity2">
-
-
-        </activity>
-
+        <activity android:name=".walletActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity2" />
         <activity
             android:name=".IntroActivity"
             android:theme="@style/Theme.Design.NoActionBar">
@@ -45,5 +36,13 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
