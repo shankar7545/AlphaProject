@@ -56,7 +56,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:1.0.1'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
-    implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
+    implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'de.blox:graphview:0.6.0'
+    // ripple effect
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

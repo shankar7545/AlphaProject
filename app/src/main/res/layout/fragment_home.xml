@@ -417,7 +417,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_gradient_very_soft" />
+            android:background="@color/grey_90" />
 
     </RelativeLayout>
 

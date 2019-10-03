@@ -15,88 +15,12 @@
         android:id="@+id/myprofiletoolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:id="@+id/parent"
-        android:gravity="center_horizontal">
-
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello"
-            android:id="@+id/parentText"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            >
-
-        </TextView>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/viewTree"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_below="@+id/name"
-        android:paddingBottom="@dimen/spacing_smlarge">
-
-        <View
-            android:id="@+id/line9"
-            android:layout_width="5dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="50dp"
-            android:background="@color/colorAccent" />
-
-        <View
-            android:id="@+id/line"
-            android:layout_width="100dp"
-            android:layout_height="3dp"
-            android:layout_below="@+id/line9"
-            android:background="@color/colorAccent" />
-
-        <View
-            android:id="@+id/line6"
-            android:layout_width="3dp"
-            android:layout_height="80dp"
-            android:layout_below="@+id/line"
-            android:background="@color/colorAccent" />
-
-        <View
-            android:id="@+id/line8"
-            android:layout_width="3dp"
-            android:layout_height="80dp"
-            android:layout_below="@+id/line"
-            android:layout_marginLeft="98dp"
-            android:background="@color/colorAccent" />
-
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/child"
-        android:gravity="center_horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:layout_below="@+id/viewTree"
-        android:id="@+id/childLeft">
-
-    </TextView>
-
-    <TextView
-        android:id="@+id/childRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewTree"
-        android:textColor="@color/black"
-        android:layout_marginLeft="90dp"
-        android:text="2"
-        android:textSize="15sp"/>
+        android:layout_height="match_parent">
+        <de.blox.graphview.GraphView
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </de.blox.graphview.GraphView>
     </LinearLayout>
 
 </LinearLayout>
