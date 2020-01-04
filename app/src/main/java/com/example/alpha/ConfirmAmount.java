@@ -83,7 +83,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         private ProgressDialog dialog = new ProgressDialog(ConfirmAmount.this);
 
         //private String orderId , mid, custid, amt;
-        String url ="https://dreamwinner.in/paytm/generateChecksum.php";
+        String url ="rnt.30c.myftpupload.com/paytm/generateChecksum.php";
         String varifyurl = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID="+"DW"+id.substring(0,5).toUpperCase();
         // "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID"+orderId;
         String CHECKSUMHASH ="";

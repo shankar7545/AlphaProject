@@ -169,8 +169,9 @@ public class Signup_Activity extends AppCompatActivity {
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("paymentStatus").setValue("false");
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("childCount").setValue("0");
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("date").setValue(currentdate);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(currentTime);
+                            //mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(currentTime);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("false");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p1").setValue("null");
 
 
 
@@ -178,6 +179,15 @@ public class Signup_Activity extends AppCompatActivity {
 
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
+
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelOne").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelTwo").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelThree").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelFour").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelFive").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelSix").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelSeven").setValue("0");
+
 
 
 

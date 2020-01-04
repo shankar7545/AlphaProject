@@ -1,5 +1,7 @@
 package com.example.alpha;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +41,8 @@ public class HomeFragment extends Fragment {
     EditText editTextReferCode;
     Button next;
     Button paytm;
+    Dialog dialog;
+
     View mView;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mLevelTwo , mLevelThree;
     public ProgressBar progressBar;
@@ -72,7 +77,7 @@ public class HomeFragment extends Fragment {
         wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
         level =(TextView)mView.findViewById(R.id.levelH);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
-        /*Paytm add money
+        //Paytm add money
 
         paytm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,32 +121,27 @@ public class HomeFragment extends Fragment {
         });
 
 
-        Paytm add money*/
+        //Paytm add money
 
 
 
 
-        mRef = FirebaseDatabase.getInstance().getReference();
-        mTransactions = FirebaseDatabase.getInstance().getReference("Transactions");
-        mFirebase = FirebaseDatabase.getInstance().getReference("Users");
+        mFirebase = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
         mReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
         mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
-        mLevelTwo = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid).child("Transactions").child("received").child("50*2");
-        mLevelThree = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid).child("Transactions").child("received").child("100*4");
-        mLevel = FirebaseDatabase.getInstance().getReference("Level");
-        mLogin = FirebaseDatabase.getInstance().getReference("Login");
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference();
         scoresRef.keepSynced(true);
 
 
-        mRef.addValueEventListener(new ValueEventListener() {
+        mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 //details
                 String nameH = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
                 String balanceH = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
-                String value_count = dataSnapshot.child("Level").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
+                String value_count = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
                 profileName.setText(nameH);
                 wallet_bal.setText(balanceH);
@@ -171,23 +171,47 @@ public class HomeFragment extends Fragment {
 
 
         //LevelTwo
-        mLevelTwo.addValueEventListener(new ValueEventListener() {
+        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists())
+                final String level = dataSnapshot.child("level").getValue().toString();
+                if(level.equals("0"))
                 {
-                    final int levelTwoCount = (int) dataSnapshot.getChildrenCount();
+                    forLevelOne();
+                }
+                if(level.equals("1"))
+                {
 
-                    String count = Integer.toString(levelTwoCount);
-
-                    if (count.equals("3"))
-                    {
-                        LevelTwo();
-
-                    }
 
                 }
+                if(level.equals("2"))
+                {
+
+                }
+                if(level.equals("3"))
+                {
+
+                }
+                if(level.equals("4"))
+                {
+
+                }
+                if(level.equals("5"))
+                {
+
+                }
+                if(level.equals("6"))
+                {
+
+                }
+                if(level.equals("7"))
+                {
+
+                }
+
+
+
 
             }
 
@@ -197,25 +221,123 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
 
-        //LevelThree
-        mLevelThree.addValueEventListener(new ValueEventListener() {
+    private void forLevelOne() {
+
+        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists())
-                {
-                    final int levelThreeCount = (int) dataSnapshot.getChildrenCount();
 
-                    String count = Integer.toString(levelThreeCount);
+                //LevelOne
+                String level = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
-                    if (count.equals("5"))
-                    {
-                        LevelThree();
+                if (level.equals("0")) {
+                    String balance = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
+                    String p1 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p1").getValue().toString();
+                    String p2 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p2").getValue().toString();
+                    String p3 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p3").getValue().toString();
+                    String p4 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p4").getValue().toString();
+                    String p5 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p5").getValue().toString();
+                    String p6 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p6").getValue().toString();
+                    String p7 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p7").getValue().toString();
+                    String p8 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p8").getValue().toString();
+
+
+                    if (balance.equals("50")) {
+
+                        dialog=new Dialog(getContext());
+                        dialog.setContentView(R.layout.progress_dialogue);
+                        dialog.setCancelable(false);
+                        final TextView mainHeading=(TextView) dialog.findViewById(R.id.mainHeading);
+                        final TextView subHeading=(TextView) dialog.findViewById(R.id.subHeading);
+                        dialog.show();
+
+
+
+                        //reducing money in user wallet
+
+                        String user_bal = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
+                        int user_bal_Int = Integer.parseInt(user_bal);
+
+                        String user_updated_bal = Integer.toString(user_bal_Int - 50);
+
+                        mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue(user_updated_bal);
+
+                        //adding money to parent1
+                        String p1_bal = dataSnapshot.child("Wallet").child(p1).child("balance").getValue().toString();
+                        int p1_bal_Int = Integer.parseInt(p1_bal);
+
+                        String p1_updated_bal = Integer.toString(p1_bal_Int + 50);
+
+                        mWallet.child(p1).child("balance").setValue(p1_updated_bal);
+                        subHeading.setText("Transfering money");
+
+                        //AutoLoginCode
+                        //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
+                        //String p1_password = dataSnapshot.child("Users").child(p1).child("password").getValue().toString();
+                        //String mEnd = dataSnapshot.child("Login").child("end").getValue().toString();
+                        //int i = Integer.parseInt(mEnd);
+
+                        //mLogin.child("user" + i).child("uid").setValue(p1);
+                        //mLogin.child("user" + i).child("email").setValue(p1_email);
+                        //mLogin.child("user" + i).child("password").setValue(p1_password);
+
+                        //String endCount = Integer.toString(i + 1);
+                        //mLogin.child("end").setValue(endCount);
+
+
+                        //sendTransaction in user
+
+                        String id = UUID.randomUUID().toString();
+                        String childid = "PW"+id.substring(0,5).toUpperCase();
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p1);
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("50");
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(selfUid);
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionType").setValue("debited");
+
+
+
+                        //receivedTransaction in parent1
+                        String p1_tran_count= dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("levelOne").getValue().toString();
+                        int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
+
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p1);
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("50");
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(selfUid);
+                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionType").setValue("credited");
+
+                        String updated_p1_tran_count =Integer.toString(p1_tran_count_Int + 1);
+                        mWallet.child(p1).child("Transactions").child("count").child("levelOne").setValue(updated_p1_tran_count);
+
+
+
+                        //Upgrading level
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("1");
+                        subHeading.setText("Sucessfully upgraded to Level One");
+
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        }, 3000);
+
+
 
                     }
 
                 }
+                //LevelOneEnd
+
 
             }
 
@@ -224,10 +346,11 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
     }
 
     public void LevelTwo(){
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -324,7 +447,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void LevelThree(){
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -426,118 +549,17 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onStart() {
-     super.onStart();
+        super.onStart();
 
-     new Handler().postDelayed(new Runnable() {
-         @Override
-         public void run() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
-             mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                     //LevelOne
-                     String levelOne = dataSnapshot.child("Level").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
-
-                     if (levelOne.equals("0")) {
-                         String balance = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
-                         String p1 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").getValue().toString();
-                         String p2 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").getValue().toString();
-                         String p3 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("uid").getValue().toString();
-                         String p4 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("uid").getValue().toString();
-                         String p5 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("uid").getValue().toString();
-                         String p6 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("uid").getValue().toString();
-                         String p7 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("uid").getValue().toString();
-                         String p8 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").getValue().toString();
+            }
+        }, 0);
+    }
 
 
-                         if (balance.equals("50")) {
-
-                             String tranState = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("received").child("50*2").child("state").getValue().toString();
-                             int tranStateInt = Integer.parseInt(tranState);
-
-
-                                 String p1_bal = dataSnapshot.child("Wallet").child(p1).child("balance").getValue().toString();
-
-                                 //converting string to integer
-                                 int a = Integer.parseInt(p1_bal);
-
-                                 //reducing money in user wallet
-                                 mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
-
-                                 //adding money to parent1
-                                 String bal = Integer.toString(a + 50);
-                                 mWallet.child(p1).child("balance").setValue(bal);
-                                 Toast.makeText(getActivity(), "Transferred 50 to p1", Toast.LENGTH_SHORT).show();
-
-                                 //AutoLoginCode
-                                 String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
-                                 String p1_password = dataSnapshot.child("Users").child(p1).child("password").getValue().toString();
-                                 String mEnd = dataSnapshot.child("Login").child("end").getValue().toString();
-                                 int i = Integer.parseInt(mEnd);
-
-                                 mLogin.child("user" + i).child("uid").setValue(p1);
-                                 mLogin.child("user" + i).child("email").setValue(p1_email);
-                                 mLogin.child("user" + i).child("password").setValue(p1_password);
-
-                                 String endCount = Integer.toString(i + 1);
-                                 mLogin.child("end").setValue(endCount);
-
-
-                                 //sendTransaction in user
-                                  mWallet.child(selfUid).child("Transactions").child("send").child("50").child("uid").setValue(p1);
-                                  mWallet.child(selfUid).child("Transactions").child("send").child("50").child("state").setValue("true");
-
-
-                                //receivedTransaction in parent1
-
-                                 String uidInt = Integer.toString(tranStateInt + 1);
-                                 mWallet.child(p1).child("Transactions").child("received").child("50*2").child("state").setValue(uidInt);
-                                 mWallet.child(p1).child("Transactions").child("received").child("50*2").child(selfUid).setValue(datetime);
-
-
-                             //Send TransactionList in user
-                                  mWallet.child(selfUid).child("TransactionsList").child(p1).child("uid").setValue(p1);
-                                  mWallet.child(selfUid).child("TransactionsList").child(p1).child("transactionType").setValue("Send");
-                                  mWallet.child(selfUid).child("TransactionsList").child(p1).child("transactionTime").setValue(timeformat);
-                                  mWallet.child(selfUid).child("TransactionsList").child(p1).child("transactionDate").setValue(datetime);
-                                  mWallet.child(selfUid).child("TransactionsList").child(p1).child("transactionAmount").setValue("50");
-
-                                 //receivedTransactionList in parent1
-
-
-                                 mWallet.child(p1).child("TransactionsList").child(selfUid).child("uid").setValue(selfUid);
-                                 mWallet.child(p1).child("TransactionsList").child(selfUid).child("transactionTime").setValue(timeformat);
-                                 mWallet.child(p1).child("TransactionsList").child(selfUid).child("transactionDate").setValue(datetime);
-                                 mWallet.child(p1).child("TransactionsList").child(selfUid).child("transactionAmount").setValue("50");
-                                 mWallet.child(p1).child("TransactionsList").child(selfUid).child("transactionType").setValue("Received");
-
-
-
-                                //Upgrading level
-                                 mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("1");
-                                 Toast.makeText(getActivity(), "Upgraded to LevelOne", Toast.LENGTH_SHORT).show();
-
-
-
-                         }
-
-                     }
-                     //LevelOneEnd
-
-
-                 }
-
-                 @Override
-                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                 }
-             });
-         }
-     }, 0);
-
- }
 
 
 

@@ -3,6 +3,7 @@ package com.example.alpha;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,18 +44,19 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
         editTextReferCode = findViewById(R.id.referCode);
         textViewReferCode = findViewById(R.id.fetchReferCode);
-        mFirebase = FirebaseDatabase.getInstance().getReference("Users");
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
+        mFirebase = FirebaseDatabase.getInstance().getReference();
 
         mAuth = FirebaseAuth.getInstance();
         finish = findViewById(R.id.finsh);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar2 = (ProgressBar) findViewById(R.id.progress_bar2);
 
+        editTextReferCode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
         mAutoReferCode = FirebaseDatabase.getInstance().getReference("AutoReferCode");
 
-        textViewReferCode.setOnClickListener(new View.OnClickListener() {
+        /*textViewReferCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -110,7 +112,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                         },2000);
 
             }
-        });
+        });   */
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +121,8 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
                 final String mReferCode = editTextReferCode.getText().toString().trim();
 
-                final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
-                promodb.addListenerForSingleValueEvent(new ValueEventListener() {
+                final DatabaseReference ReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
+                ReferDB.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
@@ -157,27 +159,25 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     }
 
     private void Child(){
-        mRef = FirebaseDatabase.getInstance().getReference();
 
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String mReferCode = editTextReferCode.getText().toString().trim();
                 String referUid = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
-                String count = dataSnapshot.child("Users").child(referUid).child("child").child("count").getValue().toString();
+                String childCount = dataSnapshot.child("Users").child(referUid).child("childCount").getValue().toString();
 
 
-                if(count.equals("0")){
+                if(childCount.equals("0")){
                     referDetails();
-                    mRef.child("Users").child(referUid).child("child").child("lchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    mRef.child("Users").child(referUid).child("child").child("count").setValue("1");
+                    mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("leftChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mFirebase.child("Users").child(referUid).child("childCount").setValue("1");
 
                 }
-                else if(count.equals("1")){
+                else if(childCount.equals("1")){
                     referDetails();
-                    mRef.child("Users").child(referUid).child("child").child("rchild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    mRef.child("Users").child(referUid).child("child").child("count").setValue("2");
-
+                    mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("rightChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    mFirebase.child("Users").child(referUid).child("childCount").setValue("2");
 
                 }
                 else{
@@ -198,63 +198,43 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
     private void referDetails(){
         try {
-            mRef = FirebaseDatabase.getInstance().getReference();
+            mFirebase = FirebaseDatabase.getInstance().getReference();
 
-            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
+                    String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").getValue().toString();
 
                     if (state.equals("false")) {
                         final String mReferCode = editTextReferCode.getText().toString().trim();
                         String uid_p1 = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
-                        String uid_p2 = dataSnapshot.child("Users").child(uid_p1).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p3 = dataSnapshot.child("Users").child(uid_p2).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p4 = dataSnapshot.child("Users").child(uid_p3).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p5 = dataSnapshot.child("Users").child(uid_p4).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p6 = dataSnapshot.child("Users").child(uid_p5).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p7 = dataSnapshot.child("Users").child(uid_p6).child("parent").child("p1").child("uid").getValue().toString();
-                        String uid_p8 = dataSnapshot.child("Users").child(uid_p7).child("parent").child("p1").child("uid").getValue().toString();
+                        String uid_p2 = dataSnapshot.child("Users").child(uid_p1).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p3 = dataSnapshot.child("Users").child(uid_p2).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p4 = dataSnapshot.child("Users").child(uid_p3).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p5 = dataSnapshot.child("Users").child(uid_p4).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p6 = dataSnapshot.child("Users").child(uid_p5).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p7 = dataSnapshot.child("Users").child(uid_p6).child("Chain").child("parent").child("p1").getValue().toString();
+                        String uid_p8 = dataSnapshot.child("Users").child(uid_p7).child("Chain").child("parent").child("p1").getValue().toString();
 
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").setValue("true");
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("true");
 
                         //p1
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").setValue(uid_p1);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("state").setValue("true");
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p1").setValue(uid_p1);
                         //p2
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").setValue(uid_p2);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("state").setValue("true");
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p2").setValue(uid_p2);
                         //p3
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("uid").setValue(uid_p3);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("state").setValue("true");
-
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p3").setValue(uid_p3);
                         //p4
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("uid").setValue(uid_p4);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("state").setValue("true");
-
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p4").setValue(uid_p4);
                         //p5
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("uid").setValue(uid_p5);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("state").setValue("true");
-
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p5").setValue(uid_p5);
                         //p6
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("uid").setValue(uid_p6);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("state").setValue("true");
-
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p6").setValue(uid_p6);
                         //p7
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("uid").setValue(uid_p7);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("state").setValue("true");
-
-
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p7").setValue(uid_p7);
                         //p8
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue(uid_p8);
-                        mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("state").setValue("true");
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p8").setValue(uid_p8);
 
 
 

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -87,36 +88,39 @@ public class PaytmPayment extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        mRef = FirebaseDatabase.getInstance().getReference();
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
+        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String payment = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").getValue().toString();
+                String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
 
-                if(payment.equals("true")){
+                if(paymentStatus.equals("true")){
 
                     SuccessLayout.setVisibility(View.VISIBLE);
 
-                    final String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
+                    final String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
 
-                            if(state.equals("false")){
+                            if(parentStatus.equals("false")){
                                 Intent intent = new Intent(PaytmPayment.this, ReferCodeAcitvity.class);
                                 startActivity(intent);
                                 finish();
                             }
-                            if(state.equals("true")){
+                            if(parentStatus.equals("true")){
                                 Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         }
-                    },2000);
+                    },1000);
 
 
+                }
+                else{
+                    Toast.makeText(PaytmPayment.this, "Payment Incomplete", Toast.LENGTH_SHORT).show();
                 }
 
 

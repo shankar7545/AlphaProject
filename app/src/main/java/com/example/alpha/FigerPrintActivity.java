@@ -67,8 +67,8 @@ public class FigerPrintActivity extends AppCompatActivity {
                 mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String payment = dataSnapshot.child("payment").getValue().toString();
-                        String state = dataSnapshot.child("parent").child("state").getValue().toString();
+                        String payment = dataSnapshot.child("paymentStatus").getValue().toString();
+                        String state = dataSnapshot.child("parentStatus").getValue().toString();
 
                         if(payment.equals("false")){
 
