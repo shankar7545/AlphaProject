@@ -3,6 +3,7 @@ package com.example.alpha;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,7 @@ public class self_details extends AppCompatActivity {
         setContentView(R.layout.activity_self_details);
 
         editTextuserName = findViewById(R.id.userName);
+        editTextuserName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
         mFirebase = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -63,6 +65,12 @@ public class self_details extends AppCompatActivity {
                             editTextuserName.requestFocus();
                             return;
 
+                        }
+                        if(mUserName.length() < 5){
+                            editTextuserName.setError("Enter 5 Letters");
+                            editTextuserName.requestFocus();
+
+                            return;
                         }
                         else if(checkdataSnapshot.hasChild(mUserName))
                         {

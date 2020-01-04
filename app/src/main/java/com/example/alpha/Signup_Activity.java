@@ -27,6 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,6 +100,11 @@ public class Signup_Activity extends AppCompatActivity {
         final String mPassword = editTextPassword.getText().toString().trim();
 
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+        final String currentdate = dateformat.format(c.getTime());
+        final Date currentTime = Calendar.getInstance().getTime();
+
 
         Bundle bundle = getIntent().getExtras();
         final String mUserName = bundle.getString("stuff");
@@ -156,22 +164,13 @@ public class Signup_Activity extends AppCompatActivity {
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(mName);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(mEmail);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("password").setValue(mPassword);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").setValue(mUserName);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("false");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("child").child("count").setValue("0");
-
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p1").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p2").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p3").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p4").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p5").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p6").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p7").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("p8").child("uid").setValue("0");
-
-
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").setValue("false");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("paymentStatus").setValue("false");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("childCount").setValue("0");
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("date").setValue(currentdate);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(currentTime);
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("false");
 
 
 
@@ -179,16 +178,6 @@ public class Signup_Activity extends AppCompatActivity {
 
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("50*2").child("state").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("100*4").child("state").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("400*8").child("state").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("3000*16").child("state").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("received").child("40000*32").child("state").setValue("0");
-
-
-                            //Level
-
-                            mLevel.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
 
 
 
@@ -196,7 +185,6 @@ public class Signup_Activity extends AppCompatActivity {
 
                             mReferDB.child(mUserName).child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             mReferDB.child(mUserName).child("username").setValue(mUserName);
-                            mReferDB.child(mUserName).child("child").setValue("0");
 
 
                             new Handler().postDelayed(new Runnable() {
