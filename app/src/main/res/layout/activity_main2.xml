@@ -7,7 +7,7 @@
     android:background="@color/grey_5"
     android:id="@+id/login_Relative"
     android:orientation="vertical"
-    tools:context=".MainActivity2">
+    tools:context=".Activity.MainActivity2">
 
     <RelativeLayout
         android:layout_width="match_parent"

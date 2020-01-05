@@ -7,5 +7,7 @@
     <string name="add_50_rupees_to_get_upgrade">Add 50 rupees to get upgrade</string>
     <string name="pay">Pay</string>
     <string name="user_name">User Name</string>
+    <string name="email_limits">abcdefghijklmnopqrstuvwxyz.@0123456789_</string>
+
     <string name="wallet_balance">Wallet Balance</string>
 </resources>

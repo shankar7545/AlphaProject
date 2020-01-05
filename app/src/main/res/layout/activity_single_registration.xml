@@ -220,7 +220,7 @@
         android:visibility="gone"
         android:background="@color/white"
 
-        tools:context=".Signup_Activity">
+        tools:context=".Registration.Signup_Activity">
 
 
 

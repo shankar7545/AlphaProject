@@ -3,10 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alpha">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,23 +23,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".ChainActivity"></activity>
-        <activity android:name=".Transactions" />
-        <activity android:name=".FigerPrintActivity" />
-        <activity android:name=".ReferCodeAcitvity" />
-        <activity android:name=".PaytmPayment" />
-        <activity android:name=".MyProfile" />
-        <activity android:name=".Signup_Activity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".self_details" />
-        <activity android:name=".verificaton_phone" />
-        <activity android:name=".verification_code" />
-        <activity android:name=".ConfirmAmount" />
-        <activity android:name=".walletActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MainActivity2" />
+        <activity android:name=".Wallet.TransactionsActivity"></activity>
+        <activity android:name=".Activity.ChainActivity" />
+        <activity android:name=".Activity.FigerPrintActivity" />
+        <activity android:name=".Registration.ReferCodeAcitvity" />
+        <activity android:name=".Registration.PaytmPayment" />
+        <activity android:name=".Activity.MyProfile" />
+        <activity android:name=".Registration.Signup_Activity" />
+        <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Registration.self_details" />
+        <activity android:name=".Registration.verificaton_phone" />
+        <activity android:name=".Registration.verification_code" />
+        <activity android:name=".Registration.ConfirmAmount" />
+        <activity android:name=".Wallet.walletActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.MainActivity2" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".Activity.IntroActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,13 +48,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

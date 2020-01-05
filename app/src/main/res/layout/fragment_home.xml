@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".HomeFragment"
+    tools:context=".Fragments.HomeFragment"
     >
 
     <LinearLayout
@@ -226,175 +226,125 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="6dp"
-                        android:visibility="visible"
-                        android:id="@+id/send"
-                        app:cardElevation="2dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_height="70dp"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="4dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        >
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:orientation="horizontal"
-                            android:padding="@dimen/spacing_large">
+                            android:layout_gravity="center"
+                            android:weightSum="5"
+                            >
 
-                            <RelativeLayout
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginTop="1dp">
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/transaction_send"
+                                >
 
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:tint="@color/grey_10"
-                                    app:srcCompat="@drawable/shape_circle" />
+                            </ImageView>
 
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:layout_centerInParent="true"
-                                    android:tint="@color/grey_40"
-                                    app:srcCompat="@drawable/ic_arrow_downward" />
-
-                            </RelativeLayout>
-
-                            <View
-                                android:layout_width="@dimen/spacing_middle"
-                                android:layout_height="0dp" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
+                                android:layout_gravity="center"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Send"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-                                    android:textColor="@color/indigo_900" />
-
+                                    android:text="Paid to"
+                                    android:id="@+id/txnid"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/colorPrimary"
+                                    />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="10 jan 2018 08:55"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
+                                    android:text="Shankar Chowdary"
+                                    android:textStyle="bold"
+                                    android:id="@+id/txnName"
+                                    android:textSize="14dp"
+                                    android:textColor="@color/colorPrimary"
+                                    android:layout_marginBottom="2dp"/>
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="10dp"
+                                        android:id="@+id/trans_date"
+                                        android:text="17-12-2018"/>
+                                    <View
+                                        android:layout_width="2dp"
+                                        android:layout_height="10dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_gravity="center"
+                                        android:background="@color/grey_40">
+
+                                    </View>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="10dp"
+                                        android:id="@+id/trans_time"
+                                        android:text="06:09 PM"/>
+                                </LinearLayout>
 
                             </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/sendTransAmount"
-                                    android:text="+ 50 INR"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/light_blue_500" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="150 Rupees"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="2dp"
-                        android:visibility="visible"
-                        app:cardUseCompatPadding="true">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/spacing_large">
-
-                            <RelativeLayout
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginTop="1dp">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:tint="@color/grey_10"
-                                    app:srcCompat="@drawable/shape_circle" />
-
-                                <ImageView
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:layout_centerInParent="true"
-                                    android:tint="@color/grey_40"
-                                    app:srcCompat="@drawable/ic_arrow_downward" />
-
-                            </RelativeLayout>
-
-                            <View
-                                android:layout_width="@dimen/spacing_middle"
-                                android:layout_height="0dp" />
-
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Received"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-                                    android:textColor="@color/indigo_900" />
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="1dp"
+                                        android:src="@drawable/rupee"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:id="@+id/trans_amount"
+                                        android:textColor="@color/orange_500"
+                                        android:text="50"
+                                        />
+                                </LinearLayout>
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="10 jan 2018 07:38"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="end"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="+ 50 INR"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                                    android:textColor="@color/light_blue_500" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="100 Rupees"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
 
                             </LinearLayout>
 
@@ -413,11 +363,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/grey_90" />
+
 
     </RelativeLayout>
 

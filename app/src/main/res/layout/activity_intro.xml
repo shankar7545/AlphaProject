@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="@color/colorPrimary"
-    tools:context=".IntroActivity">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".Activity.IntroActivity">
 
 
 

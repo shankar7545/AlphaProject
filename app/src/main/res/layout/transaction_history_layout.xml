@@ -1,50 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+
+
+<androidx.cardview.widget.CardView
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
-    android:layout_margin="10dp">
-
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/transactionLayout"
         android:orientation="horizontal"
+        android:layout_gravity="center"
         android:weightSum="5"
         >
+
+        <ImageView
+            android:id="@+id/transactionImage"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/transaction_send"
+            >
+
+        </ImageView>
 
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:layout_margin="10dp"
+            android:layout_weight="2"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TXN ID: 945332"
-                android:textStyle="bold"
-                android:id="@+id/txnid"
+                android:text="Paid to"
+                android:id="@+id/transactionType"
                 android:textSize="12dp"
                 android:textColor="@color/colorPrimary"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shankar Chowdary"
+                android:textStyle="bold"
+                android:id="@+id/transactionName"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginBottom="2dp"/>
-            <TextView
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10dp"
-                android:id="@+id/trans_date"
-                android:text="17-12-2018"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="10dp"
-                android:id="@+id/trans_time"
-                android:text="06:09 PM"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:id="@+id/transactionDate"
+                    android:text="17-12-2018"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/grey_40">
+
+                </View>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:id="@+id/transactionTime"
+                    android:text="06:09 PM"/>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -62,12 +108,13 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:id="@+id/trans_status"
+                android:id="@+id/transactionStatus"
                 android:textColor="@color/green_500"
                 android:text="Status"
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -83,20 +130,21 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="1dp"
+                    android:src="@drawable/rupee"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="12dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:id="@+id/trans_amount"
+                    android:id="@+id/transactionAmount"
                     android:textColor="@color/orange_500"
-                    android:text="0"
+                    android:text="50"
                     />
             </LinearLayout>
 
@@ -106,4 +154,8 @@
 
     </LinearLayout>
 
+
+
+
 </androidx.cardview.widget.CardView>
+
