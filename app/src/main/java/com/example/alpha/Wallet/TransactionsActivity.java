@@ -127,7 +127,7 @@ public class TransactionsActivity extends AppCompatActivity {
                 holder.transactionAmount.setText(model.getTransactionAmount());
                 holder.transactionDate.setText(model.getTransactionDate());
                 holder.transactionTime.setText(model.getTransactionTime());
-                holder.transactionName.setText(model.getTransferredTo());
+
 
 
                 String transType = model.getTransactionType();
@@ -137,6 +137,7 @@ public class TransactionsActivity extends AppCompatActivity {
                         holder.transactionType.setText("Received from");
                         holder.transactionImage.setImageResource(R.drawable.transaction_received);
                         holder.transactionStatus.setText("Credited");
+                        holder.transactionName.setText(model.getTransferredFrom());
                         holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
                         holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
 
@@ -146,6 +147,7 @@ public class TransactionsActivity extends AppCompatActivity {
                         holder.transactionType.setText("Paid To");
                         holder.transactionImage.setImageResource(R.drawable.transaction_send);
                         holder.transactionStatus.setText("Debited");
+                        holder.transactionName.setText(model.getTransferredTo());
                         holder.transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
                         holder.transactionAmount.setTextColor(getResources().getColor(R.color.red_500));
 

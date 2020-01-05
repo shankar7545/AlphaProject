@@ -63,7 +63,11 @@ public class MeFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               FirebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent=new Intent(getContext(),MainActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+                ActivityCompat.finishAffinity(getActivity());
 
             }
 

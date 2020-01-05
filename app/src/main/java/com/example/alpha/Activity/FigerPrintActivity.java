@@ -57,7 +57,7 @@ public class FigerPrintActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                authSuccess= findViewById(R.id.auth_success);
+                //authSuccess= findViewById(R.id.auth_success);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

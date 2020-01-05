@@ -128,41 +128,6 @@ public class MainActivity2 extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
-                mRef = FirebaseDatabase.getInstance().getReference();
-                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String payment = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").getValue().toString();
-                        String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parent").child("state").getValue().toString();
-
-                        if(payment.equals("false")){
-
-                            startActivity(new Intent(MainActivity2.this, PaytmPayment.class));
-
-                            finish();
-                        }
-
-                        else if(state.equals("false")){
-                            startActivity(new Intent(MainActivity2.this, ReferCodeAcitvity.class));
-                            finish();
-
-
-                        }
-                        else {
-
-                            startActivity(new Intent(MainActivity2.this, FigerPrintActivity.class));
-                            finish();
-                        }
-
-                        progressBar.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
 
 
             }

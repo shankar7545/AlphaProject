@@ -1,5 +1,6 @@
 package com.example.alpha.Registration;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -280,15 +282,15 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
-
-        }
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

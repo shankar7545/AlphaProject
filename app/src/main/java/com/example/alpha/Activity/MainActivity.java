@@ -1,6 +1,7 @@
 package com.example.alpha.Activity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -116,7 +118,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
                     finish();
                 }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
+                }
             }
+
         };
 
 
@@ -129,43 +136,8 @@ public class MainActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
                 mRef = FirebaseDatabase.getInstance().getReference();
-                mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String payment = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("paymentStatus").getValue().toString();
-                        String state = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").getValue().toString();
-
-                        if(payment.equals("false")){
-
-                            startActivity(new Intent(MainActivity.this, PaytmPayment.class));
-
-                            finish();
-                        }
-
-                         else if(state.equals("false")){
-                            startActivity(new Intent(MainActivity.this, ReferCodeAcitvity.class));
-                            finish();
-
-
-                        }
-
-                       else if (payment.equals("true") && state.equals("true"))
-                        {
-
-                            startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
-                            finish();
-                        }
-
-                        progressBar.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
+                startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
+                finish();
 
             }
         }).addOnFailureListener(new OnFailureListener() {

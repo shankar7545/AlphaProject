@@ -143,11 +143,8 @@ public class PaytmPayment extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent=new Intent(PaytmPayment.this, MainActivity2.class);
-                        startActivity(intent);
-                        finish();
-                                }
+                    finish();
+                    }
                 })
                 .setNegativeButton("No", null)
                 .show();
