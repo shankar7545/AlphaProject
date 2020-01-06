@@ -1,5 +1,6 @@
 package com.example.alpha.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,15 +18,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alpha.Activity.HomeActivity;
+import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.Registration.ConfirmAmount;
 import com.example.alpha.Registration.PaytmKey;
 import com.example.alpha.R;
+import com.example.alpha.ViewHolder.TransactionView;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -35,12 +44,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class HomeFragment extends Fragment {
 
 
-    DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mLevelTwo , mLevelThree;
+    DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mLogin ,mLevelTwo , mLevelThree;
     public ProgressBar progressBar;
     LinearLayout imageScroll;
     RelativeLayout homeFrag;
@@ -53,11 +64,13 @@ public class HomeFragment extends Fragment {
     SimpleDateFormat time=new SimpleDateFormat("hh:mm:ss aa");
     String timeformat=time.format(c.getTime());
     String datetime = dateformat.format(c.getTime());
-    LinearLayout pay50, referLayout;
-    public EditText mAmount;
+    FloatingActionButton fabRefresh;
     EditText editTextReferCode;
-    Button next;
-    Button paytm;
+
+    public RecyclerView transactionsRecycler;
+    public LinearLayoutManager transactionsLinearLayout ;
+    FirebaseRecyclerAdapter<Transaction_Class, TransactionView> TransactionsAdapter;
+    LinearLayout transactions_linear,progressBarLayout ,no_matches_found;
     Dialog dialog;
     View mView;
 
@@ -69,62 +82,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
-        pay50 = (LinearLayout) mView.findViewById(R.id.pay50);
-        paytm = mView.findViewById(R.id.paytm);
         homeFrag = mView.findViewById(R.id.homeFrag);
-        next = (Button) mView.findViewById(R.id.next);
+        fabRefresh = mView.findViewById(R.id.fab_refresh);
+
         editTextReferCode = mView.findViewById(R.id.referCode);
-        progressBar = (ProgressBar) mView.findViewById(R.id.progress_bar4);
-        mAmount = mView.findViewById(R.id.amount);
         profileName =(TextView)mView.findViewById(R.id.usernameH);
-        wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
-        level =(TextView)mView.findViewById(R.id.levelH);
+        //wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
+        //level =(TextView)mView.findViewById(R.id.levelH);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
-        //Paytm add money
-
-        paytm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                dbPaytm.child("01").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            final PaytmKey paytmKey = dataSnapshot.getValue(PaytmKey.class);
-                            try {
-                                final String mUserName = mAmount.getText().toString().trim();
-
-                                Intent i = new Intent(getContext(), ConfirmAmount.class);
-
-                                Bundle bundle = new Bundle();
-                                i.putExtra("Amount", mUserName);
-                                i.putExtra("MID", paytmKey.getPaytmkey());
-                                i.putExtras(bundle);
-                                startActivity(i);
-
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                        } catch (Exception e) {
-
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-        });
-
-
-        //Paytm add money
 
 
 
@@ -139,18 +104,42 @@ public class HomeFragment extends Fragment {
         scoresRef.keepSynced(true);
 
 
-        mFirebase.addValueEventListener(new ValueEventListener() {
+        //Recycler For Transactions
+
+
+        transactions_linear=(LinearLayout)mView.findViewById(R.id.transactionsHome_linear);
+
+        transactionsRecycler = mView.findViewById(R.id.transactionsHomeRecycler);
+
+        transactionsRecycler.hasFixedSize();
+
+
+
+        transactionsLinearLayout=new LinearLayoutManager(getContext());
+
+        no_matches_found=(LinearLayout)mView.findViewById(R.id.no_transactions_found);
+
+        transactionsRecycler.setLayoutManager(transactionsLinearLayout);
+
+
+
+        mTransactionsRecycler = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+        mTransactionsRecycler.child("Transactions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("history").exists()) {
 
-                //details
-                String nameH = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
-                String balanceH = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
-                String value_count = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
+                    transactions_linear.setVisibility(View.VISIBLE);
+                    no_matches_found.setVisibility(View.GONE);
 
-                profileName.setText(nameH);
-                wallet_bal.setText(balanceH);
-                level.setText("LEVEL "+value_count);
+                }
+                else{
+                    transactions_linear.setVisibility(View.GONE);
+                    no_matches_found.setVisibility(View.VISIBLE);
+                }
+
 
 
             }
@@ -164,12 +153,138 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
+        mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //details
+                String nameH = dataSnapshot.child("username").getValue().toString();
+                //String balanceH = dataSnapshot.child("balance").getValue().toString();
+                String levelH = dataSnapshot.child("level").getValue().toString();
+
+                profileName.setText(nameH +"(Username)");
+                //wallet_bal.setText(balanceH);
+                //level.setText("LEVEL "+levelH);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        fabRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                fabRefresh.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.rotate));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((HomeActivity)getActivity()).refreshMyData();
+
+
+                    }
+                }, 500);
+            }
+        });
+
+
+
         CheckingLevelUpgrades();
         initToolbar();
+        loadTransactions();
         return mView;
 
     }
 
+    private void loadTransactions() {
+        mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
+
+        Query withdrawList = mTransactions.orderByChild("position");
+        FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
+                .setQuery(withdrawList, Transaction_Class.class)
+                .build();
+        TransactionsAdapter = new FirebaseRecyclerAdapter<Transaction_Class, TransactionView>(withdrawOption) {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            protected void onBindViewHolder(@NonNull TransactionView holder,final int position, @NonNull final Transaction_Class model) {
+                transactions_linear.setVisibility(View.VISIBLE);
+
+                holder.transactionAmount.setText(model.getTransactionAmount());
+                holder.transactionDate.setText(model.getTransactionDate());
+                holder.transactionTime.setText(model.getTransactionTime());
+
+
+
+                String transType = model.getTransactionType();
+                {
+                    if(transType.equals("credited"))
+                    {
+                        holder.transactionType.setText("Received from");
+                        holder.transactionImage.setImageResource(R.drawable.transaction_received);
+                        holder.transactionStatus.setVisibility(View.GONE);
+                        holder.transactionName.setText(model.getTransferredFrom());
+                        //holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+                        holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
+
+                    }
+                    else if(transType.equals("debited"))
+                    {
+                        holder.transactionType.setText("Paid To");
+                        holder.transactionImage.setImageResource(R.drawable.transaction_send);
+                        //holder.transactionStatus.setText("Debited");
+                        holder.transactionStatus.setVisibility(View.GONE);
+                        holder.transactionName.setText(model.getTransferredTo());
+                        //holder.transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
+                        holder.transactionAmount.setTextColor(getResources().getColor(R.color.red_500));
+
+
+                    }
+                }
+
+
+
+
+
+                holder.transactionLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      /*  String BranchName=getIntent().getStringExtra("branchname");
+                        toolBar=getIntent().getStringExtra("toolbar");
+                        yearName=getIntent().getStringExtra("yearName");
+                        year=getIntent().getStringExtra("year");
+
+                        Intent sendto_single=new Intent(ActivitySubjects.this, ActivityUnits1.class);
+                        sendto_single.putExtra("branchname",BranchName);
+                        sendto_single.putExtra("yearName",yearName);
+                        sendto_single.putExtra("year",year);
+                        sendto_single.putExtra("subjectname",model.getSubjectName());
+                        sendto_single.putExtra("sem","firstSem");
+                        startActivity(sendto_single); */
+
+
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public TransactionView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View itemView = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.transaction_history_layout, viewGroup, false);
+                return new TransactionView(itemView);
+            }
+        };
+        transactionsRecycler.setAdapter(TransactionsAdapter);
+        TransactionsAdapter.startListening();
+
+    }
 
 
     public void CheckingLevelUpgrades(){
@@ -630,9 +745,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-        @Override
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -644,9 +757,6 @@ public class HomeFragment extends Fragment {
             }
         }, 0);
     }
-
-
-
 
 
     private void initToolbar() {

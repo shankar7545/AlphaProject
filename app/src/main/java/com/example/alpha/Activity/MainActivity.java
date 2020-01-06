@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent registration = new Intent(MainActivity.this, self_details.class);
                 startActivity(registration);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
 
             }

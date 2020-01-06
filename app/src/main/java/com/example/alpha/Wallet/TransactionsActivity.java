@@ -34,12 +34,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class TransactionsActivity extends AppCompatActivity {
-    public RecyclerView  transactionsRecycler;
-    public LinearLayoutManager transactionsLinearLayout ;
+
     public ProgressBar progressBar;
     Toolbar solotoolbar;
     DatabaseReference mRef ,mTransactions ,mStaff;
-
+    public RecyclerView  transactionsRecycler;
+    public LinearLayoutManager transactionsLinearLayout ;
     FirebaseRecyclerAdapter<Transaction_Class, TransactionView> TransactionsAdapter;
     LinearLayout transactions_linear,progressBarLayout ,no_matches_found;
 

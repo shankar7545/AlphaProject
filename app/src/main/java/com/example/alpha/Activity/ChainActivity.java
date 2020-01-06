@@ -41,7 +41,7 @@ public class ChainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chain);
-        mRef = FirebaseDatabase.getInstance().getReference("TreeView").child("1boZEA0VUvPW4C05cx4N7ZIQZz");
+        mRef = FirebaseDatabase.getInstance().getReference("Users").child(selfUid).child("Chain");
 
         GraphView graphView = findViewById(R.id.graph);
 
@@ -56,16 +56,15 @@ public class ChainActivity extends AppCompatActivity {
 
 
 
-        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child("child").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot currentdataSnapshot) {
 
                 if (currentdataSnapshot.exists()) {
-                    TreeClass treeClass = currentdataSnapshot.getValue(TreeClass.class);
-                    node1 = new Node(treeClass.getCurrentuser());
+                    String OneOne = currentdataSnapshot.child("levelOne").child("leftChild").getValue().toString();
+                    node1 = new Node(OneOne);
 
                 }
-
             }
 
             @Override
@@ -77,7 +76,7 @@ public class ChainActivity extends AppCompatActivity {
 
 
 
-        mRef.child("Level1").child("lchild").addListenerForSingleValueEvent(new ValueEventListener() {
+       /* mRef.child("Level1").child("lchild").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot level1leftdataSnapshot) {
                 TreeClass lvel1leftclass=level1leftdataSnapshot.getValue(TreeClass.class);
@@ -174,6 +173,7 @@ public class ChainActivity extends AppCompatActivity {
 
 
 
+        */
 
 
         // you can set the graph via the constructor or use the adapter.setGraph(Graph) method

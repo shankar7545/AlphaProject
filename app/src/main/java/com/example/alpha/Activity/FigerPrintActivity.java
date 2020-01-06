@@ -75,6 +75,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                         if(payment.equals("false")){
 
                             startActivity(new Intent(FigerPrintActivity.this, PaytmPayment.class));
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             finish();
 
                         }
@@ -83,12 +84,15 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                             if(state.equals("false")){
                                 startActivity(new Intent(FigerPrintActivity.this, ReferCodeAcitvity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             }
                         }
                         if(payment.equals("true")&& state.equals("true")){
 
                             startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                             finish();
                         }
 

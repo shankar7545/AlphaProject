@@ -36,7 +36,6 @@ public class PaytmPayment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paytm_payment);
 
-        pay50 = (LinearLayout)findViewById(R.id.pay50);
 
         SuccessLayout = findViewById(R.id.payment_success);
 
