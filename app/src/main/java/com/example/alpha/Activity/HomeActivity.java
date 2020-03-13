@@ -1,7 +1,6 @@
 package com.example.alpha.Activity;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -33,30 +31,15 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout home_Relative;
     AppBarLayout appbar;
     ActionBar actionBar;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-
-        home_Relative = (RelativeLayout) findViewById(R.id.home_relative);
-
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        bottomNav.setSelectedItemId(R.id.nav_home);
-    }
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
 
-
                     Fragment selectedFragment = null;
 
-                    switch (menuItem.getItemId()){
+                    switch (menuItem.getItemId()) {
 
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
@@ -80,6 +63,19 @@ public class HomeActivity extends AppCompatActivity {
                 }
             };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+
+        home_Relative = (RelativeLayout) findViewById(R.id.home_relative);
+
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setSelectedItemId(R.id.nav_home);
+    }
 
     @Override
     public void onBackPressed() {

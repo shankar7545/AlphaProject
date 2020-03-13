@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.alpha.Model.TreeClass;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import de.blox.graphview.BaseGraphAdapter;
 import de.blox.graphview.Graph;
 import de.blox.graphview.GraphView;
@@ -49,11 +47,7 @@ public class ChainActivity extends AppCompatActivity {
         final Graph graph = new Graph();
 
 
-
-
         //Getting the tree
-
-
 
 
         mRef.child("child").addValueEventListener(new ValueEventListener() {

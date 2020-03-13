@@ -2,55 +2,51 @@ package com.example.alpha.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.R;
-import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.example.alpha.Registration.self_details;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity2 extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+public class LoginActivity extends AppCompatActivity {
 
 
-    TextView sign_up;
     private static long back_pressed;
     public FirebaseAuth logAuth;
     public DatabaseReference loginDatabse;
     public EditText email, password;
     public ProgressBar progressBar;
-
-    public LinearLayout signin;
+    public Button signin;
     public String login_email, login_password;
-    FirebaseAuth.AuthStateListener mAuthListener;
-    public LinearLayout login_Relative;
+    public RelativeLayout login_Relative;
     public TextView forgetPasswrod;
+    TextView sign_up;
+    FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_login);
 
-        signin = (LinearLayout) findViewById(R.id.fab);
+        signin = (Button) findViewById(R.id.fab);
         sign_up = (TextView) findViewById(R.id.sign_up);
         email = (EditText) findViewById(R.id.l_email);
         password = (EditText) findViewById(R.id.l_password);
@@ -59,10 +55,9 @@ public class MainActivity2 extends AppCompatActivity {
         /*---------------------------------------------------------*/
 
 
-        login_Relative = (LinearLayout) findViewById(R.id.login_Relative);
+        login_Relative = (RelativeLayout) findViewById(R.id.login_Relative);
 
-        signin = (LinearLayout) findViewById(R.id.fab);
-
+        signin = (Button) findViewById(R.id.fab);
 
 
         signin.setOnClickListener(new View.OnClickListener() {
@@ -78,13 +73,12 @@ public class MainActivity2 extends AppCompatActivity {
                 if (!login_email.isEmpty() && !login_password.isEmpty()) {
                     signin.setAlpha(0f);
 
-
                     startLogin(login_email, login_password);
                 } else {
                     signin.setAlpha(1f);
                     progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(MainActivity2.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -100,21 +94,22 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent registration = new Intent(MainActivity2.this, self_details.class);
+                Intent registration = new Intent(LoginActivity.this, self_details.class);
                 startActivity(registration);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
 
             }
         });
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(MainActivity2.this, FigerPrintActivity.class));
-                    finish();
+
+                    startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
                 }
             }
+
         };
 
 
@@ -122,22 +117,24 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
+
+
     private void startLogin(String login_email, String login_password) {
-        logAuth.signInWithEmailAndPassword(login_email,login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
+                startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
 
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Snackbar.make(login_Relative,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(login_Relative, e.getMessage(), Snackbar.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
                 signin.setAlpha(1f);
-
             }
         });
     }
@@ -159,8 +156,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-       // logAuth.addAuthStateListener(mAuthListener);
-
+        logAuth.addAuthStateListener(mAuthListener);
 
     }
 

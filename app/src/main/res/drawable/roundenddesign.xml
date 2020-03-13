@@ -7,10 +7,8 @@
                 <shape android:shape="rectangle">
                     <solid android:color="@color/transparent" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
-                    <size android:width="110dp" android:height="40dp" />  <corners android:bottomRightRadius="8dp"
-                    android:bottomLeftRadius="8dp"
-                    android:topRightRadius="8dp"
-                    android:topLeftRadius="8dp"/>
+                    <size android:width="110dp" android:height="40dp" />
+                    <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp" />
 
                 </shape>
             </item>
@@ -26,10 +24,7 @@
                     <solid android:color="@color/transparent" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
-                    <corners android:bottomRightRadius="8dp"
-                        android:bottomLeftRadius="8dp"
-                        android:topRightRadius="8dp"
-                        android:topLeftRadius="8dp"/>
+                    <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp" />
                 </shape>
             </item>
         </layer-list>
@@ -44,10 +39,7 @@
                     <solid android:color="@color/colorPrimaryDark" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
-                    <corners android:bottomRightRadius="8dp"
-                        android:bottomLeftRadius="8dp"
-                        android:topRightRadius="8dp"
-                        android:topLeftRadius="8dp"/>
+                    <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp" />
                 </shape>
             </item>
         </layer-list>
@@ -62,10 +54,7 @@
                     <stroke android:width="1dp" android:color="@color/colorPrimaryDark" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
-                    <corners android:bottomRightRadius="8dp"
-                        android:bottomLeftRadius="8dp"
-                        android:topRightRadius="8dp"
-                        android:topLeftRadius="8dp"/>
+                    <corners android:bottomLeftRadius="8dp" android:bottomRightRadius="8dp" android:topLeftRadius="8dp" android:topRightRadius="8dp" />
                 </shape>
 
             </item>

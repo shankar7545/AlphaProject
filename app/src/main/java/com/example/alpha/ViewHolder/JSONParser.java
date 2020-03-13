@@ -24,9 +24,10 @@ public class JSONParser {
     HttpURLConnection urlConnection = null;
     // variable to hold context
     private Context context;
+
     // constructor
-    public JSONParser(Context context){
-        this.context=context;
+    public JSONParser(Context context) {
+        this.context = context;
     }
 
 
@@ -35,7 +36,7 @@ public class JSONParser {
         // boolean isReachable =Config.isURLReachable(context);
         // Making HTTP request
         try {
-            String retSrc="";
+            String retSrc = "";
             char current = '0';
 
             URL url1 = new URL(url);
@@ -61,9 +62,9 @@ public class JSONParser {
             while ((numRead = in.read(bytes)) >= 0) {
                 x.append(new String(bytes, 0, numRead));
             }
-            retSrc=x.toString();
+            retSrc = x.toString();
 
-           // Log.e("json parse ", " the value is "+ retSrc);
+            // Log.e("json parse ", " the value is "+ retSrc);
 
             jObj = new JSONObject(retSrc);
         } catch (Exception e) {
@@ -75,12 +76,12 @@ public class JSONParser {
                 }
             });
             return null;
-        }finally {
+        } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
-       // Log.e("jsonpardse ", "respone is "+ jObj.toString() );
+        // Log.e("jsonpardse ", "respone is "+ jObj.toString() );
         return jObj;
     }
 }

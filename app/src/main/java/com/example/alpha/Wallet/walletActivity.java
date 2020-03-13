@@ -25,44 +25,44 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class walletActivity extends AppCompatActivity {
-    public Button buy_dreamcoins,redeem_dreamcoins,view_transactions;
+    public Button buy_dreamcoins, redeem_dreamcoins, view_transactions;
     public TextView total_balance;
     DatabaseReference u_walletdb;
     Toolbar toolbar;
     DecimalFormat myFormatter = new DecimalFormat("#,##,###");
-    TextView received_balanceT,withdraw_balanceT;
-    ProgressBar progress_total,rec_prog,with_prog;
+    TextView received_balanceT, withdraw_balanceT;
+    ProgressBar progress_total, rec_prog, with_prog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        toolbar=(Toolbar)findViewById(R.id.dreamcoinWallet);
+        toolbar = (Toolbar) findViewById(R.id.dreamcoinWallet);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Wallet");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        progress_total=(ProgressBar)findViewById(R.id.progress_wallet);
+        progress_total = (ProgressBar) findViewById(R.id.progress_wallet);
         progress_total.setVisibility(View.VISIBLE);
-        view_transactions=(Button)findViewById(R.id.view_transactions);
-        total_balance=(TextView)findViewById(R.id.walletBalance);
-        received_balanceT=(TextView)findViewById(R.id.received_balance);
-        withdraw_balanceT=(TextView)findViewById(R.id.withdrawable_balance);
-        rec_prog=(ProgressBar)findViewById(R.id.progress_depo);
-        with_prog=(ProgressBar)findViewById(R.id.progress_winning);
+        view_transactions = (Button) findViewById(R.id.view_transactions);
+        total_balance = (TextView) findViewById(R.id.walletBalance);
+        received_balanceT = (TextView) findViewById(R.id.received_balance);
+        withdraw_balanceT = (TextView) findViewById(R.id.withdrawable_balance);
+        rec_prog = (ProgressBar) findViewById(R.id.progress_depo);
+        with_prog = (ProgressBar) findViewById(R.id.progress_winning);
         rec_prog.setVisibility(View.VISIBLE);
         with_prog.setVisibility(View.VISIBLE);
         total_balance.setVisibility(View.GONE);
         received_balanceT.setVisibility(View.GONE);
         withdraw_balanceT.setVisibility(View.GONE);
-        u_walletdb= FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        u_walletdb = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         loadU_WalletCoins();
 
 
         view_transactions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewtransActivity=new Intent(walletActivity.this, TransactionsActivity.class);
+                Intent viewtransActivity = new Intent(walletActivity.this, TransactionsActivity.class);
                 viewtransActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(viewtransActivity);
             }
@@ -74,8 +74,7 @@ public class walletActivity extends AppCompatActivity {
         u_walletdb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot udataSnapshot) {
-                try
-                {
+                try {
                     String receiedBalance = udataSnapshot.child("balance").getValue().toString();
                     String withdrawableBalance = udataSnapshot.child("withdrawable").getValue().toString();
 
@@ -90,7 +89,7 @@ public class walletActivity extends AppCompatActivity {
 
                     int a = Integer.parseInt(receiedBalance);
                     int b = Integer.parseInt(withdrawableBalance);
-                    int c = a+b;
+                    int c = a + b;
 
                     String bal = Integer.toString(c);
 
@@ -100,11 +99,7 @@ public class walletActivity extends AppCompatActivity {
                     progress_total.setVisibility(View.GONE);
 
 
-
-
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(walletActivity.this, "Something went wrong!!!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -119,13 +114,12 @@ public class walletActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-       Intent gotohome=new Intent(walletActivity.this, HomeActivity.class);
-       gotohome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-       startActivity(gotohome);
+            Intent gotohome = new Intent(walletActivity.this, HomeActivity.class);
+            gotohome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(gotohome);
         } else {
             Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
         }

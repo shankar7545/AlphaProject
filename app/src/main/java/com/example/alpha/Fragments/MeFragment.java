@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alpha.Activity.ChainActivity;
+import com.example.alpha.Activity.LoginActivity;
 import com.example.alpha.Activity.MainActivity;
-import com.example.alpha.Activity.MainActivity2;
 import com.example.alpha.Activity.MyProfile;
 import com.example.alpha.R;
 import com.example.alpha.Wallet.walletActivity;
@@ -29,13 +29,12 @@ import androidx.fragment.app.Fragment;
 
 
 public class MeFragment extends Fragment {
-    LinearLayout logout ,myProfile,myWallet, walletLayout , chainActivity;
-    TextView profileName,wallet_bal,recieved , withdrawable;
+    public FirebaseAuth mAuth, mAuthListener;
+    LinearLayout logout, myProfile, myWallet, walletLayout, chainActivity;
+    TextView profileName, wallet_bal, recieved, withdrawable;
     View mView;
     DatabaseReference mRef;
-    public FirebaseAuth mAuth ,mAuthListener;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
 
 
     @Override
@@ -44,27 +43,25 @@ public class MeFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_me, container, false);
 
 
-        profileName =(TextView)mView.findViewById(R.id.profilename);
-        wallet_bal =(TextView)mView.findViewById(R.id.wallet_bal);
-        recieved =(TextView)mView.findViewById(R.id.level);
-        withdrawable =(TextView)mView.findViewById(R.id.withdrawable);
+        profileName = (TextView) mView.findViewById(R.id.profilename);
+        wallet_bal = (TextView) mView.findViewById(R.id.wallet_bal);
+        recieved = (TextView) mView.findViewById(R.id.level);
+        withdrawable = (TextView) mView.findViewById(R.id.withdrawable);
 
-        myWallet=(LinearLayout) mView.findViewById(R.id.mywallet);
-        walletLayout=(LinearLayout) mView.findViewById(R.id.walletLayout);
-        chainActivity=(LinearLayout) mView.findViewById(R.id.chain);
+        myWallet = (LinearLayout) mView.findViewById(R.id.mywallet);
+        walletLayout = (LinearLayout) mView.findViewById(R.id.walletLayout);
+        chainActivity = (LinearLayout) mView.findViewById(R.id.chain);
 
 
-
-        logout=(LinearLayout) mView.findViewById(R.id.logout);
-        myProfile=(LinearLayout) mView.findViewById(R.id.myprofile);
-
+        logout = (LinearLayout) mView.findViewById(R.id.logout);
+        myProfile = (LinearLayout) mView.findViewById(R.id.myprofile);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent=new Intent(getContext(),MainActivity.class);
+                Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
                 ActivityCompat.finishAffinity(getActivity());
@@ -76,7 +73,7 @@ public class MeFragment extends Fragment {
         myProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(), MyProfile.class);
+                Intent intent = new Intent(getContext(), MyProfile.class);
                 startActivity(intent);
 
             }
@@ -85,7 +82,7 @@ public class MeFragment extends Fragment {
         myWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(), walletActivity.class);
+                Intent intent = new Intent(getContext(), walletActivity.class);
                 startActivity(intent);
 
             }
@@ -93,20 +90,21 @@ public class MeFragment extends Fragment {
         walletLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),walletActivity.class);
+                Intent intent = new Intent(getContext(), walletActivity.class);
                 startActivity(intent);
             }
         });
         chainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(), ChainActivity.class);
+                Intent intent = new Intent(getContext(), ChainActivity.class);
                 startActivity(intent);
             }
         });
         return mView;
 
     }
+
     @Override
     public void onStart() {
         super.onStart();

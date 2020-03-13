@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_Relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/grey_5"
-    android:id="@+id/login_Relative"
     android:orientation="vertical"
     tools:context=".Activity.MainActivity2">
 
@@ -28,9 +28,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_middle"
-                android:layout_marginLeft="@dimen/spacing_medium"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_middle"
                 android:text="Sign In"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary"
@@ -39,8 +39,8 @@
             <View
                 android:layout_width="40dp"
                 android:layout_height="4dp"
-                android:layout_marginLeft="@dimen/spacing_medium"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginLeft="@dimen/spacing_medium"
                 android:background="@color/colorPrimary" />
 
             <View
@@ -74,19 +74,18 @@
                         android:textColor="@color/grey_800" />
 
                     <EditText
+                        android:id="@+id/l_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-4dp"
                         android:layout_marginRight="-4dp"
                         android:inputType="textEmailAddress"
-                        android:text="shankarchowdary7545@gmail.com"
                         android:maxLength="50"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:id="@+id/l_email"
+                        android:text="shankarchowdary7545@gmail.com"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/grey_900"
-                        />
+                        android:textColor="@color/grey_900" />
 
                     <View
                         android:layout_width="0dp"
@@ -101,24 +100,22 @@
                         android:textColor="@color/grey_800" />
 
                     <EditText
+                        android:id="@+id/l_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-4dp"
                         android:layout_marginRight="-4dp"
                         android:inputType="textPassword"
-                        android:id="@+id/l_password"
                         android:maxLength="50"
-                        android:text="Sh@nkar7545"
                         android:maxLines="1"
                         android:singleLine="true"
+                        android:text="Sh@nkar7545"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/grey_900"
-                        />
+                        android:textColor="@color/grey_900" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/spacing_middle" />
-
 
 
                     <TextView
@@ -129,11 +126,11 @@
                         android:layout_marginTop="@dimen/spacing_medium"
                         android:clickable="true"
                         android:text="Sign Up"
-                        android:visibility="gone"
                         android:textAlignment="center"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -149,9 +146,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:orientation="vertical"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:background="@color/colorPrimary">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/fab"
@@ -171,6 +168,7 @@
 
 
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"

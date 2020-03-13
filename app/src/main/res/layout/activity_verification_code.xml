@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -28,34 +27,35 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="Enter the 6-digit code sent to"
                 android:gravity="center"
+                android:text="Enter the 6-digit code sent to"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/grey_60" />
+
             <TextView
+                android:id="@+id/ph_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:id="@+id/ph_num"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/grey_800"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_large"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/spacing_large"
                 android:orientation="horizontal">
 
 
                 <EditText
+                    android:id="@+id/otp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:inputType="number"
-                    android:id="@+id/otp"
                     android:maxLength="6"
                     android:maxLines="6"
                     android:singleLine="true"
@@ -64,13 +64,12 @@
                     android:textStyle="bold" />
 
 
-
             </LinearLayout>
 
             <Button
+                android:id="@+id/verify"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/verify"
                 android:background="@drawable/btn_rounded_red"
                 android:text="Verify"
                 android:textColor="@android:color/white" />

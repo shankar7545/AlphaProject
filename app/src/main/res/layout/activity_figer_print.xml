@@ -1,38 +1,39 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".Activity.FigerPrintActivity">
 
     <TextView
+        android:id="@+id/authenticateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login With Touch ID"
-        android:textSize="20dp"
         android:textColor="@color/orange_800"
+        android:textSize="20dp"
         android:textStyle="bold"
-        android:id="@+id/authenticateButton"
 
         />
+
     <LinearLayout
+        android:id="@+id/auth_success"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/auth_success"
-        android:gravity="center"
-        android:layout_marginTop="40dp"
         android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
         android:visibility="gone">
+
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
             android:layout_gravity="center_vertical"
             android:tint="@android:color/white"
-            app:lottie_fileName="success2.json"/>
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="success2.json"
+            app:lottie_loop="true" />
 
     </LinearLayout>
 

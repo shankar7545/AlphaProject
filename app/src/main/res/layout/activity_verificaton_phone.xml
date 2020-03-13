@@ -29,16 +29,16 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Please enter your mobile number to receive a verification code."
             android:gravity="center"
+            android:text="Please enter your mobile number to receive a verification code."
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
             android:textColor="@color/grey_60" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large"
             android:layout_marginTop="@dimen/spacing_xlarge"
+            android:layout_marginBottom="@dimen/spacing_large"
             android:orientation="horizontal">
 
             <TextView
@@ -56,32 +56,31 @@
                 android:layout_height="0dp" />
 
             <EditText
+                android:id="@+id/phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
-                android:id="@+id/phone_number"
-                android:maxLines="1"
                 android:maxLength="10"
+                android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@color/grey_900"
-                android:textStyle="bold" >
+                android:textStyle="bold">
 
-                <requestFocus/>
+                <requestFocus />
 
             </EditText>
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/continueBtn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/continueBtn"
             android:layout_marginLeft="13dp"
             android:background="@drawable/btn_rounded_red"
             android:text="CONTINUE"
             android:textColor="@android:color/white" />
-
 
 
     </LinearLayout>

@@ -1,400 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/white"
     android:gravity="center"
-    tools:context=".Fragments.HomeFragment"
-    >
+    android:orientation="vertical"
+    tools:context=".Fragments.HomeFragment">
+
+    <include
+        android:id="@+id/cse_toolbar"
+        layout="@layout/toolbar_main" />
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/homeFrag"
-     >
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nested_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-
-
-            android:scrollingCache="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                    <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        app:contentInsetStartWithNavigation="0dp"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                        app:theme="@style/Toolbar.Light" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:orientation="vertical">
-
-
-
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="6dp"
-                        app:cardElevation="2dp"
-                        app:cardUseCompatPadding="true">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:gravity="center"
-                            android:background="@color/light_blue_A100"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:weightSum="3"
-                                android:orientation="horizontal">
-
-
-                                <com.mikhaellopez.circularimageview.CircularImageView
-                                    android:id="@+id/image"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:src="@drawable/profile_two"
-                                    app:civ_border="true"
-                                    android:scaleType="centerInside"
-                                    app:civ_border_width="3dp"
-                                    app:civ_shadow="true"
-                                    app:civ_shadow_radius="0" />
-
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="25dp"
-                                    android:orientation="vertical"
-                                    android:layout_marginBottom="@dimen/spacing_medium"
-                                    android:layout_marginTop="@dimen/spacing_middle"
-
-
-                                    >
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Shankar Chowdary"
-                                        android:textSize="23sp"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/black"
-                                        />
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="SHANKAR"
-                                        android:id="@+id/usernameH"
-                                        android:textSize="15dp"
-                                        android:textColor="@color/black"
-                                        />
-
-                                </LinearLayout>
-
-
-
-
-
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="5dp"
-                                android:visibility="visible"
-                                android:background="@color/white"/>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="65dp"
-                                android:orientation="horizontal"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="8dp"
-                                android:weightSum="5"
-                                >
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/atm"
-                                    >
-
-                                </ImageView>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="80dp"
-                                    android:orientation="vertical"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:layout_weight="3"
-                                    android:background="@color/transparent">
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="Withdrawable Amount"
-                                        android:textSize="15sp"
-                                        android:textStyle="bold"
-                                        android:textColor="@color/grey_80"
-                                        />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:layout_gravity="center"
-                                        android:text=" 10 "
-
-                                        >
-
-                                    </TextView>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_weight="2"
-                                    android:layout_marginLeft="5dp"
-                                    android:gravity="end"
-                                    android:layout_height="65dp"
-                                    android:orientation="vertical"
-                                    android:background="@color/transparent">
-
-
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_margin="10dp"
-                                        android:gravity="end"
-                                        android:layout_gravity="end"
-                                        android:orientation="horizontal"
-                                        android:background="@color/blue_900">
-
-
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:text="WITHDRAW"
-                                            android:textStyle="bold"
-                                            android:gravity="center"
-                                            android:textColor="@color/white"
-                                            android:textSize="10dp"
-
-                                            >
-
-                                        </TextView>
-
-                                    </LinearLayout>
-
-
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="5dp"
-
-                                android:layout_marginBottom="5dp"
-                                android:visibility="visible"
-                                android:background="@color/white"/>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:background="@color/black">
-
-                            </LinearLayout>
-
-
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/spacing_mxlarge" />
-
-                        </LinearLayout>
-
-
-
-
-
-
-                    </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_small" />
-
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.glide.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="15dp"
+                android:visibility="visible"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp" />
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/dailytext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
                 android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="match_parent"
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginTop="@dimen/spacing_middle"
-                    android:gravity="center"
-                    android:text="Transactions"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/grey_80"
-                    />
+                    android:layout_margin="4dp"
+                    app:shimmer_auto_start="true"
+                    app:shimmer_direction="left_to_right"
+                    app:shimmer_duration="2000"
+                    app:shimmer_highlight_color="@color/red_900"
+                    app:shimmer_shape="linear">
+
+                    <TextView
+                        android:id="@+id/branchName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:fontFamily="@font/lato"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="Transactions"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+
+                        />
+                </com.facebook.shimmer.ShimmerFrameLayout>
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/transactionsHome_linear"
+                android:visibility="gone">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/transactionsHome_linear"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/transactionsHomeRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:visibility="visible"
                         android:layout_marginTop="5dp"
-                        android:id="@+id/transactionsHomeRecycler">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="visible">
+
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
 
+            </androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/no_transactions_found"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/no_transactions_found"
-                    android:gravity="center"
-                    android:layout_marginTop="140dp"
                     android:layout_gravity="center"
-                    android:visibility="gone">
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        android:layout_gravity="center_vertical"
-                        android:tint="@android:color/white"
-                        app:lottie_fileName="stopwatch.json"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No Transactions found"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                        android:textColor="@color/grey_40"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:text="Check Again"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_40" />
-                </LinearLayout>
-
+                    android:layout_marginTop="100dp"
+                    android:gravity="center"
+                    android:text="No Transactions found"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
 
 
-        </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
 
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end|right"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_refresh"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_smlarge"
-            android:layout_marginLeft="@dimen/spacing_smlarge"
-            android:layout_marginRight="@dimen/spacing_smlarge"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            app:backgroundTint="@color/deep_purple_700"
-            android:tint="@android:color/white"
-            app:fabCustomSize="55dp"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/refresh2x" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_smlarge"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:layout_marginRight="@dimen/spacing_smlarge"
+                android:layout_marginBottom="@dimen/spacing_smlarge"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:tint="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabCustomSize="55dp"
+                app:rippleColor="@color/white"
+                app:srcCompat="@drawable/refresh2x" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

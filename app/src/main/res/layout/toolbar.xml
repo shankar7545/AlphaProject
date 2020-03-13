@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/blue_800"
-    android:contentInsetEnd="0dp"
-    android:contentInsetLeft="0dp"
-    android:contentInsetRight="0dp"
     android:contentInsetStart="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetEnd="0dp"
+    android:contentInsetRight="0dp"
     app:contentInsetEnd="0dp"
     app:contentInsetLeft="0dp"
     app:contentInsetRight="0dp"
@@ -19,20 +18,16 @@
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Toolbar"
-            android:textColor="#ffff"
-            android:textSize="18dp"
-            android:layout_weight="3"
-            android:id="@+id/tool_name"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"/>
-
+    <TextView
+        android:id="@+id/tool_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="3"
+        android:text="Toolbar"
+        android:textColor="#ffff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
 
 </androidx.appcompat.widget.Toolbar>

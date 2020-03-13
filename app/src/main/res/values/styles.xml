@@ -7,20 +7,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="ProgressBar.Blue" parent="@style/AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
+
     <style name="ProgressBar.White" parent="@style/AppTheme">
         <item name="colorPrimary">@color/white</item>
         <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="EditText.Grey" parent="@style/AppTheme">
-    <item name="colorControlActivated">@color/grey_60</item>
-    <item name="colorControlHighlight">@color/grey_60</item>
-    <item name="colorControlNormal">@color/grey_40</item>
+        <item name="colorControlActivated">@color/grey_60</item>
+        <item name="colorControlHighlight">@color/grey_60</item>
+        <item name="colorControlNormal">@color/grey_40</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Toolbar.Light" parent="@style/AppTheme">

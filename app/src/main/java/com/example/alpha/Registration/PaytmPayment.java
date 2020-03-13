@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.alpha.Activity.HomeActivity;
-import com.example.alpha.Activity.MainActivity2;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,10 +24,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class PaytmPayment extends AppCompatActivity {
-    LinearLayout pay50 , SuccessLayout;
-    AppCompatButton paytm;
-    public EditText mAmount;
     private static long back_pressed;
+    public EditText mAmount;
+    LinearLayout pay50, SuccessLayout;
+    AppCompatButton paytm;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
     @Override
@@ -91,12 +90,12 @@ public class PaytmPayment extends AppCompatActivity {
         super.onStart();
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
 
-                if(paymentStatus.equals("true")){
+                if (paymentStatus.equals("true")) {
 
                     SuccessLayout.setVisibility(View.VISIBLE);
 
@@ -106,22 +105,21 @@ public class PaytmPayment extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            if(parentStatus.equals("false")){
+                            if (parentStatus.equals("false")) {
                                 Intent intent = new Intent(PaytmPayment.this, ReferCodeAcitvity.class);
                                 startActivity(intent);
                                 finish();
                             }
-                            if(parentStatus.equals("true")){
+                            if (parentStatus.equals("true")) {
                                 Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         }
-                    },1000);
+                    }, 1000);
 
 
-                }
-                else{
+                } else {
                     Toast.makeText(PaytmPayment.this, "Payment Incomplete", Toast.LENGTH_SHORT).show();
                 }
 
@@ -142,7 +140,7 @@ public class PaytmPayment extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                    finish();
+                        finish();
                     }
                 })
                 .setNegativeButton("No", null)

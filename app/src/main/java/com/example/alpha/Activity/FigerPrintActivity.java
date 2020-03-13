@@ -6,16 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricPrompt;
-import androidx.fragment.app.FragmentActivity;
-
-import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.R;
+import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,16 +16,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
+import androidx.fragment.app.FragmentActivity;
+
 public class FigerPrintActivity extends AppCompatActivity {
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
     LinearLayout authSuccess;
     TextView fingerText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_figer_print);
-        authSuccess= findViewById(R.id.auth_success);
-        fingerText=findViewById(R.id.authenticateButton);
+        authSuccess = findViewById(R.id.auth_success);
+        fingerText = findViewById(R.id.authenticateButton);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                         String payment = dataSnapshot.child("paymentStatus").getValue().toString();
                         String state = dataSnapshot.child("parentStatus").getValue().toString();
 
-                        if(payment.equals("false")){
+                        if (payment.equals("false")) {
 
                             startActivity(new Intent(FigerPrintActivity.this, PaytmPayment.class));
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -80,15 +81,15 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                         }
 
-                        if(payment.equals("true")){
+                        if (payment.equals("true")) {
 
-                            if(state.equals("false")){
+                            if (state.equals("false")) {
                                 startActivity(new Intent(FigerPrintActivity.this, ReferCodeAcitvity.class));
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             }
                         }
-                        if(payment.equals("true")&& state.equals("true")){
+                        if (payment.equals("true") && state.equals("true")) {
 
                             startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -126,6 +127,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         findViewById(R.id.authenticateButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 biometricPrompt.authenticate(promptInfo);
             }
         });

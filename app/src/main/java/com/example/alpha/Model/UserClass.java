@@ -1,7 +1,7 @@
 package com.example.alpha.Model;
 
 public class UserClass {
-    public String email,name,password,payment,username;
+    public String email, name, password, payment, username;
 
     public UserClass() {
     }

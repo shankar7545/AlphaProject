@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp"
-    android:layout_marginBottom="5dp"
     android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp">
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
+        android:id="@+id/transactionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/transactionLayout"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:weightSum="5"
-        >
+        android:orientation="horizontal"
+        android:weightSum="5">
 
         <ImageView
             android:id="@+id/transactionImage"
@@ -31,8 +29,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:src="@drawable/transaction_send"
-            >
+            android:src="@drawable/transaction_send">
 
         </ImageView>
 
@@ -40,88 +37,90 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:layout_gravity="center"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/transactionType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Paid to"
-                android:id="@+id/transactionType"
-                android:textSize="12dp"
                 android:textColor="@color/colorPrimary"
-                />
+                android:textSize="12dp" />
 
             <TextView
+                android:id="@+id/transactionName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:text="Shankar Chowdary"
-                android:textStyle="bold"
-                android:id="@+id/transactionName"
-                android:textSize="14dp"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginBottom="2dp"/>
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/transactionDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:id="@+id/transactionDate"
-                    android:text="17-12-2018"/>
+                    android:text="17-12-2018"
+                    android:textSize="10dp" />
+
                 <View
                     android:layout_width="2dp"
                     android:layout_height="10dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_gravity="center"
                     android:background="@color/grey_40">
 
                 </View>
+
                 <TextView
+                    android:id="@+id/transactionTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10dp"
-                    android:id="@+id/transactionTime"
-                    android:text="06:09 PM"/>
+                    android:text="06:09 PM"
+                    android:textSize="10dp" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/transactionStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textStyle="bold"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:id="@+id/transactionStatus"
-                android:textColor="@color/green_500"
+                android:gravity="center"
                 android:text="Status"
-                />
+                android:textColor="@color/green_500"
+                android:textSize="12dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -129,32 +128,29 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="1dp"
-                    android:src="@drawable/rupee"
-                    />
+                    android:src="@drawable/rupee" />
+
                 <TextView
+                    android:id="@+id/transactionAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:id="@+id/transactionAmount"
-                    android:textColor="@color/orange_500"
                     android:text="50"
-                    />
+                    android:textColor="@color/orange_500"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
-
 
 
         </LinearLayout>
 
     </LinearLayout>
-
-
 
 
 </androidx.cardview.widget.CardView>

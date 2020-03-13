@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:background="@color/colorPrimaryDark"
+    android:gravity="center"
     tools:context=".Activity.IntroActivity">
-
-
 
 
     <View
@@ -19,48 +17,47 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:scaleType="centerInside"
             android:layout_marginTop="90dp"
-            android:visibility="gone"
-            android:src="@drawable/paytm_assist_icon"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/paytm_assist_icon"
+            android:visibility="gone" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PAISA VASOOL"
-                android:layout_marginTop="50dp"
-                android:textColor="@android:color/white"
-                android:background="@drawable/rectangle_splash"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:padding="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rectangle_splash"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="PAISA VASOOL"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
 
         <ProgressBar
             style="?android:attr/progressBarStyleSmallInverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ProgressBar.White"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="30dp"
+            android:theme="@style/ProgressBar.White" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading..."
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:text="Loading..." />
 
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

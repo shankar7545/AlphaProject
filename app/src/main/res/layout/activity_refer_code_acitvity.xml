@@ -5,13 +5,13 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:id="@+id/linearlayout"
-        android:padding="70dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="70dp">
 
 
         <ImageView
@@ -24,47 +24,45 @@
             android:layout_height="wrap_content"
             android:text="Enter Refercode"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/spacing_large"
             android:orientation="horizontal">
 
 
-
             <EditText
+                android:id="@+id/referCode"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
                 android:layout_marginLeft="55dp"
-                android:maxLines="1"
-                android:maxLength="10"
-                android:id="@+id/referCode"
                 android:gravity="center"
+                android:inputType="textPersonName"
+                android:maxLength="10"
+                android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@color/white"
 
                 >
-                <requestFocus/>
+
+                <requestFocus />
 
             </EditText>
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/finsh"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:id="@+id/finsh"
             android:background="@drawable/btn_rounded_white"
             android:text="NEXT"
             android:textColor="@color/colorPrimary" />
-
 
 
     </LinearLayout>
@@ -73,29 +71,30 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
         android:layout_marginLeft="185dp"
+        android:layout_marginTop="500dp"
         android:theme="@style/ProgressBar.White"
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/fetchReferCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearlayout"
-        android:text="Fetch ReferCode"
-        android:id="@+id/fetchReferCode"
-        android:textSize="20sp"
         android:gravity="center"
+        android:text="Fetch ReferCode"
         android:textColor="@color/white"
+        android:textSize="20sp"
         android:textStyle="bold"
 
         />
+
     <ProgressBar
         android:id="@+id/progress_bar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="600dp"
         android:layout_marginLeft="175dp"
+        android:layout_marginTop="600dp"
         android:theme="@style/ProgressBar.White"
         android:visibility="gone" />
 </RelativeLayout>

@@ -1,16 +1,11 @@
 package com.example.alpha.Registration;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.alpha.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,17 +20,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class Signup_Activity extends AppCompatActivity {
 
-    EditText editTextName, editTextEmail ,editTextPassword,editTextReferCode ;
+    public ProgressBar progressBar;
+    EditText editTextName, editTextEmail, editTextPassword, editTextReferCode;
     Button next;
     Button finish;
-    private FirebaseAuth mAuth;
-    public ProgressBar progressBar;
-
-    private DatabaseReference mFirebase ,mReferDB ,mWallet, mTransactions , mLevel , mRef ,mLogin;
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mLevel, mRef, mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +43,9 @@ public class Signup_Activity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
 
 
-
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        next = (Button)findViewById(R.id.next);
+        next = (Button) findViewById(R.id.next);
 
         mRef = FirebaseDatabase.getInstance().getReference();
         mFirebase = FirebaseDatabase.getInstance().getReference("Users");
@@ -60,11 +55,6 @@ public class Signup_Activity extends AppCompatActivity {
         mLevel = FirebaseDatabase.getInstance().getReference("Level");
         mLogin = FirebaseDatabase.getInstance().getReference("Login");
         mAuth = FirebaseAuth.getInstance();
-
-
-
-
-
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -81,8 +71,7 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-
-    private void registerUser(){
+    private void registerUser() {
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -102,17 +91,15 @@ public class Signup_Activity extends AppCompatActivity {
         final String mUserName = bundle.getString("stuff");
 
 
-
-        if(mName.isEmpty()){
+        if (mName.isEmpty()) {
             editTextName.setError("Enter Name");
             editTextName.requestFocus();
             next.setVisibility(View.VISIBLE);
 
 
-
             return;
         }
-        if(mEmail.isEmpty()){
+        if (mEmail.isEmpty()) {
             editTextEmail.setError("Enter Email");
             editTextEmail.requestFocus();
             next.setVisibility(View.VISIBLE);
@@ -123,16 +110,14 @@ public class Signup_Activity extends AppCompatActivity {
 
         }
 
-        if(mPassword.isEmpty()){
+        if (mPassword.isEmpty()) {
             editTextPassword.setError("Enter Password");
             editTextPassword.requestFocus();
             next.setVisibility(View.VISIBLE);
 
-
             return;
         }
-
-        if(mPassword.length() <= 5){
+        if (mPassword.length() <= 5) {
             editTextPassword.setError("Enter valid Password");
             editTextPassword.requestFocus();
             next.setVisibility(View.VISIBLE);
@@ -142,13 +127,12 @@ public class Signup_Activity extends AppCompatActivity {
         }
 
 
-
-        mAuth.createUserWithEmailAndPassword(mEmail,mPassword)
+        mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
 
                             //UsersDB
@@ -163,24 +147,30 @@ public class Signup_Activity extends AppCompatActivity {
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("date").setValue(currentdate);
                             //mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(currentTime);
                             mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("false");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p1").setValue("null");
-
+                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child("Chain").child("parent").child("p1").setValue("null");
 
 
                             //WalletDB
 
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
+
                             mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
 
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelOne").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelTwo").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelThree").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelFour").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelFive").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelSix").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("count").child("levelSeven").setValue("0");
-
-
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelOne").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelTwo").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelThree").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelFour").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelFive").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelSix").setValue("0");
+                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
+                                    .child("count").child("levelSeven").setValue("0");
 
 
                             //ReferDB
@@ -189,9 +179,7 @@ public class Signup_Activity extends AppCompatActivity {
                             mReferDB.child(mUserName).child("username").setValue(mUserName);
 
 
-
-
-                        }else {
+                        } else {
                             Toast.makeText(Signup_Activity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                             next.setVisibility(View.VISIBLE);
@@ -200,7 +188,6 @@ public class Signup_Activity extends AppCompatActivity {
 
                     }
                 });
-
 
 
     }

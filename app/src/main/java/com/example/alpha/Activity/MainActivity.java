@@ -1,51 +1,43 @@
 package com.example.alpha.Activity;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.R;
-import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.example.alpha.Registration.self_details;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    TextView sign_up;
     private static long back_pressed;
     public FirebaseAuth logAuth;
     public DatabaseReference loginDatabse;
     public EditText email, password;
     public ProgressBar progressBar;
-
     public Button signin;
     public String login_email, login_password;
-    FirebaseAuth.AuthStateListener mAuthListener;
     public RelativeLayout login_Relative;
     public TextView forgetPasswrod;
+    TextView sign_up;
+    FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
     @Override
@@ -65,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         login_Relative = (RelativeLayout) findViewById(R.id.login_Relative);
 
         signin = (Button) findViewById(R.id.fab);
-
 
 
         signin.setOnClickListener(new View.OnClickListener() {
@@ -115,11 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 if (firebaseAuth.getCurrentUser() != null) {
 
                     startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
-                    finish();
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -128,21 +114,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     private void startLogin(String login_email, String login_password) {
-        logAuth.signInWithEmailAndPassword(login_email,login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
-                mRef = FirebaseDatabase.getInstance().getReference();
                 startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
-                finish();
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Snackbar.make(login_Relative,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(login_Relative, e.getMessage(), Snackbar.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
                 signin.setAlpha(1f);
             }

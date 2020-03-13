@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_Relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/login_Relative"
     android:layout_gravity="center"
-    android:gravity="center"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/grad4"
+    android:gravity="center">
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="@dimen/spacing_mlarge">
-
-
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="50dp"
+                android:orientation="vertical"
                 android:padding="@dimen/spacing_mlarge">
+
                 <View
                     android:layout_width="80dp"
                     android:layout_height="3dp"
@@ -41,9 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
                     android:layout_marginBottom="@dimen/spacing_xlarge"
                     android:text="SIGN IN"
-                    android:layout_marginTop="4dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
@@ -51,61 +49,60 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColorHint="@color/grey_300"
                     android:textColor="@color/blue_grey_300"
+                    android:textColorHint="@color/grey_300"
                     android:theme="@style/EditText.Grey">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/l_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:digits="@string/email_limits"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:digits="@string/email_limits"
+                        android:singleLine="true"
                         android:textColor="@color/blue_grey_300"
-                        android:theme="@style/EditText.Grey"
-                        android:id="@+id/l_email"
                         android:textColorHint="@color/grey_300"
-                        android:singleLine="true" />
+                        android:theme="@style/EditText.Grey" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:passwordToggleDrawable="@drawable/password_view"
-                    app:passwordToggleTint="@color/orange_900"
-                    app:passwordToggleEnabled="true"
                     android:layout_marginTop="4dp"
-                    android:textColorHint="@color/grey_300"
                     android:textColor="@color/blue_grey_300"
-                    android:theme="@style/EditText.Grey">
+                    android:textColorHint="@color/grey_300"
+                    android:theme="@style/EditText.Grey"
+                    app:passwordToggleDrawable="@drawable/password_view"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/orange_900">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/l_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:id="@+id/l_password"
-                        android:textColorHint="@color/grey_300"
+                        android:singleLine="true"
                         android:textColor="@color/blue_grey_300"
-                        android:theme="@style/EditText.Grey"
-                        android:singleLine="true" />
+                        android:textColorHint="@color/grey_300"
+                        android:theme="@style/EditText.Grey" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
+                    android:id="@+id/forget_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Forget Password?"
+                    android:layout_gravity="end"
                     android:layout_marginTop="2dp"
-                    android:textColor="@color/blue_50"
-                    android:id="@+id/forget_password"
-                    android:layout_gravity="end"/>
+                    android:text="Forget Password?"
+                    android:textColor="@color/blue_50" />
 
                 <View
                     android:layout_width="0dp"
@@ -114,19 +111,18 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp">
 
                     <Button
                         android:id="@+id/fab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:textStyle="bold"
                         android:text="Login"
+                        android:textStyle="bold"
                         android:tint="@color/cyan_800"
-                        app:backgroundTint="@color/grey_10"
-                        />
+                        app:backgroundTint="@color/grey_10" />
 
 
                     <ProgressBar
@@ -142,8 +138,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium"
                     android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_medium"
                     android:gravity="center"
 
                     android:orientation="horizontal">

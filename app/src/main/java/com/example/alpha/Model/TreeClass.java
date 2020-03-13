@@ -1,9 +1,16 @@
 package com.example.alpha.Model;
 
 public class TreeClass {
-    public String referid,uid,username,currentuser;
+    public String referid, uid, username, currentuser;
 
     public TreeClass() {
+    }
+
+    public TreeClass(String referid, String uid, String username, String currentuser) {
+        this.referid = referid;
+        this.uid = uid;
+        this.username = username;
+        this.currentuser = currentuser;
     }
 
     public String getReferid() {
@@ -35,13 +42,6 @@ public class TreeClass {
     }
 
     public void setCurrentuser(String currentuser) {
-        this.currentuser = currentuser;
-    }
-
-    public TreeClass(String referid, String uid, String username, String currentuser) {
-        this.referid = referid;
-        this.uid = uid;
-        this.username = username;
         this.currentuser = currentuser;
     }
 }

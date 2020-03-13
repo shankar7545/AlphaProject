@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_margin="10dp"
-    android:padding="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
         android:layout_height="180dp"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
         app:lottie_fileName="no_internet_connection.json"
-        />
+        app:lottie_loop="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/mainHeading"
-            android:text="Please donot close App"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="18dp"/>
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Please donot close App"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/subHeading"
-            android:text="It will be done Quickly"
-            android:layout_gravity="center"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="It will be done Quickly" />
 
 
     </LinearLayout>
@@ -41,22 +42,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_marginTop="4dp"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:theme="@style/ProgressBar.Blue"
             android:visibility="visible" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Processing..."
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:text="Processing..." />
 
     </LinearLayout>
 

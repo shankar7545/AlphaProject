@@ -22,7 +22,7 @@ public class verificaton_phone extends AppCompatActivity {
 
         PhoneNum = findViewById(R.id.phone_number);
 
-        continueBtn = (Button)findViewById(R.id.continueBtn);
+        continueBtn = (Button) findViewById(R.id.continueBtn);
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,24 +36,22 @@ public class verificaton_phone extends AppCompatActivity {
                 String mUserName = getIntent().getStringExtra("username");
 
 
-
-                if(number.isEmpty() || number.length() <10)
-                {
+                if (number.isEmpty() || number.length() < 10) {
                     PhoneNum.setError("Enter Number");
                     PhoneNum.requestFocus();
                     return;
                 }
 
 
-                String mobile = "+" +"91" +number;
+                String mobile = "+" + "91" + number;
 
                 Intent intent = new Intent(verificaton_phone.this, verification_code.class);
-                intent.putExtra("mobile" ,mobile);
-                intent.putExtra("name" ,mName);
-                intent.putExtra("email" ,mEmail);
-                intent.putExtra("password" ,mPassword);
-                intent.putExtra("refercode" ,mReferCode);
-                intent.putExtra("username" ,mUserName);
+                intent.putExtra("mobile", mobile);
+                intent.putExtra("name", mName);
+                intent.putExtra("email", mEmail);
+                intent.putExtra("password", mPassword);
+                intent.putExtra("refercode", mReferCode);
+                intent.putExtra("username", mUserName);
                 startActivity(intent);
             }
         });

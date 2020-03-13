@@ -8,9 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.alpha.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,76 +22,17 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class verification_code extends AppCompatActivity {
 
     Button verify;
-
-    private String mVerificationId;
-
     TextView ph_num;
-
-
+    private String mVerificationId;
     private FirebaseAuth mAuth;
 
     private EditText editTextCode;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verification_code);
-
-        mAuth = FirebaseAuth.getInstance();
-        editTextCode= findViewById(R.id.otp);
-        String mobile = getIntent().getStringExtra("mobile");
-        verify=(Button)findViewById(R.id.verify);
-        ph_num=findViewById(R.id.phone_number);
-
-
-        verify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                String code = editTextCode.getText().toString().trim();
-                if (code.isEmpty() || code.length() < 6) {
-                    editTextCode.setError("Enter valid code");
-                    editTextCode.requestFocus();
-                    return;
-                }
-
-                //verifying the code entered manually
-                verifyVerificationCode(code);
-            }
-        });
-
-    }
-
-    //the method is sending verification code
-    //the country id is concatenated
-    //you can take the country id as user input as well
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        String mobile = getIntent().getStringExtra("mobile");
-
-        sendVerificationCode(mobile);
-
-    }
-    private void sendVerificationCode(String mobile) {
-
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                mobile,
-                60,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                mCallbacks);
-    }
-
-
-
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
@@ -126,6 +64,59 @@ public class verification_code extends AppCompatActivity {
         }
     };
 
+    //the method is sending verification code
+    //the country id is concatenated
+    //you can take the country id as user input as well
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_verification_code);
+
+        mAuth = FirebaseAuth.getInstance();
+        editTextCode = findViewById(R.id.otp);
+        String mobile = getIntent().getStringExtra("mobile");
+        verify = (Button) findViewById(R.id.verify);
+        ph_num = findViewById(R.id.phone_number);
+
+
+        verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String code = editTextCode.getText().toString().trim();
+                if (code.isEmpty() || code.length() < 6) {
+                    editTextCode.setError("Enter valid code");
+                    editTextCode.requestFocus();
+                    return;
+                }
+
+                //verifying the code entered manually
+                verifyVerificationCode(code);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String mobile = getIntent().getStringExtra("mobile");
+
+        sendVerificationCode(mobile);
+
+    }
+
+    private void sendVerificationCode(String mobile) {
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                mobile,
+                60,
+                TimeUnit.SECONDS,
+                TaskExecutors.MAIN_THREAD,
+                mCallbacks);
+    }
 
     private void verifyVerificationCode(String code) {
         //creating the credential

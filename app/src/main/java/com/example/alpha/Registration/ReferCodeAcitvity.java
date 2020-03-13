@@ -13,8 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.Activity.HomeActivity;
-import com.example.alpha.Activity.IntroActivity;
-import com.example.alpha.Activity.MainActivity;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,20 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 public class ReferCodeAcitvity extends AppCompatActivity {
 
+    private static long back_pressed;
     public EditText editTextReferCode;
+    public ProgressBar progressBar, progressBar2;
     Button finish;
     TextView textViewReferCode;
-    private static long back_pressed;
-    public ProgressBar progressBar ,progressBar2;
+    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin, mUsers, questionsRef, mAutoReferCode;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebase;
-    DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin ,mUsers,questionsRef ,mAutoReferCode;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,15 +130,12 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                             editTextReferCode.requestFocus();
 
                             return;
-                        }
-                        else if (checkdataSnapshot.hasChild(mReferCode)) {
+                        } else if (checkdataSnapshot.hasChild(mReferCode)) {
 
                             Child();
 
 
-                        }
-                        else if(!checkdataSnapshot.hasChild(mReferCode))
-                        {
+                        } else if (!checkdataSnapshot.hasChild(mReferCode)) {
                             editTextReferCode.setError("Invalid ReferCode");
                             editTextReferCode.requestFocus();
 
@@ -162,7 +154,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         });
     }
 
-    private void Child(){
+    private void Child() {
 
         mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -172,19 +164,17 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                 String childCount = dataSnapshot.child("Users").child(referUid).child("childCount").getValue().toString();
 
 
-                if(childCount.equals("0")){
+                if (childCount.equals("0")) {
                     referDetails();
                     mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("leftChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mFirebase.child("Users").child(referUid).child("childCount").setValue("1");
 
-                }
-                else if(childCount.equals("1")){
+                } else if (childCount.equals("1")) {
                     referDetails();
                     mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("rightChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     mFirebase.child("Users").child(referUid).child("childCount").setValue("2");
 
-                }
-                else{
+                } else {
                     editTextReferCode.setError("Limit Exceeded");
                     editTextReferCode.requestFocus();
                     Toast.makeText(ReferCodeAcitvity.this, "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
@@ -192,6 +182,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -200,7 +191,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     }
 
 
-    private void referDetails(){
+    private void referDetails() {
         try {
             mFirebase = FirebaseDatabase.getInstance().getReference();
 
@@ -264,7 +255,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
-                        },2000);
+                        }, 2000);
 
 
                     }
@@ -280,6 +271,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)

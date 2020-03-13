@@ -8,10 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.alpha.Activity.MainActivity;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +16,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class self_details extends AppCompatActivity {
 
@@ -46,8 +46,6 @@ public class self_details extends AppCompatActivity {
         finish = findViewById(R.id.finsh);
 
 
-
-
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,32 +58,26 @@ public class self_details extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
 
-
-
-                         if (mUserName.isEmpty()) {
+                        if (mUserName.isEmpty()) {
                             editTextuserName.setError("Enter Username");
                             editTextuserName.requestFocus();
                             return;
 
                         }
-                        if(mUserName.length() < 5){
+                        if (mUserName.length() < 5) {
                             editTextuserName.setError("Enter 5 Letters");
                             editTextuserName.requestFocus();
 
                             return;
-                        }
-                        else if(checkdataSnapshot.hasChild(mUserName))
-                        {
+                        } else if (checkdataSnapshot.hasChild(mUserName)) {
                             editTextuserName.setError("Username Exists");
                             editTextuserName.requestFocus();
-                        }
-
-                        else{
+                        } else {
 
                             Intent i = new Intent(getApplicationContext(), Signup_Activity.class);
 
                             Bundle bundle = new Bundle();
-                            bundle.putString("stuff",mUserName);
+                            bundle.putString("stuff", mUserName);
 
                             i.putExtras(bundle);
                             startActivity(i);
@@ -100,7 +92,7 @@ public class self_details extends AppCompatActivity {
                 });
 
 
-                }
+            }
 
 
         });
@@ -114,7 +106,7 @@ public class self_details extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent=new Intent(self_details.this, MainActivity.class);
+                        Intent intent = new Intent(self_details.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
