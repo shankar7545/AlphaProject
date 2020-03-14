@@ -23,7 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="fullSensor"></activity>
         <activity android:name=".Wallet.TransactionsActivity" />
         <activity android:name=".Activity.ChainActivity" />
         <activity android:name=".Activity.FigerPrintActivity" />
@@ -31,7 +34,9 @@
         <activity android:name=".Registration.PaytmPayment" />
         <activity android:name=".Activity.MyProfile" />
         <activity android:name=".Registration.Signup_Activity" />
-        <activity android:name=".Activity.HomeActivity" />
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:configChanges="orientation" />
         <activity android:name=".Registration.self_details" />
         <activity android:name=".Registration.verificaton_phone" />
         <activity android:name=".Registration.verification_code" />

@@ -1,19 +1,19 @@
 package com.example.alpha.Model;
 
 public class Wallet_Class {
-    public String balance, transaction, paid, username, amountwon, kill, withdrawableamount;
+    public String balance, transaction, paid, username, amountwon, kill, withdrawable;
 
     public Wallet_Class() {
     }
 
-    public Wallet_Class(String balance, String transaction, String paid, String username, String amountwon, String kill, String withdrawableamount) {
+    public Wallet_Class(String balance, String transaction, String paid, String username, String amountwon, String kill, String withdrawable) {
         this.balance = balance;
         this.transaction = transaction;
         this.paid = paid;
         this.username = username;
         this.amountwon = amountwon;
         this.kill = kill;
-        this.withdrawableamount = withdrawableamount;
+        this.withdrawable = withdrawable;
     }
 
     public String getBalance() {
@@ -64,11 +64,13 @@ public class Wallet_Class {
         this.kill = kill;
     }
 
-    public String getWithdrawableamount() {
-        return withdrawableamount;
+    public String getwithdrawable() {
+        return withdrawable;
     }
 
-    public void setWithdrawableamount(String withdrawableamount) {
-        this.withdrawableamount = withdrawableamount;
+    public void setwithdrawable(String withdrawable) {
+        this.withdrawable = withdrawable;
     }
+
+
 }

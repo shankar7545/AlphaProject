@@ -10,4 +10,12 @@
     <string name="email_limits">abcdefghijklmnopqrstuvwxyz.@0123456789_</string>
 
     <string name="wallet_balance">Wallet Balance</string>
+
+
+    //Google Login
+    <string name="web_client_id">xxxxxxxx..place your web client id here</string>
+    <string name="HIDE" />
+    <string name="SAVE" />
+    <string name="dashboard">Dashboard</string>
+    <string name="beginner">Beginner</string>
 </resources>

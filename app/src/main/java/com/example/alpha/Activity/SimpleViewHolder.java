@@ -7,10 +7,10 @@ import com.example.alpha.R;
 
 import de.blox.graphview.ViewHolder;
 
-class SimpleViewHolder extends ViewHolder {
-    TextView textView;
+public class SimpleViewHolder extends ViewHolder {
+    public TextView textView;
 
-    SimpleViewHolder(View itemView) {
+    public SimpleViewHolder(View itemView) {
         super(itemView);
         textView = itemView.findViewById(R.id.textView);
     }

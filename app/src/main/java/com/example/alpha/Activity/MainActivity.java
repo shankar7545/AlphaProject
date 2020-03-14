@@ -45,18 +45,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        signin = (Button) findViewById(R.id.fab);
-        sign_up = (TextView) findViewById(R.id.sign_up);
-        email = (EditText) findViewById(R.id.l_email);
-        password = (EditText) findViewById(R.id.l_password);
+        signin = findViewById(R.id.fab);
+        sign_up = findViewById(R.id.sign_up);
+        email = findViewById(R.id.l_email);
+        password = findViewById(R.id.l_password);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = findViewById(R.id.progress_bar);
         /*---------------------------------------------------------*/
 
 
-        login_Relative = (RelativeLayout) findViewById(R.id.login_Relative);
+        login_Relative = findViewById(R.id.login_Relative);
 
-        signin = (Button) findViewById(R.id.fab);
+        signin = findViewById(R.id.fab);
 
 
         signin.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         logAuth = FirebaseAuth.getInstance();
         loginDatabse = FirebaseDatabase.getInstance().getReference("Players");
 
-        sign_up = (TextView) findViewById(R.id.sign_up);
+        sign_up = findViewById(R.id.sign_up);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        logAuth.addAuthStateListener(mAuthListener);
 
     }
 

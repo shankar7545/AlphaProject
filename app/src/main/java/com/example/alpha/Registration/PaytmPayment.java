@@ -1,6 +1,5 @@
 package com.example.alpha.Registration;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,9 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
 
 public class PaytmPayment extends AppCompatActivity {
     private static long back_pressed;
@@ -90,7 +89,7 @@ public class PaytmPayment extends AppCompatActivity {
         super.onStart();
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
@@ -135,16 +134,16 @@ public class PaytmPayment extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+            ActivityCompat.finishAffinity(this);
+            System.exit(0);
+        } else {
+            Toast.makeText(PaytmPayment.this, "Press once again to exit", Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+
+        }
     }
 
 

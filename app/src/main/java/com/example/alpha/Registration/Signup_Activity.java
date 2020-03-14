@@ -7,6 +7,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.alpha.Model.ReferClass;
+import com.example.alpha.Model.TransactionCount_class;
+import com.example.alpha.Model.UserClass;
 import com.example.alpha.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +34,9 @@ public class Signup_Activity extends AppCompatActivity {
     Button finish;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
-    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mLevel, mRef, mLogin;
+    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mLevel, mRef, mLogin, mUsers;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +48,18 @@ public class Signup_Activity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
 
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = findViewById(R.id.progress_bar);
 
-        next = (Button) findViewById(R.id.next);
+        next = findViewById(R.id.next);
 
         mRef = FirebaseDatabase.getInstance().getReference();
-        mFirebase = FirebaseDatabase.getInstance().getReference("Users");
+        mUsers = FirebaseDatabase.getInstance().getReference("Users");
         mReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
-        mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
         mTransactions = FirebaseDatabase.getInstance().getReference("Transactions");
         mLevel = FirebaseDatabase.getInstance().getReference("Level");
         mLogin = FirebaseDatabase.getInstance().getReference("Login");
         mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth.getInstance().signOut();
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +73,7 @@ public class Signup_Activity extends AppCompatActivity {
             }
 
         });
+
     }
 
 
@@ -136,47 +142,59 @@ public class Signup_Activity extends AppCompatActivity {
 
 
                             //UsersDB
+                            UserClass user = new UserClass(
+                                    mEmail,
+                                    mName,
+                                    mPassword,
+                                    "false",
+                                    mUserName,
+                                    "0",
+                                    "false",
+                                    currentdate,
+                                    "0"
+                            );
 
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").setValue(mName);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").setValue(mEmail);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("password").setValue(mPassword);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").setValue(mUserName);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("paymentStatus").setValue("false");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("childCount").setValue("0");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("date").setValue(currentdate);
-                            //mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("time").setValue(currentTime);
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("false");
-                            mFirebase.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+
+                            mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+
+
+                            mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .child("Chain").child("parent").child("p1").setValue("null");
 
 
                             //WalletDB
+                            mWallet = FirebaseDatabase.getInstance().getReference("Wallet")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("0");
+                            mWallet.child("balance").setValue("0");
+                            mWallet.child("withdrawable").setValue("0");
 
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").setValue("0");
 
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelOne").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelTwo").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelThree").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelFour").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelFive").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelSix").setValue("0");
-                            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions")
-                                    .child("count").child("levelSeven").setValue("0");
+                            TransactionCount_class transactionCount_class = new TransactionCount_class(
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0",
+                                    "0"
+                            );
+
+                            mWallet.child("Transactions").child("count").setValue(transactionCount_class);
+
+
+
 
 
                             //ReferDB
+                            ReferClass referClass = new ReferClass(
+                                    FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                                    mUserName);
 
-                            mReferDB.child(mUserName).child("uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            mReferDB.child(mUserName).child("username").setValue(mUserName);
+
+                            mReferDB.child(mUserName).setValue(referClass);
+
 
 
                         } else {
@@ -192,5 +210,11 @@ public class Signup_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().signOut();
 
+
+    }
 }

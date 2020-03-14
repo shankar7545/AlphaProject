@@ -28,6 +28,7 @@ import de.blox.graphview.tree.BuchheimWalkerConfiguration;
 
 public class ChainActivity extends AppCompatActivity {
 
+
     DatabaseReference mRef;
     RelativeLayout Chain;
     TextView parent, rightChild, leftChild;
@@ -39,7 +40,7 @@ public class ChainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chain);
-        mRef = FirebaseDatabase.getInstance().getReference("Users").child(selfUid).child("Chain");
+        mRef = FirebaseDatabase.getInstance().getReference("TreeView").child("1boZEA0VUvPW4C05cx4N7ZIQZz");
 
         GraphView graphView = findViewById(R.id.graph);
 
@@ -48,34 +49,30 @@ public class ChainActivity extends AppCompatActivity {
 
 
         //Getting the tree
+        node1 = new Node("Node1");
 
+        mRef = FirebaseDatabase.getInstance().getReference();
 
-        mRef.child("child").addValueEventListener(new ValueEventListener() {
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot currentdataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (currentdataSnapshot.exists()) {
-                    String OneOne = currentdataSnapshot.child("levelOne").child("leftChild").getValue().toString();
-                    node1 = new Node(OneOne);
+                if (dataSnapshot.child("Chain").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).exists()) {
+                    final String child1 = dataSnapshot.child("Chain").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("child1").getValue().toString();
+                    String child2 = dataSnapshot.child("Chain").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("child2").getValue().toString();
 
+                    node2 = new Node(child1);
+                    graph.addEdge(node1, node2);
+                    node3 = new Node(child2);
+                    graph.addEdge(node1, node3);
+                } else {
+                    node2 = new Node("?");
+                    graph.addEdge(node1, node2);
+                    node3 = new Node("?");
+                    graph.addEdge(node1, node3);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
-       /* mRef.child("Level1").child("lchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot level1leftdataSnapshot) {
-                TreeClass lvel1leftclass=level1leftdataSnapshot.getValue(TreeClass.class);
-                node2=new Node(lvel1leftclass.getUsername());
-                graph.addEdge(node1, node2);
 
 
             }
@@ -85,89 +82,16 @@ public class ChainActivity extends AppCompatActivity {
 
             }
         });
-        mRef.child("Level1").child("rchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot level1rightdataSnapshot) {
-                TreeClass lvel1rightclass=level1rightdataSnapshot.getValue(TreeClass.class);
-                node4=new Node(lvel1rightclass.getUsername());
-                graph.addEdge(node1, node4);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        mRef.child("Level2Left").child("lchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot lvl2leftdatasnap) {
-
-                TreeClass lvl2leftclass=lvl2leftdatasnap.getValue(TreeClass.class);
-                node5=new Node(lvl2leftclass.getUsername());
-                graph.addEdge(node2,node5);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        mRef.child("Level2Left").child("rchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot lvl2rightdatasnap) {
-
-                TreeClass lvl2rightlass=lvl2rightdatasnap.getValue(TreeClass.class);
-                node6=new Node(lvl2rightlass.getUsername());
-                graph.addEdge(node2,node6);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
-        mRef.child("Level2Right").child("lchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot lvl2righttdatasnap) {
-
-                TreeClass lvl2rightclass=lvl2righttdatasnap.getValue(TreeClass.class);
-                node7=new Node(lvl2rightclass.getUsername());
-                graph.addEdge(node4,node7);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        mRef.child("Level2Right").child("rchild").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot lvl2rightdatasnap) {
-
-                TreeClass lvl2rightlass=lvl2rightdatasnap.getValue(TreeClass.class);
-                node8=new Node(lvl2rightlass.getUsername());
-                graph.addEdge(node4,node8);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
-
-        */
+        node4 = new Node("Node4");
+        graph.addEdge(node2, node4);
+        node5 = new Node("Node5");
+        graph.addEdge(node2, node5);
+        node6 = new Node("node6");
+        graph.addEdge(node4, node6);
+        node7 = new Node("Node7");
+        graph.addEdge(node4, node7);
 
 
         // you can set the graph via the constructor or use the adapter.setGraph(Graph) method
@@ -199,177 +123,7 @@ public class ChainActivity extends AppCompatActivity {
         adapter.setAlgorithm(new BuchheimWalkerAlgorithm(configuration));
     }
 
-        /*
-        parent = findViewById(R.id.parentText);
-        rightChild = findViewById(R.id.childRight);
-        leftChild = findViewById(R.id.childLeft);
-
-
-        mRef = FirebaseDatabase.getInstance().getReference();
-
-        leftChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                leftChain();
-            }
-        });
-        rightChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rightChain();
-            }
-        });
-        chain();
-
-
-
-         */
-
 
 }
-
-    /*
-
-    public void chain(){
-
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //details
-                String parentName = dataSnapshot.child("Users").child(selfUid).child("name").getValue().toString();
-                String rightChildUid = dataSnapshot.child("Users").child(selfUid).child("child").child("rchild").getValue().toString();
-                String leftChildUid = dataSnapshot.child("Users").child(selfUid).child("child").child("lchild").getValue().toString();
-
-                String rightChildName = dataSnapshot.child("Users").child(rightChildUid).child("username").getValue().toString();
-                String leftChildName = dataSnapshot.child("Users").child(leftChildUid).child("username").getValue().toString();
-
-                parent.setText(parentName);
-                rightChild.setText(rightChildName);
-                leftChild.setText(leftChildName);
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    public void leftChain() {
-        final String parentName = leftChild.getText().toString();
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //details
-                String parentUid = dataSnapshot.child("ReferDB").child(parentName).child("uid").getValue().toString();
-                String childCount = dataSnapshot.child("Users").child(parentUid).child("child").child("count").getValue().toString();
-
-                if(childCount.equals("1")){
-                    String rightChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("rchild").getValue().toString();
-                    String leftChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("lchild").getValue().toString();
-                    String rightChildName = dataSnapshot.child("Users").child(rightChildUid).child("username").getValue().toString();
-                    String leftChildName = dataSnapshot.child("Users").child(leftChildUid).child("username").getValue().toString();
-
-                    parent.setText(parentName);
-                    rightChild.setText("?");
-                    rightChild.setClickable(false);
-                    leftChild.setText(leftChildName);
-
-
-                }
-                else if(childCount.equals("2"))
-                {
-                    String rightChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("rchild").getValue().toString();
-                    String leftChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("lchild").getValue().toString();
-
-                    String rightChildName = dataSnapshot.child("Users").child(rightChildUid).child("username").getValue().toString();
-                    String leftChildName = dataSnapshot.child("Users").child(leftChildUid).child("username").getValue().toString();
-
-                    parent.setText(parentName);
-                    rightChild.setText(rightChildName);
-                    leftChild.setText(leftChildName);
-                }
-                else
-                {
-                    parent.setText(parentName);
-                    rightChild.setText("?");
-                    rightChild.setClickable(false);
-                    leftChild.setText("?");
-                    leftChild.setClickable(false);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    public void rightChain()
-    {
-        final String parentName = rightChild.getText().toString();
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                //details
-                String parentUid = dataSnapshot.child("ReferDB").child(parentName).child("uid").getValue().toString();
-                String rightChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("rchild").getValue().toString();
-                String leftChildUid = dataSnapshot.child("Users").child(parentUid).child("child").child("lchild").getValue().toString();
-                String childCount = dataSnapshot.child("Users").child(parentUid).child("child").child("count").getValue().toString();
-
-                if(childCount.equals("1")){
-                    String rightChildName = dataSnapshot.child("Users").child(rightChildUid).child("username").getValue().toString();
-                    String leftChildName = dataSnapshot.child("Users").child(leftChildUid).child("username").getValue().toString();
-
-                    parent.setText(parentName);
-                    rightChild.setText("?");
-                    rightChild.setClickable(false);
-                    leftChild.setText(leftChildName);
-
-
-                }
-                else if(childCount.equals("2"))
-                {
-                    String rightChildName = dataSnapshot.child("Users").child(rightChildUid).child("username").getValue().toString();
-                    String leftChildName = dataSnapshot.child("Users").child(leftChildUid).child("username").getValue().toString();
-
-                    parent.setText(parentName);
-                    rightChild.setText(rightChildName);
-                    leftChild.setText(leftChildName);
-                }
-                else
-                {
-                    parent.setText(parentName);
-                    rightChild.setText("?");
-                    rightChild.setClickable(false);
-                    leftChild.setText("?");
-                    leftChild.setClickable(false);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-    */
 
 

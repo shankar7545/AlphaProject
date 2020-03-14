@@ -2,7 +2,6 @@ package com.example.alpha.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,18 +45,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signin = (Button) findViewById(R.id.fab);
-        sign_up = (TextView) findViewById(R.id.sign_up);
-        email = (EditText) findViewById(R.id.l_email);
-        password = (EditText) findViewById(R.id.l_password);
+        signin = findViewById(R.id.fab);
+        sign_up = findViewById(R.id.sign_up);
+        email = findViewById(R.id.l_email);
+        password = findViewById(R.id.l_password);
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = findViewById(R.id.progress_bar);
         /*---------------------------------------------------------*/
 
 
-        login_Relative = (RelativeLayout) findViewById(R.id.login_Relative);
+        login_Relative = findViewById(R.id.login_Relative);
 
-        signin = (Button) findViewById(R.id.fab);
+        signin = findViewById(R.id.fab);
 
 
         signin.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         logAuth = FirebaseAuth.getInstance();
         loginDatabse = FirebaseDatabase.getInstance().getReference("Players");
 
-        sign_up = (TextView) findViewById(R.id.sign_up);
+        sign_up = findViewById(R.id.sign_up);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
                 startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
+                finish();
 
 
             }
@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
             ActivityCompat.finishAffinity(this);
             System.exit(0);
         } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Press once again to exit", Toast.LENGTH_SHORT).show();
             back_pressed = System.currentTimeMillis();
 
         }

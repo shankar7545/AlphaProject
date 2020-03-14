@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grey_5"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
@@ -17,13 +17,13 @@
     <RelativeLayout
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.glide.slider.library.SliderLayout
@@ -37,40 +37,10 @@
                 android:layout_marginBottom="15dp" />
 
 
-            <LinearLayout
-                android:id="@+id/dailytext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="2dp"
-                android:orientation="vertical">
+            <include
+                android:id="@+id/cse_toolbar"
+                layout="@layout/layout_dashboard" />
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    app:shimmer_auto_start="true"
-                    app:shimmer_direction="left_to_right"
-                    app:shimmer_duration="2000"
-                    app:shimmer_highlight_color="@color/red_900"
-                    app:shimmer_shape="linear">
-
-                    <TextView
-                        android:id="@+id/branchName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:fontFamily="@font/lato"
-                        android:gravity="center"
-                        android:padding="2dp"
-                        android:text="Transactions"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-
-                        />
-                </com.facebook.shimmer.ShimmerFrameLayout>
-            </LinearLayout>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -78,11 +48,13 @@
                 android:id="@+id/transactionsHome_linear"
                 android:visibility="gone">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:visibility="visible">
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/transactionsHomeRecycler"
@@ -99,26 +71,6 @@
 
             </androidx.core.widget.NestedScrollView>
 
-            <LinearLayout
-                android:id="@+id/no_transactions_found"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="100dp"
-                    android:gravity="center"
-                    android:text="No Transactions found"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -127,10 +79,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -142,6 +95,7 @@
                 android:layout_marginRight="@dimen/spacing_smlarge"
                 android:layout_marginBottom="@dimen/spacing_smlarge"
                 android:clickable="true"
+                android:focusable="true"
                 android:scaleType="fitXY"
                 android:tint="@color/white"
                 app:backgroundTint="@color/colorPrimary"

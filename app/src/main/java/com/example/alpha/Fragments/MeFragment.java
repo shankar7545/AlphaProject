@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.alpha.Activity.ChainActivity;
 import com.example.alpha.Activity.LoginActivity;
-import com.example.alpha.Activity.MainActivity;
 import com.example.alpha.Activity.MyProfile;
 import com.example.alpha.R;
 import com.example.alpha.Wallet.walletActivity;
@@ -31,7 +30,7 @@ import androidx.fragment.app.Fragment;
 public class MeFragment extends Fragment {
     public FirebaseAuth mAuth, mAuthListener;
     LinearLayout logout, myProfile, myWallet, walletLayout, chainActivity;
-    TextView profileName, wallet_bal, recieved, withdrawable;
+    TextView profileName, wallet_bal, recieved, withdrawable, email;
     View mView;
     DatabaseReference mRef;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -43,18 +42,16 @@ public class MeFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_me, container, false);
 
 
-        profileName = (TextView) mView.findViewById(R.id.profilename);
-        wallet_bal = (TextView) mView.findViewById(R.id.wallet_bal);
-        recieved = (TextView) mView.findViewById(R.id.level);
-        withdrawable = (TextView) mView.findViewById(R.id.withdrawable);
+        profileName = mView.findViewById(R.id.profilename);
+        wallet_bal = mView.findViewById(R.id.wallet_bal);
+        recieved = mView.findViewById(R.id.level);
+        withdrawable = mView.findViewById(R.id.withdrawable);
+        walletLayout = mView.findViewById(R.id.walletLayout);
+        myWallet = mView.findViewById(R.id.mywallet);
+        chainActivity = mView.findViewById(R.id.chain);
 
-        myWallet = (LinearLayout) mView.findViewById(R.id.mywallet);
-        walletLayout = (LinearLayout) mView.findViewById(R.id.walletLayout);
-        chainActivity = (LinearLayout) mView.findViewById(R.id.chain);
-
-
-        logout = (LinearLayout) mView.findViewById(R.id.logout);
-        myProfile = (LinearLayout) mView.findViewById(R.id.myprofile);
+        logout = mView.findViewById(R.id.logout);
+        myProfile = mView.findViewById(R.id.myprofile);
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +95,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ChainActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
         return mView;
@@ -112,10 +109,12 @@ public class MeFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("name").getValue().toString();
+                String name = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").getValue().toString();
+                String mEmail = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString();
                 String balance = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
                 String withdraw_balance = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("withdrawable").getValue().toString();
                 String value_count = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
+
 
                 profileName.setText(name);
                 wallet_bal.setText(balance);
@@ -131,5 +130,6 @@ public class MeFragment extends Fragment {
         });
 
     }
+
 
 }

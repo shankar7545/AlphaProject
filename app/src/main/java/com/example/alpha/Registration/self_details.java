@@ -44,7 +44,7 @@ public class self_details extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         finish = findViewById(R.id.finsh);
-
+        FirebaseAuth.getInstance().signOut();
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override

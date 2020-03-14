@@ -1,6 +1,7 @@
 package com.example.alpha.Wallet;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
@@ -38,21 +41,24 @@ public class TransactionsActivity extends AppCompatActivity {
     DatabaseReference mRef, mTransactions, mStaff;
     FirebaseRecyclerAdapter<Transaction_Class, TransactionView> TransactionsAdapter;
     LinearLayout transactions_linear, progressBarLayout, no_matches_found;
+    TextView transactionDate, transactionTime, transferredFrom, transactionAmount, transactionType, transactionStatus, transactionId;
+    MaterialRippleLayout fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
-        solotoolbar = (Toolbar) findViewById(R.id.subjecttoolbar);
+        solotoolbar = findViewById(R.id.subjecttoolbar);
         setSupportActionBar(solotoolbar);
+        no_matches_found = findViewById(R.id.no_subjects_found);
 
 
         getSupportActionBar().setTitle("Transactions");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressBarLayout = (LinearLayout) findViewById(R.id.progress_bar1);
+        progressBarLayout = findViewById(R.id.progress_bar1);
 
-        transactions_linear = (LinearLayout) findViewById(R.id.transactions_linear);
+        transactions_linear = findViewById(R.id.transactions_linear);
 
         transactionsRecycler = findViewById(R.id.transactionsRecycler);
 
@@ -60,8 +66,9 @@ public class TransactionsActivity extends AppCompatActivity {
 
 
         transactionsLinearLayout = new LinearLayoutManager(this);
+        transactionsLinearLayout.setReverseLayout(true);
+        transactionsLinearLayout.setStackFromEnd(true);
 
-        no_matches_found = (LinearLayout) findViewById(R.id.no_subjects_found);
 
         transactionsRecycler.setLayoutManager(transactionsLinearLayout);
 
@@ -147,18 +154,59 @@ public class TransactionsActivity extends AppCompatActivity {
                 holder.transactionLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                      /*  String BranchName=getIntent().getStringExtra("branchname");
-                        toolBar=getIntent().getStringExtra("toolbar");
-                        yearName=getIntent().getStringExtra("yearName");
-                        year=getIntent().getStringExtra("year");
 
-                        Intent sendto_single=new Intent(ActivitySubjects.this, ActivityUnits1.class);
-                        sendto_single.putExtra("branchname",BranchName);
-                        sendto_single.putExtra("yearName",yearName);
-                        sendto_single.putExtra("year",year);
-                        sendto_single.putExtra("subjectname",model.getSubjectName());
-                        sendto_single.putExtra("sem","firstSem");
-                        startActivity(sendto_single); */
+
+                        final Dialog dialog = new Dialog(TransactionsActivity.this);
+                        dialog.setContentView(R.layout.fragment_success_request);
+
+                        fab = dialog.findViewById(R.id.bt_action);
+
+                        transactionDate = dialog.findViewById(R.id.success_date);
+                        transactionTime = dialog.findViewById(R.id.success_time);
+                        transferredFrom = dialog.findViewById(R.id.success_name);
+                        transactionAmount = dialog.findViewById(R.id.success_money);
+                        transactionType = dialog.findViewById(R.id.success_type);
+                        transactionStatus = dialog.findViewById(R.id.status);
+                        transactionId = dialog.findViewById(R.id.txnorderid);
+
+
+                        String transType = model.getTransactionType();
+                        {
+                            if (transType.equals("credited")) {
+                                transactionDate.setText(model.getTransactionDate());
+                                transactionTime.setText(model.getTransactionTime());
+                                transactionAmount.setText(model.getTransactionAmount());
+                                transferredFrom.setText(model.getTransferredFrom());
+                                transactionType.setText("RECEIVED FROM :  ");
+                                transactionStatus.setText("CREDITED");
+                                transactionId.setText(model.getTransactionId());
+                                transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+
+                            } else if (transType.equals("debited")) {
+                                transactionDate.setText(model.getTransactionDate());
+                                transactionTime.setText(model.getTransactionTime());
+                                transactionAmount.setText(model.getTransactionAmount());
+                                transferredFrom.setText(model.getTransferredTo());
+                                transactionType.setText("TRANSFERED TO :  ");
+                                transactionStatus.setText("DEBITED");
+                                transactionId.setText(model.getTransactionId());
+                                transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
+
+
+                            }
+                        }
+
+
+                        dialog.show();
+
+
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                            }
+                        });
 
 
                     }

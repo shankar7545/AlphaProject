@@ -1,9 +1,17 @@
 package com.example.alpha.Model;
 
 public class Transaction_Class {
-    public String transactionType, transactionDate, transactionTime, transferredFrom, transferredTo, transactionId, transactionAmount;
+    public String transactionType;
+    public String transactionDate;
+    public String transactionTime;
+    public String transferredFrom;
+    public String transferredTo;
+    public String transactionId;
+    public String transactionAmount;
+    public long position;
 
-    public Transaction_Class(String transactionType, String transactionDate, String transactionTime, String transferredFrom, String transferredTo, String transactionId, String transactionAmount) {
+    public Transaction_Class(String transactionType, String transactionDate, String transactionTime, String transferredFrom,
+                             String transferredTo, String transactionId, String transactionAmount, long position) {
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.transactionTime = transactionTime;
@@ -11,6 +19,7 @@ public class Transaction_Class {
         this.transferredTo = transferredTo;
         this.transactionId = transactionId;
         this.transactionAmount = transactionAmount;
+        this.position = position;
 
 
     }

@@ -69,26 +69,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        home_Relative = (RelativeLayout) findViewById(R.id.home_relative);
+        home_Relative = findViewById(R.id.home_relative);
 
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId(R.id.nav_home);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
-
-        }
     }
 
     public void refreshMyData() {
@@ -110,9 +96,26 @@ public class HomeActivity extends AppCompatActivity {
         ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_done);
         (custom_view.findViewById(R.id.parent_view)).setBackgroundColor(getResources().getColor(R.color.green_700));
         snackBarView.addView(custom_view, 0);
-        snackbar.show();
+        //snackbar.show();
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 1000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+            ActivityCompat.finishAffinity(this);
+            System.exit(0);
+        } else {
+            Toast.makeText(this, "Press once again to exit", Toast.LENGTH_SHORT).show();
+            back_pressed = System.currentTimeMillis();
+
+        }
+    }
+
+
 }
 

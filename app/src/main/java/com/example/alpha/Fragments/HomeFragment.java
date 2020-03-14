@@ -3,7 +3,6 @@ package com.example.alpha.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -11,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.example.alpha.Activity.HomeActivity;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
@@ -30,7 +28,6 @@ import com.glide.slider.library.slidertypes.BaseSliderView;
 import com.glide.slider.library.slidertypes.TextSliderView;
 import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +42,6 @@ import java.util.Calendar;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,28 +51,26 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
 
-    public ProgressBar progressBar;
-    public RecyclerView transactionsRecycler;
-    public LinearLayoutManager transactionsLinearLayout;
-    DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mLogin, mLevelTwo, mLevelThree;
-    LinearLayout imageScroll;
-    RelativeLayout homeFrag;
-    TextView profileName, wallet_bal, level, withdrawable;
-    String selfUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    Calendar c = Calendar.getInstance();
-    SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-    SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-    String timeformat = time.format(c.getTime());
-    String datetime = dateformat.format(c.getTime());
-    FloatingActionButton fabRefresh;
-    EditText editTextReferCode;
+    private String selfUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private Calendar c = Calendar.getInstance();
+    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+    private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+    private String timeformat = time.format(c.getTime());
+    private String datetime = dateformat.format(c.getTime());
+    private FloatingActionButton fabRefresh;
+    private EditText editTextReferCode;
     FirebaseRecyclerAdapter<Transaction_Class, TransactionView> TransactionsAdapter;
-    LinearLayout  progressBarLayout, no_matches_found;
-    NestedScrollView transactions_linear;
-    Dialog dialog;
-    View mView;
-    private TabLayout tab_layout;
-    private NestedScrollView nested_scroll_view;
+    private NestedScrollView transactions_linear;
+    private Dialog dialog;
+    private View mView;
+    private ProgressBar beginnerPaymentProgress, beginnerReferProgressBar, beginnerChildProgressBar;
+    private RecyclerView transactionsRecycler;
+    private LinearLayoutManager transactionsLinearLayout;
+    //Dashboard
+    private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1, mlevel2, mlevel3;
+    private LinearLayout beginnerLayout, beginnerExpand, bronzeLayout, bronzeExpand, silverLayout;
+    private ImageView beginnerCircle, beginnerPaymentCircle, beginnerPaymentGreenCheck, beginnerReferCirle, beginnerReferGreenCheck, beginnerChildCirle, beginnerChildGreenCheck;
+    private TextView beginnerPaymentText, beginnerReferText, beginnerChildText;
     private SliderLayout mDemoSlider;
 
     public HomeFragment() {
@@ -93,22 +87,81 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         //wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
         //level =(TextView)mView.findViewById(R.id.levelH);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
-
-
         mFirebase = FirebaseDatabase.getInstance().getReference();
         mRef = FirebaseDatabase.getInstance().getReference("Users");
         mReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
         mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
-        mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid).child("Transactions");
+        mTransactions = FirebaseDatabase.getInstance().getReference("Wallet")
+                .child(selfUid).child("Transactions");
 
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference();
         scoresRef.keepSynced(true);
 
 
+        //DashBoard
+        beginnerLayout = mView.findViewById(R.id.beginnerLayout);
+        beginnerExpand = mView.findViewById(R.id.beginnerExpand);
+        bronzeLayout = mView.findViewById(R.id.bronzeLayout);
+        bronzeExpand = mView.findViewById(R.id.bronzeExpand);
+        silverLayout = mView.findViewById(R.id.silverLayout);
+
+
+        beginnerCircle = mView.findViewById(R.id.beginnerCircle);
+        beginnerReferCirle = mView.findViewById(R.id.beginnerReferCirle);
+        beginnerChildCirle = mView.findViewById(R.id.beginnerChildCirle);
+        beginnerPaymentCircle = mView.findViewById(R.id.beginnerPaymentCircle);
+        beginnerReferGreenCheck = mView.findViewById(R.id.beginnerReferGreenCheck);
+        beginnerChildGreenCheck = mView.findViewById(R.id.beginnerChildGreenCheck);
+        beginnerPaymentGreenCheck = mView.findViewById(R.id.beginnerPaymentGreenCheck);
+
+        beginnerPaymentText = mView.findViewById(R.id.beginnerPaymentText);
+        beginnerReferText = mView.findViewById(R.id.beginnerReferText);
+        beginnerChildText = mView.findViewById(R.id.beginnerChildText);
+
+        beginnerPaymentProgress = mView.findViewById(R.id.beginnerPaymentProgress);
+        beginnerReferProgressBar = mView.findViewById(R.id.beginnerReferProgressBar);
+        beginnerChildProgressBar = mView.findViewById(R.id.beginnerChildProgressBar);
+
+
+        beginnerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (beginnerExpand.getVisibility() == View.VISIBLE) {
+
+                    beginnerExpand.setVisibility(View.GONE);
+
+                } else {
+
+                    beginnerExpand.setVisibility(View.VISIBLE);
+
+
+                }
+            }
+        });
+
+        dashboard();
+
+
+        bronzeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bronzeExpand.getVisibility() == View.VISIBLE) {
+
+                    bronzeExpand.setVisibility(View.GONE);
+
+
+                } else {
+
+                    bronzeExpand.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
         //Recycler For Transactions
 
 
-        transactions_linear = (NestedScrollView) mView.findViewById(R.id.transactionsHome_linear);
+        transactions_linear = mView.findViewById(R.id.transactionsHome_linear);
 
         transactionsRecycler = mView.findViewById(R.id.transactionsHomeRecycler);
 
@@ -116,13 +169,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
         transactionsLinearLayout = new LinearLayoutManager(getContext());
-
-        no_matches_found = (LinearLayout) mView.findViewById(R.id.no_transactions_found);
+        transactionsLinearLayout.setReverseLayout(true);
+        transactionsLinearLayout.setStackFromEnd(true);
 
         transactionsRecycler.setLayoutManager(transactionsLinearLayout);
 
 
-        mTransactionsRecycler = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mTransactionsRecycler = FirebaseDatabase.getInstance().getReference("Wallet")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
         mTransactionsRecycler.child("Transactions").addValueEventListener(new ValueEventListener() {
@@ -131,35 +185,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                 if (dataSnapshot.child("history").exists()) {
 
                     transactions_linear.setVisibility(View.VISIBLE);
-                    no_matches_found.setVisibility(View.GONE);
 
                 } else {
                     transactions_linear.setVisibility(View.GONE);
-                    no_matches_found.setVisibility(View.VISIBLE);
                 }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-        mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //details
-                String nameH = dataSnapshot.child("username").getValue().toString();
-                //String balanceH = dataSnapshot.child("balance").getValue().toString();
-                String levelH = dataSnapshot.child("level").getValue().toString();
-
-                //profileName.setText(nameH + "(Username)");
-                //wallet_bal.setText(balanceH);
-                //level.setText("LEVEL "+levelH);
 
 
             }
@@ -175,13 +204,15 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
             @Override
             public void onClick(View v) {
 
+                fabRefresh.setEnabled(false);
+
 
                 fabRefresh.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.rotate));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        ((HomeActivity) getActivity()).refreshMyData();
-
+                        dashboard();
+                        fabRefresh.setEnabled(true);
 
                     }
                 }, 500);
@@ -190,11 +221,121 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
         CheckingLevelUpgrades();
-        loadTransactions();
+        //loadTransactions();
         Slider();
         return mView;
 
     }
+
+    private void dashboard() {
+
+        try {
+
+            mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    final String user_level = dataSnapshot.child("Users").child(selfUid).child("level").getValue().toString();
+
+                    if (user_level.equals("0")) {
+
+
+                        beginnerExpand.setVisibility(View.VISIBLE);
+                        beginnerCircle.setImageResource(R.drawable.ic_circle);
+
+                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                                        String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
+                                        String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
+                                        String childCount = dataSnapshot.child("childCount").getValue().toString();
+
+                                        if ((parentStatus.equals("true")) && paymentStatus.equals("true") && childCount.equals("2")) {
+                                            beginnerCircle.setImageResource(R.drawable.green_chechk);
+                                            beginnerExpand.setVisibility(View.GONE);
+
+                                        } else {
+                                            beginnerCircle.setImageResource(R.drawable.ic_circle);
+                                            beginnerExpand.setVisibility(View.VISIBLE);
+                                        }
+                                        if (paymentStatus.equals("true")) {
+                                            beginnerPaymentProgress.setVisibility(View.GONE);
+                                            beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                                            beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
+                                            beginnerPaymentText.setText("Payment Completed");
+                                            beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_500));
+                                        } else {
+                                            beginnerPaymentProgress.setVisibility(View.GONE);
+                                            beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                                            beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
+                                            beginnerPaymentText.setText("Click Here to Pay");
+                                            beginnerPaymentText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        }
+
+                                        if (parentStatus.equals("true")) {
+                                            beginnerReferProgressBar.setVisibility(View.GONE);
+                                            beginnerReferCirle.setVisibility(View.VISIBLE);
+                                            beginnerReferCirle.setImageResource(R.drawable.green_chechk);
+                                            beginnerReferText.setText("ReferCode Found");
+                                            beginnerReferText.setTextColor(getResources().getColor(R.color.green_500));
+                                        } else {
+                                            beginnerReferProgressBar.setVisibility(View.GONE);
+                                            beginnerReferCirle.setVisibility(View.VISIBLE);
+                                            beginnerReferCirle.setImageResource(R.drawable.ic_circle);
+                                            beginnerReferText.setText("Enter ReferCode");
+                                            beginnerReferText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        }
+
+                                        if (childCount.equals("2")) {
+                                            beginnerChildProgressBar.setVisibility(View.GONE);
+                                            beginnerChildCirle.setVisibility(View.VISIBLE);
+                                            beginnerChildCirle.setImageResource(R.drawable.green_chechk);
+                                            beginnerChildText.setText("Refered Two people");
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.green_500));
+                                        } else {
+                                            beginnerChildProgressBar.setVisibility(View.GONE);
+                                            beginnerChildCirle.setVisibility(View.VISIBLE);
+                                            beginnerChildCirle.setImageResource(R.drawable.ic_circle);
+                                            beginnerChildText.setText("Refer Two People");
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        }
+
+                                        if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
+                                            forlevel1();
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     private void Slider() {
         mDemoSlider = mView.findViewById(R.id.slider);
@@ -253,8 +394,12 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
     private void loadTransactions() {
-        mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
+        mTransactions = FirebaseDatabase.getInstance().getReference("Wallet")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
+        mTransactions1 = FirebaseDatabase.getInstance().getReference("Transactions");
 
+
+        long one = 1;
         Query withdrawList = mTransactions.orderByChild("position");
         FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
                 .setQuery(withdrawList, Transaction_Class.class)
@@ -320,7 +465,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
 
-    public void CheckingLevelUpgrades() {
+    private void CheckingLevelUpgrades() {
 
 
         mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -328,31 +473,30 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 final String user_level = dataSnapshot.child("Users").child(selfUid).child("level").getValue().toString();
-                final String transactionCount_levelOne = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelOne").getValue().toString();
-                final String transactionCount_levelTwo = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelTwo").getValue().toString();
-                final String transactionCount_levelThree = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelThree").getValue().toString();
-                final String transactionCount_levelFour = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelFour").getValue().toString();
-                final String transactionCount_levelFive = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelFive").getValue().toString();
-                final String transactionCount_levelSix = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("count").child("levelSix").getValue().toString();
+                final String transactionCount_level1 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level1").getValue().toString();
+                final String transactionCount_level2 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level2").getValue().toString();
+                final String transactionCount_level3 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level3").getValue().toString();
+                final String transactionCount_level4 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level4").getValue().toString();
+                final String transactionCount_level5 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level5").getValue().toString();
+                final String transactionCount_level6 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                        .child("count").child("level6").getValue().toString();
 
 
                 if (user_level.equals("0")) {
-                    forLevelOne();
+                    forlevel1();
                 }
 
-                if ((user_level.equals("1")) && (transactionCount_levelOne.equals("2"))) {
-                    forLevelTwo();
-
+                if ((user_level.equals("1")) && (transactionCount_level1.equals("2"))) {
+                    forlevel2();
 
                 }
-                if ((user_level.equals("2")) && (transactionCount_levelTwo.equals("4"))) {
-                    forLevelThree();
+                if ((user_level.equals("2")) && (transactionCount_level2.equals("4"))) {
+                    forlevel3();
                 }
                 if (user_level.equals("3")) {
 
@@ -382,14 +526,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
 
-    private void forLevelOne() {
+    private void forlevel1() {
 
         mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                //LevelOne
+                //level1
                 String level = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
                 if (level.equals("0")) {
@@ -398,7 +542,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     String p1 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p1").getValue().toString();
                     //String p2 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p2").getValue().toString();
                     //String p3 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p3").getValue().toString();
-                    // String p4 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p4").getValue().toString();
+                    //String p4 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p4").getValue().toString();
                     //String p5 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p5").getValue().toString();
                     //String p6 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p6").getValue().toString();
                     //String p7 = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain").child("parent").child("p7").getValue().toString();
@@ -410,8 +554,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = (TextView) dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = (TextView) dialog.findViewById(R.id.subHeading);
+                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
+                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -443,37 +587,138 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         //String endCount = Integer.toString(i + 1);
                         //mLogin.child("end").setValue(endCount);
 
+                        //MainTransactions
+                        String user_userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
+                        String p1_userName = dataSnapshot.child("Users").child(p1).child("username").getValue().toString();
+                        String id = UUID.randomUUID().toString();
+                        String childid = "PW" + id.substring(0, 5).toUpperCase();
+                        String extraid = id.substring(0, 4).toUpperCase();
+
+
+                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
+
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    1
+                            );
+                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
+
+                        } else {
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    1
+
+                            );
+                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
+
+
+                        }
 
                         //sendTransaction in user
 
-                        String id = UUID.randomUUID().toString();
-                        String childid = "PW" + id.substring(0, 5).toUpperCase();
-                        String user_userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
-                        String p1_userName = dataSnapshot.child("Users").child(p1).child("username").getValue().toString();
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p1_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("50");
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionType").setValue("debited");
+
+                        if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                .child("history").exists()) {
+                            long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                    .child("history").getChildrenCount();
+
+                            long sizeR = countR + 1;
+
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    sizeR
+                            );
+                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+
+                        } else {
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    1
+                            );
+                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+
+
+                        }
 
 
                         //receivedTransaction in parent1
-                        String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("levelOne").getValue().toString();
-                        int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
 
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p1_userName);
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("50");
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(p1).child("Transactions").child("history").child(childid).child("transactionType").setValue("credited");
 
-                        String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
-                        mWallet.child(p1).child("Transactions").child("count").child("levelOne").setValue(updated_p1_tran_count);
+                        if (dataSnapshot.child("Wallet").child(p1).child("Transactions")
+                                .child("history").exists()) {
+                            long countP = dataSnapshot.child("Wallet").child(p1).child("Transactions")
+                                    .child("history").getChildrenCount();
 
+                            long sizeP = countP + 1;
+                            Transaction_Class received_transaction_class = new Transaction_Class(
+                                    "credited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    sizeP
+
+
+                            );
+                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+
+                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
+                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
+                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
+
+                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
+
+
+                        } else {
+                            Transaction_Class received_transaction_class = new Transaction_Class(
+                                    "credited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p1_userName,
+                                    childid,
+                                    "50",
+                                    1
+
+                            );
+                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+
+                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
+                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
+                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
+
+                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
+                        }
 
                         //Upgrading level
                         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("1");
@@ -491,7 +736,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     }
 
                 }
-                //LevelOneEnd
+                //level1End
 
 
             }
@@ -505,14 +750,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
 
-    private void forLevelTwo() {
+    private void forlevel2() {
 
         mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                //LevelTwo
+                //level2
                 String level = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
                 if (level.equals("1")) {
@@ -533,8 +778,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = (TextView) dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = (TextView) dialog.findViewById(R.id.subHeading);
+                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
+                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -568,35 +813,94 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         //mLogin.child("end").setValue(endCount);
 
 
-                        //sendTransaction in user
-
+                        //MainTransactions
                         String id = UUID.randomUUID().toString();
                         String childid = "PW" + id.substring(0, 5).toUpperCase();
+                        String extraid = id.substring(0, 4).toUpperCase();
                         String user_userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
                         String p2_userName = dataSnapshot.child("Users").child(p2).child("username").getValue().toString();
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p2_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("100");
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionType").setValue("debited");
+
+
+                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
+
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p2_userName,
+                                    childid,
+                                    "100",
+                                    1
+                            );
+                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
+
+                        } else {
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "debited",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    p2_userName,
+                                    childid,
+                                    "100",
+                                    1
+                            );
+                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
+
+
+                        }
+
+
+                        //sendTransaction in user
+
+
+                        long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                .child("history").getChildrenCount();
+
+                        long sizeR = countR + 1;
+
+
+                        Transaction_Class send_transaction_class = new Transaction_Class(
+                                "debited",
+                                datetime,
+                                timeformat,
+                                user_userName,
+                                p2_userName,
+                                childid,
+                                "100",
+                                sizeR
+                        );
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
 
                         //receivedTransaction in parent1
-                        String p2_tran_count = dataSnapshot.child("Wallet").child(p2).child("Transactions").child("count").child("levelTwo").getValue().toString();
+
+                        long countP = dataSnapshot.child("Wallet").child(p2).child("Transactions")
+                                .child("history").getChildrenCount();
+
+                        long sizeP = countP + 1;
+                        Transaction_Class received_transaction_class = new Transaction_Class(
+                                "credited",
+                                datetime,
+                                timeformat,
+                                user_userName,
+                                p2_userName,
+                                childid,
+                                "100",
+                                sizeP
+
+
+                        );
+                        mWallet.child(p2).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+
+                        String p2_tran_count = dataSnapshot.child("Wallet").child(p2).child("Transactions").child("count").child("level2").getValue().toString();
                         int p2_tran_count_Int = Integer.parseInt(p2_tran_count);
-
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p2_userName);
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("100");
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(p2).child("Transactions").child("history").child(childid).child("transactionType").setValue("credited");
-
                         String updated_p2_tran_count = Integer.toString(p2_tran_count_Int + 1);
-                        mWallet.child(p2).child("Transactions").child("count").child("levelTwo").setValue(updated_p2_tran_count);
+
+                        mWallet.child(p2).child("Transactions").child("count").child("level2").setValue(updated_p2_tran_count);
 
 
                         //Upgrading level
@@ -615,7 +919,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     }
 
                 }
-                //LevelTwoEnd
+                //level2End
 
 
             }
@@ -628,7 +932,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     }
 
-    private void forLevelThree() {
+    private void forlevel3() {
 
         mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -657,8 +961,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = (TextView) dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = (TextView) dialog.findViewById(R.id.subHeading);
+                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
+                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -698,29 +1002,52 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         String childid = "PW" + id.substring(0, 5).toUpperCase();
                         String user_userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
                         String p3_userName = dataSnapshot.child("Users").child(p3).child("username").getValue().toString();
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p3_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("400");
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).child("transactionType").setValue("debited");
+
+
+                        long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                .child("history").getChildrenCount();
+
+                        long sizeR = countR + 1;
+
+
+                        Transaction_Class send_transaction_class = new Transaction_Class(
+                                "debited",
+                                datetime,
+                                timeformat,
+                                user_userName,
+                                p3_userName,
+                                childid,
+                                "400",
+                                sizeR
+                        );
+                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
 
                         //receivedTransaction in parent1
-                        String p3_tran_count = dataSnapshot.child("Wallet").child(p3).child("Transactions").child("count").child("levelThree").getValue().toString();
+
+                        long countP = dataSnapshot.child("Wallet").child(p3).child("Transactions")
+                                .child("history").getChildrenCount();
+
+                        long sizeP = countP + 1;
+                        Transaction_Class received_transaction_class = new Transaction_Class(
+                                "credited",
+                                datetime,
+                                timeformat,
+                                user_userName,
+                                p3_userName,
+                                childid,
+                                "400",
+                                sizeP
+
+
+                        );
+                        mWallet.child(p3).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+
+                        String p3_tran_count = dataSnapshot.child("Wallet").child(p3).child("Transactions").child("count").child("level3").getValue().toString();
                         int p3_tran_count_Int = Integer.parseInt(p3_tran_count);
-
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transactionTime").setValue(timeformat);
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transactionDate").setValue(datetime);
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transferredTo").setValue(p3_userName);
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transactionAmount").setValue("400");
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transactionId").setValue(childid);
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transferredFrom").setValue(user_userName);
-                        mWallet.child(p3).child("Transactions").child("history").child(childid).child("transactionType").setValue("credited");
-
                         String updated_p3_tran_count = Integer.toString(p3_tran_count_Int + 1);
-                        mWallet.child(p3).child("Transactions").child("count").child("levelTwo").setValue(updated_p3_tran_count);
+
+                        mWallet.child(p3).child("Transactions").child("count").child("level3").setValue(updated_p3_tran_count);
 
 
                         //Upgrading level
@@ -739,7 +1066,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     }
 
                 }
-                //LevelTwoEnd
+                //level2End
 
 
             }

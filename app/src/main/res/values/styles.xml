@@ -31,4 +31,26 @@
         <item name="android:textColorPrimary">@color/grey_60</item>
     </style>
 
+    <style name="RippleStyleWhite">
+        <item name="mrl_rippleOverlay">true</item>
+        <item name="mrl_rippleColor">#80FFFFFF</item>
+        <item name="mrl_rippleHover">true</item>
+        <item name="mrl_rippleAlpha">0.2</item>
+    </style>
+
+    <style name="Button.Accent.Borderless" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="Button.Accent.Borderless.WhiteText" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+    <style name="ProgressBar.Green" parent="@style/AppTheme">
+        <item name="colorPrimary">@color/green_900</item>
+        <item name="colorAccent">@color/green_900</item>
+    </style>
+
+
 </resources>

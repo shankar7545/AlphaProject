@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/grad4"
+    android:background="@drawable/grad5"
     android:gravity="center">
 
 
@@ -49,8 +49,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/blue_grey_300"
-                    android:textColorHint="@color/grey_300"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:theme="@style/EditText.Grey">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -73,8 +73,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textColor="@color/blue_grey_300"
-                    android:textColorHint="@color/grey_300"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:theme="@style/EditText.Grey"
                     app:passwordToggleDrawable="@drawable/password_view"
                     app:passwordToggleEnabled="true"
