@@ -39,6 +39,7 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:inputType="textPersonName"
                 android:digits="@string/refername"
                 android:gravity="center"
                 android:maxLength="8"

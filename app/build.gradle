@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.alpha"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -72,6 +72,7 @@ dependencies {
 
     implementation 'com.chaos.view:pinview:1.3.2'     //PinView
 
+    implementation 'com.jakewharton:process-phoenix:2.0.0'  //restart App
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

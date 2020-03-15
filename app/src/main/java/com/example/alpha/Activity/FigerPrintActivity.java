@@ -1,12 +1,15 @@
 package com.example.alpha.Activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
@@ -30,10 +34,11 @@ import androidx.fragment.app.FragmentActivity;
 
 public class FigerPrintActivity extends AppCompatActivity {
     private static long back_pressed;
-    TextView letsgo;
+    TextView topText;
     DatabaseReference mRef, mPin;
-    ProgressBar progressBar;
-    TextView fingerText, progressText, textU;
+    LinearLayout progressBar;
+    TextView textU;
+    LinearLayout loogut, fingerPrintLayout;
     private PinView pinView;
 
 
@@ -42,108 +47,130 @@ public class FigerPrintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_figer_print);
         //authSuccess = findViewById(R.id.auth_success);
-        fingerText = findViewById(R.id.authenticateButton);
-
-        letsgo = findViewById(R.id.button);
+        fingerPrintLayout = findViewById(R.id.fingerPrintLayout);
+        topText = findViewById(R.id.topText);
         progressBar = findViewById(R.id.progress_bar);
-        progressText = findViewById(R.id.progressText);
-        progressText.setVisibility(View.GONE);
         pinView = findViewById(R.id.pinView);
         textU = findViewById(R.id.textView_noti);
+        loogut = findViewById(R.id.logout);
+
+
+        loogut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(FigerPrintActivity.this)
+                        .setMessage(R.string.end_session)
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                FirebaseAuth.getInstance().signOut();
+
+                                Intent i = new Intent(FigerPrintActivity.this, LoginActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("logoutState", "logout");
+                                i.putExtras(bundle);
+                                startActivity(i);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+
+
+            }
+        });
 
         //check Pin
+        mPin = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        mPin.child("pin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        if (FirebaseAuth.getInstance().getCurrentUser().getUid() != null) {
-            mPin = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            mPin.child("pin").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
-                    if (dataSnapshot.exists()) {
+                    final String mPin = dataSnapshot.getValue().toString();
 
-                        final String mPin = dataSnapshot.getValue().toString();
+                    pinView.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                        pinView.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
 
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            final String pin = pinView.getText().toString();
+                            if ((pin.length() == 4) && (pin.equals(mPin))) {
+                                pinView.setLineColor(getResources().getColor(R.color.green_800));
+                                textU.setTextColor(getResources().getColor(R.color.green_800));
+                                textU.setText("Verification Successfull");
+                                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                                        .hideSoftInputFromWindow(pinView.getWindowToken(), 0);
+
+                                // progressBar.setVisibility(View.VISIBLE);
+                                startlogin();
+
+                            } else {
+                                pinView.setLineColor(Color.RED);
+                                textU.setText("Incorrect PIN");
+                                textU.setTextColor(Color.RED);
+                            }
+                            if (pin.length() < 4) {
+                                pinView.setLineColor(Color.DKGRAY);
+                                textU.setText("Enter 4 digit Login Pin");
+                                textU.setTextColor(Color.DKGRAY);
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
+
+                } else {
+                    fingerPrintLayout.setVisibility(View.GONE);
+                    topText.setText("Create Secure PIN");
+                    textU.setTextColor(Color.DKGRAY);
+                    textU.setText("Create 4 digit PIN");
+
+                    pinView.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                            final String pin = pinView.getText().toString();
+                            if (pin.length() == 4) {
+                                mPin.child("pin").setValue(pin);
+                                textU.setText("PIN Created Successfully");
+                                //progressBar.setVisibility(View.VISIBLE);
+                                startlogin();
                             }
 
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                final String pin = pinView.getText().toString();
-                                if (pin.equals(mPin)) {
-                                    pinView.setLineColor(Color.GREEN);
-                                    textU.setTextColor(Color.GREEN);
-                                    textU.setText("Verification Successfull");
-                                    letsgo.setBackgroundColor(getResources().getColor(R.color.transparent));
-                                    letsgo.setTextColor(getResources().getColor(R.color.transparent));
-                                    progressBar.setVisibility(View.VISIBLE);
-                                    progressText.setVisibility(View.VISIBLE);
-                                    startlogin();
-
-                                } else {
-                                    pinView.setLineColor(Color.RED);
-                                    textU.setText("Incorrect PIN");
-                                    textU.setTextColor(Color.RED);
-                                }
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-
-                            }
-                        });
-
-
-                    } else {
-                        fingerText.setVisibility(View.GONE);
-                        textU.setTextColor(Color.DKGRAY);
-                        textU.setText("Create 4 digit PIN");
-
-                        pinView.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-
-                                final String pin = pinView.getText().toString();
-                                if (pin.length() == 4) {
-                                    mPin.child("pin").setValue(pin);
-                                    textU.setText("PIN Created Successfully");
-                                    letsgo.setBackgroundColor(getResources().getColor(R.color.transparent));
-                                    letsgo.setTextColor(getResources().getColor(R.color.transparent));
-                                    progressBar.setVisibility(View.VISIBLE);
-                                    progressText.setVisibility(View.VISIBLE);
-                                    startlogin();
-                                }
-
-                            }
-                        });
-
-                    }
-
+                        }
+                    });
 
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        } else {
-            Toast.makeText(FigerPrintActivity.this, "No Use Found", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
+
 
     }
 
@@ -173,10 +200,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                letsgo.setBackgroundColor(getResources().getColor(R.color.transparent));
-                                letsgo.setTextColor(getResources().getColor(R.color.transparent));
                                 progressBar.setVisibility(View.VISIBLE);
-                                progressText.setVisibility(View.VISIBLE);
                             }
                         });
 
@@ -200,7 +224,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                 .build();
         //biometricPrompt.authenticate(promptInfo);
 
-        findViewById(R.id.authenticateButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fingerPrintLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -209,10 +233,11 @@ public class FigerPrintActivity extends AppCompatActivity {
         });
     }
 
+
     private void startlogin() {
 
         startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
 
        /* mRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -255,6 +280,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         });*/
 
     }
+
 
     @Override
     public void onBackPressed() {

@@ -87,18 +87,39 @@ public class LoginActivity extends AppCompatActivity {
 
         logAuth = FirebaseAuth.getInstance();
         loginDatabse = FirebaseDatabase.getInstance().getReference("Players");
-
         sign_up = findViewById(R.id.sign_up);
-        sign_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent registration = new Intent(LoginActivity.this, self_details.class);
-                startActivity(registration);
-                finish();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            final String logoutState = bundle.getString("logoutState");
+            if (logoutState.equals("logout")) {
+                sign_up.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                        Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
             }
-        });
+
+        } else {
+            sign_up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent registration = new Intent(LoginActivity.this, self_details.class);
+                    startActivity(registration);
+                    finish();
+
+                }
+            });
+        }
+
+
+
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -113,9 +134,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 
     private void startLogin(String login_email, String login_password) {

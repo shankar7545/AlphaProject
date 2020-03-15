@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 
@@ -42,15 +41,8 @@ public class MeFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_me, container, false);
 
 
-        profileName = mView.findViewById(R.id.profilename);
-        wallet_bal = mView.findViewById(R.id.wallet_bal);
-        recieved = mView.findViewById(R.id.level);
-        withdrawable = mView.findViewById(R.id.withdrawable);
-        walletLayout = mView.findViewById(R.id.walletLayout);
-        myWallet = mView.findViewById(R.id.mywallet);
-        chainActivity = mView.findViewById(R.id.chain);
 
-        logout = mView.findViewById(R.id.logout);
+
         myProfile = mView.findViewById(R.id.myprofile);
 
 
@@ -59,9 +51,11 @@ public class MeFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getContext(), LoginActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("logoutState", "logout");
+                intent.putExtras(bundle);
                 startActivity(intent);
                 getActivity().finish();
-                ActivityCompat.finishAffinity(getActivity());
 
             }
 

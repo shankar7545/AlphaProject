@@ -28,6 +28,7 @@ import com.example.alpha.R;
 import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.ViewHolder.TransactionView;
 import com.example.alpha.Wallet.TransactionsActivity;
+import com.example.alpha.Wallet.walletActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.glide.slider.library.SliderLayout;
@@ -76,6 +77,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private LinearLayoutManager transactionsLinearLayout;
 
     CircularImageView profilePic;
+
+    //Functions
+
+    LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
     //Dashboard
     private ProgressBar beginnerPaymentProgress, beginnerReferProgressBar, beginnerChildProgressBar, bronzePaymentProgressBar;
     private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1;
@@ -163,6 +168,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
         dashboard();
 
+        FunctionOnclick();
 
         //Recycler For Transactions
 
@@ -232,11 +238,19 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         });
 
 
-        CheckingLevelUpgrades();
+        //CheckingLevelUpgrades();
         //loadTransactions();
         Slider();
         return mView;
 
+    }
+
+    private void FunctionOnclick() {
+        walletLayout = mView.findViewById(R.id.walletLayout);
+        walletLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), walletActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void dashboard() {
@@ -293,7 +307,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                         beginnerPaymentCircle.setVisibility(View.VISIBLE);
                                         beginnerPaymentClick.setVisibility(View.GONE);
                                         beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
-                                        beginnerPaymentText.setText("PAYMENT COMPLETED");
+                                        beginnerPaymentText.setText("PAYMENT SUCCESSFULL");
                                         beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.BOLD);
                                         beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_800));
                                         beginnerReferText.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -324,7 +338,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                         beginnerReferCirle.setVisibility(View.VISIBLE);
                                         beginnerReferCirle.setImageResource(R.drawable.green_chechk);
                                         beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.BOLD);
-                                        beginnerReferText.setText("REFERCODE FOUND");
+                                        beginnerReferText.setText("REFERCODE SUCCESSFULL");
                                         beginnerReferText.setTextColor(getResources().getColor(R.color.green_800));
                                     } else {
                                         beginnerReferProgressBar.setVisibility(View.GONE);
@@ -588,7 +602,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                 String referUid = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
                 String childCount = dataSnapshot.child("Users").child(referUid).child("childCount").getValue().toString();
                 String parentStatus = dataSnapshot.child("Users").child(referUid).child("parentStatus").getValue().toString();
-                String userName = dataSnapshot.child("Users").child(referUid).child("username").getValue().toString();
+                String userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
 
                 if (!userName.equals(mReferCode)) {
                     String p1 = dataSnapshot.child("Users").child(referUid).child("Chain")
