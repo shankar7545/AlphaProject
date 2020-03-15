@@ -5,9 +5,9 @@ import android.widget.TextView;
 
 import com.example.alpha.R;
 
-import de.blox.graphview.ViewHolder;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class SimpleViewHolder extends ViewHolder {
+public class SimpleViewHolder extends RecyclerView.ViewHolder {
     public TextView textView;
 
     public SimpleViewHolder(View itemView) {

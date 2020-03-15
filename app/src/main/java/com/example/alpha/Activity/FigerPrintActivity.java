@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.example.alpha.R;
-import com.example.alpha.Registration.PaytmPayment;
-import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -212,7 +210,12 @@ public class FigerPrintActivity extends AppCompatActivity {
     }
 
     private void startlogin() {
-        mRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
+
+       /* mRef = FirebaseDatabase.getInstance().getReference("Users");
         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -249,7 +252,7 @@ public class FigerPrintActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
     }
 

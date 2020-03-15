@@ -1,6 +1,5 @@
 package com.example.alpha.Registration;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ReferCodeAcitvity extends AppCompatActivity {
@@ -32,7 +30,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     public EditText editTextReferCode;
     public ProgressBar progressBar, progressBar2;
     Button finish;
-    TextView textViewReferCode;
+    TextView textViewReferCode, skip;
     DatabaseReference mRef, mReferDB, mTransactions, mWallet, mLevel, dbPaytm, mLogin, mUsers, questionsRef, mAutoReferCode;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebase;
@@ -43,7 +41,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         setContentView(R.layout.activity_refer_code_acitvity);
 
         editTextReferCode = findViewById(R.id.referCode);
-        textViewReferCode = findViewById(R.id.fetchReferCode);
+        skip = findViewById(R.id.skip);
         mRef = FirebaseDatabase.getInstance().getReference("Users");
         mFirebase = FirebaseDatabase.getInstance().getReference();
 
@@ -56,6 +54,13 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
         mAutoReferCode = FirebaseDatabase.getInstance().getReference("AutoReferCode");
 
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReferCodeAcitvity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         /*textViewReferCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +135,6 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                             editTextReferCode.setError("Enter ReferCode");
                             editTextReferCode.requestFocus();
 
-                            return;
                         } else if (checkdataSnapshot.hasChild(mReferCode)) {
 
                             Child();
@@ -153,6 +157,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void Child() {
@@ -252,11 +257,6 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                         }, 2000);
 
 
-
-
-
-
-
                         /*AutoReferCode
                         String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
                         String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
@@ -289,15 +289,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
+        finish();
+
     }
 }

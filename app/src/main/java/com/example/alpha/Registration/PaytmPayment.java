@@ -1,12 +1,12 @@
 package com.example.alpha.Registration;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.alpha.Activity.HomeActivity;
 import com.example.alpha.R;
@@ -18,9 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
 
 public class PaytmPayment extends AppCompatActivity {
     private static long back_pressed;
@@ -144,16 +144,17 @@ public class PaytmPayment extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        } else {
-            Toast.makeText(PaytmPayment.this, "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
+        new AlertDialog.Builder(this)
+                .setMessage("Close Payment?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
 
-        }
     }
 
 

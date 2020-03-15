@@ -74,15 +74,15 @@
         android:layout_marginLeft="185dp"
         android:layout_marginTop="500dp"
         android:theme="@style/ProgressBar.White"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <TextView
-        android:id="@+id/fetchReferCode"
+        android:id="@+id/skip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearlayout"
         android:gravity="center"
-        android:text="Fetch ReferCode"
+        android:text="skip"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"

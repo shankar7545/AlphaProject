@@ -3,12 +3,15 @@ package com.example.alpha.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.alpha.Activity.HomeActivity;
 import com.example.alpha.Activity.MyProfile;
+import com.example.alpha.Model.ParentClass;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
+import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.ViewHolder.TransactionView;
 import com.example.alpha.Wallet.TransactionsActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -77,7 +82,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private LinearLayout beginnerLayout, beginnerExpand, bronzeLayout, bronzeExpand, silverLayout;
     private ImageView beginnerCircle, beginnerPaymentCircle, beginnerPaymentGreenCheck, beginnerReferCirle, beginnerReferGreenCheck,
             beginnerChildCirle, beginnerChildGreenCheck, bronzeCircle, bronzePaymentCircle;
-    private TextView beginnerPaymentText, beginnerReferText, beginnerChildText, bronzePaymentText;
+    private TextView beginnerPaymentText, beginnerReferText, beginnerChildText, bronzePaymentText, beginnerPaymentClick,
+            beginnerReferClick, beginnerChildClick;
     private SliderLayout mDemoSlider;
 
     public HomeFragment() {
@@ -124,6 +130,9 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         beginnerPaymentText = mView.findViewById(R.id.beginnerPaymentText);
         beginnerReferText = mView.findViewById(R.id.beginnerReferText);
         beginnerChildText = mView.findViewById(R.id.beginnerChildText);
+        beginnerPaymentClick = mView.findViewById(R.id.beginnerPaymentClick);
+        beginnerReferClick = mView.findViewById(R.id.beginnerReferClick);
+
 
         beginnerPaymentProgress = mView.findViewById(R.id.beginnerPaymentProgress);
         beginnerReferProgressBar = mView.findViewById(R.id.beginnerReferProgressBar);
@@ -262,7 +271,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
                                     String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
-                                    String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
+                                    final String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
                                     String childCount = dataSnapshot.child("childCount").getValue().toString();
 
 
@@ -282,43 +291,114 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                                     if (paymentStatus.equals("true")) {
                                         beginnerPaymentProgress.setVisibility(View.GONE);
                                         beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                                        beginnerPaymentClick.setVisibility(View.GONE);
                                         beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
-                                        beginnerPaymentText.setText("Payment Completed");
-                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_500));
+                                        beginnerPaymentText.setText("PAYMENT COMPLETED");
+                                        beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.BOLD);
+                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_800));
+                                        beginnerReferText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        beginnerReferClick.setEnabled(true);
                                     } else {
                                         beginnerPaymentProgress.setVisibility(View.GONE);
                                         beginnerPaymentCircle.setVisibility(View.VISIBLE);
                                         beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
-                                        beginnerPaymentText.setText("Click Here to Pay");
-                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.NORMAL);
+                                        beginnerPaymentClick.setVisibility(View.VISIBLE);
+                                        beginnerPaymentText.setText("to Complete Payment");
+                                        beginnerReferClick.setTextColor(getResources().getColor(R.color.grey_40));
+                                        beginnerReferClick.setEnabled(false);
+
+
+                                        beginnerPaymentClick.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getContext(), PaytmPayment.class);
+                                                startActivity(intent);
+                                            }
+                                        });
                                     }
 
                                     if (parentStatus.equals("true")) {
                                         beginnerReferProgressBar.setVisibility(View.GONE);
+                                        beginnerReferClick.setVisibility(View.GONE);
                                         beginnerReferCirle.setVisibility(View.VISIBLE);
                                         beginnerReferCirle.setImageResource(R.drawable.green_chechk);
-                                        beginnerReferText.setText("ReferCode Found");
-                                        beginnerReferText.setTextColor(getResources().getColor(R.color.green_500));
+                                        beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.BOLD);
+                                        beginnerReferText.setText("REFERCODE FOUND");
+                                        beginnerReferText.setTextColor(getResources().getColor(R.color.green_800));
                                     } else {
                                         beginnerReferProgressBar.setVisibility(View.GONE);
                                         beginnerReferCirle.setVisibility(View.VISIBLE);
+                                        beginnerReferClick.setVisibility(View.VISIBLE);
                                         beginnerReferCirle.setImageResource(R.drawable.ic_circle);
-                                        beginnerReferText.setText("Enter ReferCode");
-                                        beginnerReferText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        beginnerReferText.setText("to enter Refercode");
+                                        beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.NORMAL);
+
+                                        beginnerReferClick.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                // Intent intent = new Intent(getContext(), ReferCodeAcitvity.class);
+                                                // startActivity(intent);
+                                                referDialog();
+
+
+                                            }
+                                        });
                                     }
 
                                     if (childCount.equals("2")) {
                                         beginnerChildProgressBar.setVisibility(View.GONE);
                                         beginnerChildCirle.setVisibility(View.VISIBLE);
                                         beginnerChildCirle.setImageResource(R.drawable.green_chechk);
-                                        beginnerChildText.setText("Refered " + childCount + "/2");
-                                        beginnerChildText.setTextColor(getResources().getColor(R.color.green_500));
+                                        beginnerChildText.setText("REFERED  2/2");
+                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+                                        beginnerChildText.setTextColor(getResources().getColor(R.color.green_800));
+                                    } else if (childCount.equals("1")) {
+
+                                        beginnerChildProgressBar.setVisibility(View.GONE);
+                                        beginnerChildCirle.setVisibility(View.VISIBLE);
+                                        beginnerChildCirle.setImageResource(R.drawable.ic_circle);
+                                        beginnerChildText.setText("REFER ONE MORE");
+                                        beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+                                        if (parentStatus.equals("true")) {
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                                            beginnerChildText.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+
+                                                    Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } else {
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_40));
+
+
+                                        }
+
                                     } else {
                                         beginnerChildProgressBar.setVisibility(View.GONE);
                                         beginnerChildCirle.setVisibility(View.VISIBLE);
                                         beginnerChildCirle.setImageResource(R.drawable.ic_circle);
-                                        beginnerChildText.setText("Refer Two People");
-                                        beginnerChildText.setTextColor(getResources().getColor(R.color.grey_80));
+                                        beginnerChildText.setText("REFER TWO USERS");
+                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+
+                                        if (parentStatus.equals("true")) {
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                                            beginnerChildText.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } else {
+                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_40));
+
+
+                                        }
+
                                     }
 
                                     if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
@@ -375,7 +455,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
 
                     } else {
-                        bronzeCircle.setImageResource(R.drawable.green_chechk);
+                        bronzeCircle.setImageResource(R.drawable.ic_lock);
 
 
                         bronzeLayout.setOnClickListener(new View.OnClickListener() {
@@ -408,7 +488,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     }
 
 
-
                 }
 
                 @Override
@@ -426,6 +505,210 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
 
+    public void referDialog() {
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.referdialog);
+        dialog.setCancelable(false);
+        final EditText editTextReferCode;
+        final ProgressBar progressBar;
+        final Button finish, cancel;
+
+        editTextReferCode = dialog.findViewById(R.id.referCode);
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
+        mFirebase = FirebaseDatabase.getInstance().getReference();
+
+        finish = dialog.findViewById(R.id.finish);
+        cancel = dialog.findViewById(R.id.cancelBtn);
+        progressBar = dialog.findViewById(R.id.progress_bar);
+
+        editTextReferCode.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
+        dialog.show();
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                cancel.setEnabled(false);
+
+                final String mReferCode = editTextReferCode.getText().toString().trim();
+
+                final DatabaseReference ReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
+                ReferDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
+
+                        if (mReferCode.isEmpty()) {
+                            editTextReferCode.setError("Enter ReferCode");
+                            editTextReferCode.requestFocus();
+                            cancel.setEnabled(true);
+
+                        } else if (checkdataSnapshot.hasChild(mReferCode)) {
+
+                            Child(mReferCode);
+
+
+                        } else if (!checkdataSnapshot.hasChild(mReferCode)) {
+                            editTextReferCode.setError("Invalid ReferCode");
+                            editTextReferCode.requestFocus();
+                            cancel.setEnabled(true);
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                cancel.setEnabled(true);
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    //ReferCode
+    private void Child(final String mReferCode) {
+
+
+        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String referUid = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
+                String childCount = dataSnapshot.child("Users").child(referUid).child("childCount").getValue().toString();
+                String parentStatus = dataSnapshot.child("Users").child(referUid).child("parentStatus").getValue().toString();
+                String userName = dataSnapshot.child("Users").child(referUid).child("username").getValue().toString();
+
+                if (!userName.equals(mReferCode)) {
+                    String p1 = dataSnapshot.child("Users").child(referUid).child("Chain")
+                            .child("parent").child("p1").getValue().toString();
+
+
+                    if ((parentStatus.equals("true")) && !p1.equals("null")) {
+                        if (childCount.equals("0")) {
+                            referDetails(mReferCode);
+                            mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("leftChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            mFirebase.child("Users").child(referUid).child("childCount").setValue("1");
+
+                        } else if (childCount.equals("1")) {
+                            referDetails(mReferCode);
+                            mFirebase.child("Users").child(referUid).child("Chain").child("child").child("levelOne").child("rightChild").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            mFirebase.child("Users").child(referUid).child("childCount").setValue("2");
+
+                        } else {
+                            //editTextReferCode.setError("Limit Exceeded");
+                            //editTextReferCode.requestFocus();
+                            Toast.makeText(getContext(), "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), mReferCode + " have no parent", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "IDIOT!! Donot enter Your USERNAME", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    //ReferCode
+    private void referDetails(final String mReferCode) {
+        try {
+
+
+            mFirebase = FirebaseDatabase.getInstance().getReference();
+
+            mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    String uid_p1 = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
+
+                    String uid_p2 = dataSnapshot.child("Users").child(uid_p1).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p3 = dataSnapshot.child("Users").child(uid_p2).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p4 = dataSnapshot.child("Users").child(uid_p3).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p5 = dataSnapshot.child("Users").child(uid_p4).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p6 = dataSnapshot.child("Users").child(uid_p5).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p7 = dataSnapshot.child("Users").child(uid_p6).child("Chain").child("parent").child("p1").getValue().toString();
+                    String uid_p8 = dataSnapshot.child("Users").child(uid_p7).child("Chain").child("parent").child("p1").getValue().toString();
+
+                    mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("parentStatus").setValue("true");
+
+
+                    //Parent Class
+                    ParentClass parentClass = new ParentClass(
+                            uid_p1,
+                            uid_p2,
+                            uid_p3,
+                            uid_p4,
+                            uid_p5,
+                            uid_p6,
+                            uid_p7,
+                            uid_p8
+                    );
+                    mRef = FirebaseDatabase.getInstance().getReference("Users");
+
+                    mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Chain")
+                            .child("parent").setValue(parentClass);
+
+
+                    Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getContext(), HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    }, 2000);
+
+
+                        /*AutoReferCode
+                        String mEnd = dataSnapshot.child("AutoReferCode").child("end").getValue().toString();
+                        String mStart = dataSnapshot.child("AutoReferCode").child("start").getValue().toString();
+                        String mUsername = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("username").getValue().toString();
+
+                        int i = Integer.parseInt(mEnd);
+                        mAutoReferCode.child("user" + i).child("refercode").setValue(mUsername);
+
+                        String endCount = Integer.toString(i + 1);
+
+                        mAutoReferCode.child("end").setValue(endCount);
+                        //AutoReferCodeEnd  */
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //SLider
     private void Slider() {
         mDemoSlider = mView.findViewById(R.id.slider);
 

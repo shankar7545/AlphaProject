@@ -128,12 +128,22 @@
                                 android:visibility="visible" />
 
                             <TextView
+                                android:id="@+id/beginnerPaymentClick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="CLICK HERE"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <TextView
                                 android:id="@+id/beginnerPaymentText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="Complete Payment"
+                                android:layout_marginStart="10dp"
+                                android:text="to Complete Payment"
                                 android:textColor="@color/blue"
+                                android:visibility="visible"
                                 android:textSize="16sp" />
 
 
@@ -171,13 +181,24 @@
                                 android:visibility="visible" />
 
                             <TextView
+                                android:id="@+id/beginnerReferClick"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="CLICK HERE"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <TextView
                                 android:id="@+id/beginnerReferText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:text="Enter Refer Code"
+                                android:text="to enter refercode"
                                 android:textColor="@color/blue"
+                                android:visibility="visible"
                                 android:textSize="16sp" />
+
 
 
                         </LinearLayout>
@@ -219,6 +240,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:text="Refer Two People"
+                                android:visibility="visible"
                                 android:textColor="@color/blue"
                                 android:textSize="16sp" />
 
