@@ -111,6 +111,12 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                             @Override
                             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+
                                 final String pin = pinView.getText().toString();
                                 if (pin.length() == 4) {
                                     mPin.child("pin").setValue(pin);
@@ -120,13 +126,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.VISIBLE);
                                     progressText.setVisibility(View.VISIBLE);
                                     startlogin();
-                                } else {
-                                    Toast.makeText(FigerPrintActivity.this, "Enter Four digits", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
 
                             }
                         });

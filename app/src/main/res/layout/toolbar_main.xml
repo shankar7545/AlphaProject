@@ -16,37 +16,66 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        android:weightSum="3">
+        android:background="@color/colorPrimary">
 
-        <ImageView
-            android:id="@+id/tool_logo"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/ProfilePic"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/icon" />
+            android:layout_marginStart="15dp"
+            app:civ_border="true"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1.5dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="0"
+            app:srcCompat="@drawable/refer" />
 
-        <TextView
-            android:id="@+id/tool_name"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="3"
-            android:text="AlphaProject"
-            android:textColor="#ffff"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tool_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Your username"
+                android:textColor="@color/grey_40"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="SHANKAR"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
 
         <ImageButton
             android:id="@+id/bt_filter"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:tint="@android:color/white"
             app:srcCompat="@drawable/ic_notifications" />
+
+        <ImageButton
+            android:id="@+id/help"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_help_black_24dp" />
 
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

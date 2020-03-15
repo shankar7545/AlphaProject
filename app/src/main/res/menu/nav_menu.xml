@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/nav_earn"
-        android:icon="@drawable/ic_peoples"
-        android:title="Chain"></item>
+        android:icon="@drawable/ic_book"
+        android:title="Learn"></item>
 
     <item
         android:id="@+id/nav_home"

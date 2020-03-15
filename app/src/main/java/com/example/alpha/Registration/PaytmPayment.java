@@ -26,7 +26,7 @@ public class PaytmPayment extends AppCompatActivity {
     private static long back_pressed;
     public EditText mAmount;
     LinearLayout pay50, SuccessLayout;
-    AppCompatButton paytm;
+    AppCompatButton paytm, skip;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
     @Override
@@ -38,6 +38,8 @@ public class PaytmPayment extends AppCompatActivity {
         SuccessLayout = findViewById(R.id.payment_success);
 
         paytm = findViewById(R.id.paytm);
+        skip = findViewById(R.id.skip);
+
         mAmount = findViewById(R.id.amount);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
 
@@ -81,6 +83,14 @@ public class PaytmPayment extends AppCompatActivity {
 
             }
         });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -119,7 +129,7 @@ public class PaytmPayment extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(PaytmPayment.this, "Payment Incomplete", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(PaytmPayment.this, "Payment Incomplete", Toast.LENGTH_SHORT).show();
                 }
 
 

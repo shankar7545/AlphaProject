@@ -29,13 +29,11 @@
             <com.glide.slider.library.SliderLayout
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="15dp"
-                android:visibility="visible"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp" />
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:visibility="visible" />
 
+            <include layout="@layout/layout_functions" />
 
             <include
                 android:id="@+id/cse_toolbar"

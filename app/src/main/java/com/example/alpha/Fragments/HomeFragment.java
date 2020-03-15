@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.example.alpha.Activity.HomeActivity;
+import com.example.alpha.Activity.MyProfile;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
@@ -35,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,14 +67,17 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private NestedScrollView transactions_linear;
     private Dialog dialog;
     private View mView;
-    private ProgressBar beginnerPaymentProgress, beginnerReferProgressBar, beginnerChildProgressBar;
     private RecyclerView transactionsRecycler;
     private LinearLayoutManager transactionsLinearLayout;
+
+    CircularImageView profilePic;
     //Dashboard
-    private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1, mlevel2, mlevel3;
+    private ProgressBar beginnerPaymentProgress, beginnerReferProgressBar, beginnerChildProgressBar, bronzePaymentProgressBar;
+    private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1;
     private LinearLayout beginnerLayout, beginnerExpand, bronzeLayout, bronzeExpand, silverLayout;
-    private ImageView beginnerCircle, beginnerPaymentCircle, beginnerPaymentGreenCheck, beginnerReferCirle, beginnerReferGreenCheck, beginnerChildCirle, beginnerChildGreenCheck;
-    private TextView beginnerPaymentText, beginnerReferText, beginnerChildText;
+    private ImageView beginnerCircle, beginnerPaymentCircle, beginnerPaymentGreenCheck, beginnerReferCirle, beginnerReferGreenCheck,
+            beginnerChildCirle, beginnerChildGreenCheck, bronzeCircle, bronzePaymentCircle;
+    private TextView beginnerPaymentText, beginnerReferText, beginnerChildText, bronzePaymentText;
     private SliderLayout mDemoSlider;
 
     public HomeFragment() {
@@ -82,7 +89,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
         fabRefresh = mView.findViewById(R.id.fab_refresh);
-
+        profilePic = mView.findViewById(R.id.ProfilePic);
         editTextReferCode = mView.findViewById(R.id.referCode);
         //wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
         //level =(TextView)mView.findViewById(R.id.levelH);
@@ -123,6 +130,12 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         beginnerChildProgressBar = mView.findViewById(R.id.beginnerChildProgressBar);
 
 
+        bronzeCircle = mView.findViewById(R.id.bronzeCircle);
+        bronzePaymentText = mView.findViewById(R.id.bronzePaymentText);
+        bronzePaymentCircle = mView.findViewById(R.id.bronzePaymentCircle);
+        bronzePaymentProgressBar = mView.findViewById(R.id.bronzePaymentProgressBar);
+
+
         beginnerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,22 +154,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
         dashboard();
 
-
-        bronzeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bronzeExpand.getVisibility() == View.VISIBLE) {
-
-                    bronzeExpand.setVisibility(View.GONE);
-
-
-                } else {
-
-                    bronzeExpand.setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
 
         //Recycler For Transactions
 
@@ -206,16 +203,22 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                 fabRefresh.setEnabled(false);
 
-
                 fabRefresh.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.rotate));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        dashboard();
+                        ((HomeActivity) getActivity()).refreshMyData();
                         fabRefresh.setEnabled(true);
-
                     }
                 }, 500);
+            }
+        });
+
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyProfile.class);
+                startActivity(intent);
             }
         });
 
@@ -235,89 +238,175 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    final String transactionCount_level1 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level1").getValue().toString();
+                    final String transactionCount_level2 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level2").getValue().toString();
+                    final String transactionCount_level3 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level3").getValue().toString();
+                    final String transactionCount_level4 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level4").getValue().toString();
+                    final String transactionCount_level5 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level5").getValue().toString();
+                    final String transactionCount_level6 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                            .child("count").child("level6").getValue().toString();
+
                     final String user_level = dataSnapshot.child("Users").child(selfUid).child("level").getValue().toString();
-
-                    if (user_level.equals("0")) {
-
-
-                        beginnerExpand.setVisibility(View.VISIBLE);
-                        beginnerCircle.setImageResource(R.drawable.ic_circle);
-
-                        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int count = Integer.parseInt(user_level);
 
 
-                                        String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
-                                        String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
-                                        String childCount = dataSnapshot.child("childCount").getValue().toString();
+                    mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if ((parentStatus.equals("true")) && paymentStatus.equals("true") && childCount.equals("2")) {
-                                            beginnerCircle.setImageResource(R.drawable.green_chechk);
-                                            beginnerExpand.setVisibility(View.GONE);
 
-                                        } else {
-                                            beginnerCircle.setImageResource(R.drawable.ic_circle);
-                                            beginnerExpand.setVisibility(View.VISIBLE);
-                                        }
-                                        if (paymentStatus.equals("true")) {
-                                            beginnerPaymentProgress.setVisibility(View.GONE);
-                                            beginnerPaymentCircle.setVisibility(View.VISIBLE);
-                                            beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
-                                            beginnerPaymentText.setText("Payment Completed");
-                                            beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_500));
-                                        } else {
-                                            beginnerPaymentProgress.setVisibility(View.GONE);
-                                            beginnerPaymentCircle.setVisibility(View.VISIBLE);
-                                            beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
-                                            beginnerPaymentText.setText("Click Here to Pay");
-                                            beginnerPaymentText.setTextColor(getResources().getColor(R.color.grey_80));
-                                        }
+                                    String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
+                                    String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
+                                    String childCount = dataSnapshot.child("childCount").getValue().toString();
 
-                                        if (parentStatus.equals("true")) {
-                                            beginnerReferProgressBar.setVisibility(View.GONE);
-                                            beginnerReferCirle.setVisibility(View.VISIBLE);
-                                            beginnerReferCirle.setImageResource(R.drawable.green_chechk);
-                                            beginnerReferText.setText("ReferCode Found");
-                                            beginnerReferText.setTextColor(getResources().getColor(R.color.green_500));
-                                        } else {
-                                            beginnerReferProgressBar.setVisibility(View.GONE);
-                                            beginnerReferCirle.setVisibility(View.VISIBLE);
-                                            beginnerReferCirle.setImageResource(R.drawable.ic_circle);
-                                            beginnerReferText.setText("Enter ReferCode");
-                                            beginnerReferText.setTextColor(getResources().getColor(R.color.grey_80));
-                                        }
 
-                                        if (childCount.equals("2")) {
-                                            beginnerChildProgressBar.setVisibility(View.GONE);
-                                            beginnerChildCirle.setVisibility(View.VISIBLE);
-                                            beginnerChildCirle.setImageResource(R.drawable.green_chechk);
-                                            beginnerChildText.setText("Refered Two people");
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.green_500));
-                                        } else {
-                                            beginnerChildProgressBar.setVisibility(View.GONE);
-                                            beginnerChildCirle.setVisibility(View.VISIBLE);
-                                            beginnerChildCirle.setImageResource(R.drawable.ic_circle);
-                                            beginnerChildText.setText("Refer Two People");
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_80));
-                                        }
+                                    if ((parentStatus.equals("true")) && paymentStatus.equals("true") && childCount.equals("2")) {
+                                        beginnerCircle.setImageResource(R.drawable.green_chechk);
+                                        beginnerExpand.setVisibility(View.GONE);
 
-                                        if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
-                                            forlevel1();
-                                        }
+
+                                    } else {
+                                        beginnerExpand.setVisibility(View.VISIBLE);
+                                        beginnerCircle.setImageResource(R.drawable.ic_circle);
+                                        beginnerExpand.setVisibility(View.VISIBLE);
+                                        bronzeCircle.setImageResource(R.drawable.ic_lock);
 
 
                                     }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                    if (paymentStatus.equals("true")) {
+                                        beginnerPaymentProgress.setVisibility(View.GONE);
+                                        beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                                        beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
+                                        beginnerPaymentText.setText("Payment Completed");
+                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_500));
+                                    } else {
+                                        beginnerPaymentProgress.setVisibility(View.GONE);
+                                        beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                                        beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
+                                        beginnerPaymentText.setText("Click Here to Pay");
+                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.grey_80));
                                     }
-                                });
 
+                                    if (parentStatus.equals("true")) {
+                                        beginnerReferProgressBar.setVisibility(View.GONE);
+                                        beginnerReferCirle.setVisibility(View.VISIBLE);
+                                        beginnerReferCirle.setImageResource(R.drawable.green_chechk);
+                                        beginnerReferText.setText("ReferCode Found");
+                                        beginnerReferText.setTextColor(getResources().getColor(R.color.green_500));
+                                    } else {
+                                        beginnerReferProgressBar.setVisibility(View.GONE);
+                                        beginnerReferCirle.setVisibility(View.VISIBLE);
+                                        beginnerReferCirle.setImageResource(R.drawable.ic_circle);
+                                        beginnerReferText.setText("Enter ReferCode");
+                                        beginnerReferText.setTextColor(getResources().getColor(R.color.grey_80));
+                                    }
+
+                                    if (childCount.equals("2")) {
+                                        beginnerChildProgressBar.setVisibility(View.GONE);
+                                        beginnerChildCirle.setVisibility(View.VISIBLE);
+                                        beginnerChildCirle.setImageResource(R.drawable.green_chechk);
+                                        beginnerChildText.setText("Refered " + childCount + "/2");
+                                        beginnerChildText.setTextColor(getResources().getColor(R.color.green_500));
+                                    } else {
+                                        beginnerChildProgressBar.setVisibility(View.GONE);
+                                        beginnerChildCirle.setVisibility(View.VISIBLE);
+                                        beginnerChildCirle.setImageResource(R.drawable.ic_circle);
+                                        beginnerChildText.setText("Refer Two People");
+                                        beginnerChildText.setTextColor(getResources().getColor(R.color.grey_80));
+                                    }
+
+                                    if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
+                                        forlevel1();
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                    //for Unlocking Levels
+                    if (count >= 1) {
+                        bronzeCircle.setImageResource(R.drawable.ic_circle);
+
+
+                        bronzeLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (bronzeExpand.getVisibility() == View.VISIBLE) {
+
+                                    bronzeExpand.setVisibility(View.GONE);
+
+                                } else {
+
+                                    bronzeExpand.setVisibility(View.VISIBLE);
+
+                                }
+                            }
+                        });
+
+
+                        //BronzeExpand
+                        if (transactionCount_level1.equals("2")) {
+                            bronzePaymentCircle.setImageResource(R.drawable.green_chechk);
+                            bronzePaymentCircle.setVisibility(View.GONE);
+                            bronzePaymentProgressBar.setVisibility(View.GONE);
+                            bronzePaymentText.setText(transactionCount_level1 + " Payment received");
+                            bronzeCircle.setImageResource(R.drawable.green_chechk);
+
+                        } else {
+                            bronzePaymentProgressBar.setVisibility(View.GONE);
+                            bronzePaymentCircle.setVisibility(View.VISIBLE);
+                            bronzePaymentCircle.setImageResource(R.drawable.ic_circle);
+                            bronzePaymentText.setText(transactionCount_level1 + " Payment received");
+                            bronzeCircle.setImageResource(R.drawable.ic_circle);
+
+                        }
+
+
+                    } else {
+                        bronzeCircle.setImageResource(R.drawable.green_chechk);
+
+
+                        bronzeLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Toast.makeText(getContext(), "Complete Beginner Stage to Unlock", Toast.LENGTH_SHORT).show();
+
+                                bronzeLayout.setEnabled(false);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        bronzeLayout.setEnabled(true);
+                                    }
+                                }, 2000);
+
+                            }
+                        });
 
                     }
+
+                    //AutoExpand Current Level
+
+                    if (count == 1) {
+                        bronzeExpand.setVisibility(View.VISIBLE);
+                    } else {
+                        bronzeExpand.setVisibility(View.GONE);
+
+                    }
+
 
 
                 }
@@ -341,24 +430,24 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         mDemoSlider = mView.findViewById(R.id.slider);
 
         ArrayList<String> listUrl = new ArrayList<>();
-        ArrayList<String> listName = new ArrayList<>();
+        //ArrayList<String> listName = new ArrayList<>();
 
 
         //image2
         listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image2.jpeg?alt=media&token=0e1e079d-18c0-4858-9ca0-f088ac32ac8d");
-        listName.add("");
+        // listName.add("");
 
         //image4
         listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image4.jpg?alt=media&token=e8788eef-f8fb-4c86-be13-2d0258d43527");
-        listName.add("");
+        //listName.add("");
 
         //image3
         listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image3.jpg?alt=media&token=4f248df3-b3ba-43da-8560-9cd1b2822926");
-        listName.add("");
+        //listName.add("");
 
         //image1
         listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image1.jpeg?alt=media&token=eb02880d-080b-453a-bddf-39e0672cdb3e");
-        listName.add("");
+        //listName.add("");
 
 
         RequestOptions requestOptions = new RequestOptions();
@@ -371,24 +460,23 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
             // initialize SliderLayout
             BaseSliderView baseSliderView = sliderView
                     .image(listUrl.get(i))
-                    .description(listName.get(i))
+                    //.description(listName.get(i))
                     .setRequestOption(requestOptions)
                     .setProgressBarVisible(true)
                     .setOnSliderClickListener(this);
 
             //add your extra information
             sliderView.bundle(new Bundle());
-            sliderView.getBundle().putString("extra", listName.get(i));
+            // sliderView.getBundle().putString("extra", listName.get(i));
             mDemoSlider.addSlider(sliderView);
         }
 
         // set Slider Transition Animation
-        // mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+        //mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(5000);
+        mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
         mDemoSlider.stopCyclingWhenTouch(false);
     }

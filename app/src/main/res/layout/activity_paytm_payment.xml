@@ -113,6 +113,18 @@
                 android:text="PAY"
                 android:textColor="@android:color/white" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/skip"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@drawable/btn_rounded_red"
+                android:paddingLeft="@dimen/spacing_mlarge"
+                android:paddingRight="@dimen/spacing_mlarge"
+                android:text="SKIP"
+                android:textColor="@android:color/white" />
+
+
         </LinearLayout>
 
 
