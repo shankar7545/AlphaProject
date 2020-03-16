@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_5"
+    android:background="@color/colorPrimaryDark"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
 
-    <include
-        android:id="@+id/cse_toolbar"
-        layout="@layout/toolbar_main" />
+
 
 
     <RelativeLayout
@@ -30,10 +28,22 @@
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_margin="10dp"
+                android:layout_margin="15dp"
                 android:visibility="visible" />
 
             <include layout="@layout/layout_functions" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/lato_black"
+                android:text="Dashboard"
+                android:textColor="@color/white"
+                android:textSize="15sp">
+
+            </TextView>
 
             <include
                 android:id="@+id/cse_toolbar"
@@ -97,8 +107,8 @@
                 android:focusable="true"
                 android:scaleType="fitXY"
                 android:tint="@color/white"
-                app:backgroundTint="@color/colorPrimary"
-                app:fabCustomSize="55dp"
+                app:backgroundTint="@color/yellow_800"
+                app:fabCustomSize="50dp"
                 app:rippleColor="@color/white"
                 app:srcCompat="@drawable/refresh2x" />
 

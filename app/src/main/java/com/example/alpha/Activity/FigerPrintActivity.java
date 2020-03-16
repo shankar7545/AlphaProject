@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -35,7 +36,7 @@ import androidx.fragment.app.FragmentActivity;
 public class FigerPrintActivity extends AppCompatActivity {
     private static long back_pressed;
     TextView topText;
-    DatabaseReference mRef, mPin;
+    DatabaseReference mRef, mPin, x;
     LinearLayout progressBar;
     TextView textU;
     LinearLayout loogut, fingerPrintLayout;
@@ -82,14 +83,19 @@ public class FigerPrintActivity extends AppCompatActivity {
         });
 
         //check Pin
-        mPin = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mPin.child("pin").addListenerForSingleValueEvent(new ValueEventListener() {
+        mPin = FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+        mPin.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
+                String userName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
 
-                    final String mPin = dataSnapshot.getValue().toString();
+                topText.setText("Welcome " + userName);
+
+
+                if (dataSnapshot.child("pin").exists()) {
+
+                    final String mPin = Objects.requireNonNull(dataSnapshot.child("pin").getValue()).toString();
 
                     pinView.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -99,12 +105,12 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            final String pin = pinView.getText().toString();
+                            final String pin = Objects.requireNonNull(pinView.getText()).toString();
                             if ((pin.length() == 4) && (pin.equals(mPin))) {
                                 pinView.setLineColor(getResources().getColor(R.color.green_800));
                                 textU.setTextColor(getResources().getColor(R.color.green_800));
                                 textU.setText("Verification Successfull");
-                                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                                ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE)))
                                         .hideSoftInputFromWindow(pinView.getWindowToken(), 0);
 
                                 // progressBar.setVisibility(View.VISIBLE);
@@ -112,7 +118,7 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                             } else {
                                 pinView.setLineColor(Color.RED);
-                                textU.setText("Incorrect PIN");
+                                textU.setText("INCORRECT PIN");
                                 textU.setTextColor(Color.RED);
                             }
                             if (pin.length() < 4) {

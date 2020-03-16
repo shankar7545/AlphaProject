@@ -1,7 +1,6 @@
 package com.example.alpha.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.alpha.Activity.ChainActivity;
-import com.example.alpha.Activity.LoginActivity;
-import com.example.alpha.Activity.MyProfile;
 import com.example.alpha.R;
-import com.example.alpha.Wallet.walletActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,57 +36,11 @@ public class MeFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_me, container, false);
 
 
-
-
         myProfile = mView.findViewById(R.id.myprofile);
+        wallet_bal = mView.findViewById(R.id.wallet_bal);
+        recieved = mView.findViewById(R.id.level);
+        withdrawable = mView.findViewById(R.id.withdrawable);
 
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("logoutState", "logout");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                getActivity().finish();
-
-            }
-
-        });
-
-        myProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MyProfile.class);
-                startActivity(intent);
-
-            }
-        });
-
-        myWallet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), walletActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        walletLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), walletActivity.class);
-                startActivity(intent);
-            }
-        });
-        chainActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ChainActivity.class);
-                //startActivity(intent);
-            }
-        });
         return mView;
 
     }
@@ -110,7 +59,6 @@ public class MeFragment extends Fragment {
                 String value_count = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
 
-                profileName.setText(name);
                 wallet_bal.setText(balance);
                 recieved.setText(value_count);
                 withdrawable.setText(withdraw_balance);

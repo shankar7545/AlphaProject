@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.alpha.Model.AchievementsClass;
 import com.example.alpha.Model.ReferClass;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -155,7 +157,7 @@ public class Signup_Activity extends AppCompatActivity {
                             );
 
 
-                            mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
+                            mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user);
 
 
                             mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -184,6 +186,18 @@ public class Signup_Activity extends AppCompatActivity {
                             mWallet.child("Transactions").child("count").setValue(transactionCount_class);
 
 
+                            //AchieveMents
+
+                            AchievementsClass achievementsClass = new AchievementsClass(
+                                    "unlocked",
+                                    "locked",
+                                    "locked",
+                                    "locked",
+                                    "locked"
+                            );
+
+                            mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                                    .child("Achievements").setValue(achievementsClass);
 
 
 
@@ -193,6 +207,7 @@ public class Signup_Activity extends AppCompatActivity {
                                     mUserName);
 
 
+                            assert mUserName != null;
                             mReferDB.child(mUserName).setValue(referClass);
 
 

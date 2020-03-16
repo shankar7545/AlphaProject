@@ -1,6 +1,5 @@
 package com.example.alpha.Registration;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,53 +42,43 @@ public class PaytmPayment extends AppCompatActivity {
         mAmount = findViewById(R.id.amount);
         dbPaytm = FirebaseDatabase.getInstance().getReference("Paytm");
 
-        paytm.setOnClickListener(new View.OnClickListener() {
+        paytm.setOnClickListener(view -> dbPaytm.child("01").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    final PaytmKey paytmKey = dataSnapshot.getValue(PaytmKey.class);
+                    try {
+                        final String mUserName = mAmount.getText().toString().trim();
 
-                dbPaytm.child("01").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            final PaytmKey paytmKey = dataSnapshot.getValue(PaytmKey.class);
-                            try {
-                                final String mUserName = mAmount.getText().toString().trim();
+                        Intent i = new Intent(getApplicationContext(), ConfirmAmount.class);
 
-                                Intent i = new Intent(getApplicationContext(), ConfirmAmount.class);
-
-                                Bundle bundle = new Bundle();
-                                i.putExtra("Amount", mUserName);
-                                i.putExtra("MID", paytmKey.getPaytmkey());
-                                i.putExtras(bundle);
-                                startActivity(i);
+                        Bundle bundle = new Bundle();
+                        i.putExtra("Amount", mUserName);
+                        i.putExtra("MID", paytmKey.getPaytmkey());
+                        i.putExtras(bundle);
+                        startActivity(i);
 
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                        } catch (Exception e) {
-
-                            e.printStackTrace();
-                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                } catch (Exception e) {
 
+                    e.printStackTrace();
+                }
             }
-        });
 
-        skip.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
-                startActivity(intent);
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
+        }));
+
+        skip.setOnClickListener(v -> {
+            Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -108,23 +97,11 @@ public class PaytmPayment extends AppCompatActivity {
 
                     SuccessLayout.setVisibility(View.VISIBLE);
 
-                    final String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
+                    new Handler().postDelayed(() -> {
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            if (parentStatus.equals("false")) {
-                                Intent intent = new Intent(PaytmPayment.this, ReferCodeAcitvity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            if (parentStatus.equals("true")) {
-                                Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
+                        Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
                     }, 1000);
 
 
@@ -147,11 +124,7 @@ public class PaytmPayment extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setMessage("Close Payment?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
+                .setPositiveButton("Yes", (dialog, id) -> finish())
                 .setNegativeButton("No", null)
                 .show();
 

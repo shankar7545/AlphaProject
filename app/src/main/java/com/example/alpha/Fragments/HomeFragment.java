@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.alpha.Activity.HomeActivity;
-import com.example.alpha.Activity.MyProfile;
 import com.example.alpha.Model.ParentClass;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
@@ -44,11 +43,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -76,14 +75,13 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private RecyclerView transactionsRecycler;
     private LinearLayoutManager transactionsLinearLayout;
 
-    CircularImageView profilePic;
 
     //Functions
 
     LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
     //Dashboard
     private ProgressBar beginnerPaymentProgress, beginnerReferProgressBar, beginnerChildProgressBar, bronzePaymentProgressBar;
-    private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1;
+    private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1, mAchievements;
     private LinearLayout beginnerLayout, beginnerExpand, bronzeLayout, bronzeExpand, silverLayout;
     private ImageView beginnerCircle, beginnerPaymentCircle, beginnerPaymentGreenCheck, beginnerReferCirle, beginnerReferGreenCheck,
             beginnerChildCirle, beginnerChildGreenCheck, bronzeCircle, bronzePaymentCircle;
@@ -100,7 +98,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
         fabRefresh = mView.findViewById(R.id.fab_refresh);
-        profilePic = mView.findViewById(R.id.ProfilePic);
         editTextReferCode = mView.findViewById(R.id.referCode);
         //wallet_bal =(TextView)mView.findViewById(R.id.balanceH);
         //level =(TextView)mView.findViewById(R.id.levelH);
@@ -111,17 +108,19 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet")
                 .child(selfUid).child("Transactions");
+        mAchievements = FirebaseDatabase.getInstance().getReference("Users").child(selfUid)
+                .child("Achievements");
 
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference();
         scoresRef.keepSynced(true);
 
+        String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         //DashBoard
         beginnerLayout = mView.findViewById(R.id.beginnerLayout);
         beginnerExpand = mView.findViewById(R.id.beginnerExpand);
         bronzeLayout = mView.findViewById(R.id.bronzeLayout);
         bronzeExpand = mView.findViewById(R.id.bronzeExpand);
-        silverLayout = mView.findViewById(R.id.silverLayout);
 
 
         beginnerCircle = mView.findViewById(R.id.beginnerCircle);
@@ -150,19 +149,16 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         bronzePaymentProgressBar = mView.findViewById(R.id.bronzePaymentProgressBar);
 
 
-        beginnerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (beginnerExpand.getVisibility() == View.VISIBLE) {
+        beginnerLayout.setOnClickListener(v -> {
+            if (beginnerExpand.getVisibility() == View.VISIBLE) {
 
-                    beginnerExpand.setVisibility(View.GONE);
+                beginnerExpand.setVisibility(View.GONE);
 
-                } else {
+            } else {
 
-                    beginnerExpand.setVisibility(View.VISIBLE);
+                beginnerExpand.setVisibility(View.VISIBLE);
 
 
-                }
             }
         });
 
@@ -212,30 +208,17 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         });
 
 
-        fabRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        fabRefresh.setOnClickListener(v -> {
 
-                fabRefresh.setEnabled(false);
+            fabRefresh.setEnabled(false);
 
-                fabRefresh.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.rotate));
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((HomeActivity) getActivity()).refreshMyData();
-                        fabRefresh.setEnabled(true);
-                    }
-                }, 500);
-            }
+            fabRefresh.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.rotate));
+            new Handler().postDelayed(() -> {
+                ((HomeActivity) getActivity()).refreshMyData();
+                fabRefresh.setEnabled(true);
+            }, 500);
         });
 
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyProfile.class);
-                startActivity(intent);
-            }
-        });
 
 
         //CheckingLevelUpgrades();
@@ -255,271 +238,235 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     private void dashboard() {
 
-        try {
 
-            mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        mAchievements.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    final String transactionCount_level1 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level1").getValue().toString();
-                    final String transactionCount_level2 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level2").getValue().toString();
-                    final String transactionCount_level3 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level3").getValue().toString();
-                    final String transactionCount_level4 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level4").getValue().toString();
-                    final String transactionCount_level5 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level5").getValue().toString();
-                    final String transactionCount_level6 = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("count").child("level6").getValue().toString();
+                if (dataSnapshot.exists()) {
 
-                    final String user_level = dataSnapshot.child("Users").child(selfUid).child("level").getValue().toString();
-                    int count = Integer.parseInt(user_level);
+                    String mBeginner = Objects.requireNonNull(dataSnapshot.child("beginner").getValue()).toString();
+                    String mBronze = Objects.requireNonNull(dataSnapshot.child("bronze").getValue()).toString();
+                    String mSilver = Objects.requireNonNull(dataSnapshot.child("silver").getValue()).toString();
+                    String mGold = Objects.requireNonNull(dataSnapshot.child("gold").getValue()).toString();
+                    String mDiamond = Objects.requireNonNull(dataSnapshot.child("diamond").getValue()).toString();
 
+                    if (mBeginner.equals("unlocked")) {
+                        beginnerDashboard();
+                        mAchievements.child("bronze").setValue("locked");
+                        mAchievements.child("silver").setValue("locked");
+                        mAchievements.child("gold").setValue("locked");
+                        mAchievements.child("diamond").setValue("locked");
 
-                    mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    } else if (mBeginner.equals("completed")) {
 
+                        beginnerDashboard();
+                    }
 
-                                    String parentStatus = dataSnapshot.child("parentStatus").getValue().toString();
-                                    final String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
-                                    String childCount = dataSnapshot.child("childCount").getValue().toString();
+                    //Unlock Levels after Completing beginner
+                    if (mBeginner.equals("completed") && mBronze.equals("locked")) {
+                        mAchievements.child("bronze").setValue("unlocked");
+                    }
+                    if (mBeginner.equals("completed") && mSilver.equals("locked")) {
 
+                        mAchievements.child("silver").setValue("unlocked");
 
-                                    if ((parentStatus.equals("true")) && paymentStatus.equals("true") && childCount.equals("2")) {
-                                        beginnerCircle.setImageResource(R.drawable.green_chechk);
-                                        beginnerExpand.setVisibility(View.GONE);
+                    }
+                    if (mBeginner.equals("completed") && mGold.equals("locked")) {
 
+                        mAchievements.child("gold").setValue("unlocked");
 
-                                    } else {
-                                        beginnerExpand.setVisibility(View.VISIBLE);
-                                        beginnerCircle.setImageResource(R.drawable.ic_circle);
-                                        beginnerExpand.setVisibility(View.VISIBLE);
-                                        bronzeCircle.setImageResource(R.drawable.ic_lock);
+                    }
+                    if (mBeginner.equals("completed") && mDiamond.equals("locked")) {
 
-
-                                    }
-                                    if (paymentStatus.equals("true")) {
-                                        beginnerPaymentProgress.setVisibility(View.GONE);
-                                        beginnerPaymentCircle.setVisibility(View.VISIBLE);
-                                        beginnerPaymentClick.setVisibility(View.GONE);
-                                        beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
-                                        beginnerPaymentText.setText("PAYMENT SUCCESSFULL");
-                                        beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.BOLD);
-                                        beginnerPaymentText.setTextColor(getResources().getColor(R.color.green_800));
-                                        beginnerReferText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                        beginnerReferClick.setEnabled(true);
-                                    } else {
-                                        beginnerPaymentProgress.setVisibility(View.GONE);
-                                        beginnerPaymentCircle.setVisibility(View.VISIBLE);
-                                        beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
-                                        beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.NORMAL);
-                                        beginnerPaymentClick.setVisibility(View.VISIBLE);
-                                        beginnerPaymentText.setText("to Complete Payment");
-                                        beginnerReferClick.setTextColor(getResources().getColor(R.color.grey_40));
-                                        beginnerReferClick.setEnabled(false);
-
-
-                                        beginnerPaymentClick.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(getContext(), PaytmPayment.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    }
-
-                                    if (parentStatus.equals("true")) {
-                                        beginnerReferProgressBar.setVisibility(View.GONE);
-                                        beginnerReferClick.setVisibility(View.GONE);
-                                        beginnerReferCirle.setVisibility(View.VISIBLE);
-                                        beginnerReferCirle.setImageResource(R.drawable.green_chechk);
-                                        beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.BOLD);
-                                        beginnerReferText.setText("REFERCODE SUCCESSFULL");
-                                        beginnerReferText.setTextColor(getResources().getColor(R.color.green_800));
-                                    } else {
-                                        beginnerReferProgressBar.setVisibility(View.GONE);
-                                        beginnerReferCirle.setVisibility(View.VISIBLE);
-                                        beginnerReferClick.setVisibility(View.VISIBLE);
-                                        beginnerReferCirle.setImageResource(R.drawable.ic_circle);
-                                        beginnerReferText.setText("to enter Refercode");
-                                        beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.NORMAL);
-
-                                        beginnerReferClick.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                // Intent intent = new Intent(getContext(), ReferCodeAcitvity.class);
-                                                // startActivity(intent);
-                                                referDialog();
-
-
-                                            }
-                                        });
-                                    }
-
-                                    if (childCount.equals("2")) {
-                                        beginnerChildProgressBar.setVisibility(View.GONE);
-                                        beginnerChildCirle.setVisibility(View.VISIBLE);
-                                        beginnerChildCirle.setImageResource(R.drawable.green_chechk);
-                                        beginnerChildText.setText("REFERED  2/2");
-                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
-                                        beginnerChildText.setTextColor(getResources().getColor(R.color.green_800));
-                                    } else if (childCount.equals("1")) {
-
-                                        beginnerChildProgressBar.setVisibility(View.GONE);
-                                        beginnerChildCirle.setVisibility(View.VISIBLE);
-                                        beginnerChildCirle.setImageResource(R.drawable.ic_circle);
-                                        beginnerChildText.setText("REFER ONE MORE");
-                                        beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
-                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
-                                        if (parentStatus.equals("true")) {
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                                            beginnerChildText.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-
-                                                    Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        } else {
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_40));
-
-
-                                        }
-
-                                    } else {
-                                        beginnerChildProgressBar.setVisibility(View.GONE);
-                                        beginnerChildCirle.setVisibility(View.VISIBLE);
-                                        beginnerChildCirle.setImageResource(R.drawable.ic_circle);
-                                        beginnerChildText.setText("REFER TWO USERS");
-                                        beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
-
-                                        if (parentStatus.equals("true")) {
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
-
-                                            beginnerChildText.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        } else {
-                                            beginnerChildText.setTextColor(getResources().getColor(R.color.grey_40));
-
-
-                                        }
-
-                                    }
-
-                                    if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
-                                        forlevel1();
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-
-                    //for Unlocking Levels
-                    if (count >= 1) {
-                        bronzeCircle.setImageResource(R.drawable.ic_circle);
-
-
-                        bronzeLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (bronzeExpand.getVisibility() == View.VISIBLE) {
-
-                                    bronzeExpand.setVisibility(View.GONE);
-
-                                } else {
-
-                                    bronzeExpand.setVisibility(View.VISIBLE);
-
-                                }
-                            }
-                        });
-
-
-                        //BronzeExpand
-                        if (transactionCount_level1.equals("2")) {
-                            bronzePaymentCircle.setImageResource(R.drawable.green_chechk);
-                            bronzePaymentCircle.setVisibility(View.GONE);
-                            bronzePaymentProgressBar.setVisibility(View.GONE);
-                            bronzePaymentText.setText(transactionCount_level1 + " Payment received");
-                            bronzeCircle.setImageResource(R.drawable.green_chechk);
-
-                        } else {
-                            bronzePaymentProgressBar.setVisibility(View.GONE);
-                            bronzePaymentCircle.setVisibility(View.VISIBLE);
-                            bronzePaymentCircle.setImageResource(R.drawable.ic_circle);
-                            bronzePaymentText.setText(transactionCount_level1 + " Payment received");
-                            bronzeCircle.setImageResource(R.drawable.ic_circle);
-
-                        }
-
-
-                    } else {
-                        bronzeCircle.setImageResource(R.drawable.ic_lock);
-
-
-                        bronzeLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Toast.makeText(getContext(), "Complete Beginner Stage to Unlock", Toast.LENGTH_SHORT).show();
-
-                                bronzeLayout.setEnabled(false);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        bronzeLayout.setEnabled(true);
-                                    }
-                                }, 2000);
-
-                            }
-                        });
+                        mAchievements.child("diamond").setValue("unlocked");
 
                     }
 
-                    //AutoExpand Current Level
 
-                    if (count == 1) {
-                        bronzeExpand.setVisibility(View.VISIBLE);
-                    } else {
-                        bronzeExpand.setVisibility(View.GONE);
+                    //check Remaining Levels
 
+                    switch (mBronze) {
+                        case "locked":
+                            bronzeCircle.setImageResource(R.drawable.ic_lock);
+                            bronzeExpand.setVisibility(View.GONE);
+                            bronzeLayout.setOnClickListener(v ->
+                                    Toast.makeText(getContext(), "Complete Beginner Level", Toast.LENGTH_SHORT).show());
+
+                            break;
+                        case "unlocked":
+
+                            bronzeDashboard();
+
+
+                            break;
+                        case "completed":
+
+                            break;
                     }
 
 
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void beginnerDashboard() {
+
+        mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                String parentStatus = Objects.requireNonNull(dataSnapshot.child("parentStatus").getValue()).toString();
+                final String paymentStatus = Objects.requireNonNull(dataSnapshot.child("paymentStatus").getValue()).toString();
+
+                if (paymentStatus.equals("true")) {
+                    beginnerPaymentProgress.setVisibility(View.GONE);
+                    beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                    beginnerPaymentClick.setVisibility(View.GONE);
+                    beginnerPaymentCircle.setImageResource(R.drawable.green_chechk);
+                    beginnerPaymentText.setText("Payment Success");
+                    beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.BOLD);
+                    beginnerPaymentText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    beginnerReferText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    beginnerReferClick.setEnabled(true);
+                } else {
+                    beginnerPaymentProgress.setVisibility(View.GONE);
+                    beginnerPaymentCircle.setVisibility(View.VISIBLE);
+                    beginnerPaymentCircle.setImageResource(R.drawable.ic_circle);
+                    beginnerPaymentText.setTypeface(beginnerPaymentText.getTypeface(), Typeface.NORMAL);
+                    beginnerPaymentClick.setVisibility(View.VISIBLE);
+                    beginnerPaymentText.setText("to Complete Payment");
+                    beginnerReferClick.setEnabled(false);
+                    beginnerPaymentClick.setOnClickListener(v -> {
+                        Intent intent = new Intent(getContext(), PaytmPayment.class);
+                        startActivity(intent);
+                    });
+                }
+
+                if (parentStatus.equals("true")) {
+                    beginnerReferProgressBar.setVisibility(View.GONE);
+                    beginnerReferClick.setVisibility(View.GONE);
+                    beginnerReferCirle.setVisibility(View.VISIBLE);
+                    beginnerReferCirle.setImageResource(R.drawable.green_chechk);
+                    beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.BOLD);
+                    beginnerReferText.setText("Refercode success");
+                    beginnerReferText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else {
+                    beginnerReferProgressBar.setVisibility(View.GONE);
+                    beginnerReferCirle.setVisibility(View.VISIBLE);
+                    beginnerReferClick.setVisibility(View.VISIBLE);
+                    beginnerReferCirle.setImageResource(R.drawable.ic_circle);
+                    beginnerReferText.setText("to enter Refercode");
+                    beginnerReferText.setTypeface(beginnerReferText.getTypeface(), Typeface.NORMAL);
+                    beginnerReferClick.setOnClickListener(v -> {
+                        // Intent intent = new Intent(getContext(), ReferCodeAcitvity.class);
+                        // startActivity(intent);
+                        referDialog();
+                    });
+                }
+
+                if ((parentStatus.equals("true")) && paymentStatus.equals("true")) {
+                    beginnerCircle.setImageResource(R.drawable.green_chechk);
+                    beginnerExpand.setVisibility(View.GONE);
+                    mAchievements.child("beginner").setValue("completed");
+
+                } else {
+                    beginnerExpand.setVisibility(View.VISIBLE);
+                    beginnerCircle.setImageResource(R.drawable.ic_circle);
+                    beginnerExpand.setVisibility(View.VISIBLE);
+                    mAchievements.child("beginner").setValue("unlocked");
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void bronzeDashboard() {
+        bronzeCircle.setImageResource(R.drawable.ic_circle);
+        beginnerExpand.setVisibility(View.VISIBLE);
+        bronzeLayout.setOnClickListener(v -> {
+            if (bronzeExpand.getVisibility() == View.VISIBLE) {
+
+                bronzeExpand.setVisibility(View.GONE);
+
+            } else {
+                bronzeExpand.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //Payment Status
+        bronzePaymentProgressBar.setVisibility(View.GONE);
+        bronzePaymentCircle.setVisibility(View.VISIBLE);
+        bronzePaymentCircle.setImageResource(R.drawable.ic_circle);
+
+        mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String childCount = Objects.requireNonNull(dataSnapshot.child("childCount").getValue()).toString();
+
+
+                if (childCount.equals("2")) {
+                    beginnerChildProgressBar.setVisibility(View.GONE);
+                    beginnerChildCirle.setVisibility(View.VISIBLE);
+                    beginnerChildCirle.setImageResource(R.drawable.green_chechk);
+                    beginnerChildText.setText("REFERED  2/2");
+                    beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+                    beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                } else if (childCount.equals("1")) {
+
+                    beginnerChildProgressBar.setVisibility(View.GONE);
+                    beginnerChildCirle.setVisibility(View.VISIBLE);
+                    beginnerChildCirle.setImageResource(R.drawable.ic_circle);
+                    beginnerChildText.setText("REFER ONE MORE");
+                    beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+                    beginnerChildText.setOnClickListener(v -> Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show());
+
+
+                } else {
+                    beginnerChildProgressBar.setVisibility(View.GONE);
+                    beginnerChildCirle.setVisibility(View.VISIBLE);
+                    beginnerChildCirle.setImageResource(R.drawable.ic_circle);
+                    beginnerChildText.setText("REFER TWO USERS");
+                    beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
+                    beginnerChildText.setOnClickListener(v -> Toast.makeText(getContext(), "Refer Clicked", Toast.LENGTH_SHORT).show());
 
                 }
-            });
 
+            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
 
 
-    public void referDialog() {
+    //ReferDialog
+    private void referDialog() {
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.referdialog);
         dialog.setCancelable(false);
@@ -777,6 +724,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         mDemoSlider.addOnPageChangeListener(this);
         mDemoSlider.stopCyclingWhenTouch(false);
     }
+
 
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet")
@@ -1316,6 +1264,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         });
 
     }
+
 
     private void forlevel3() {
 

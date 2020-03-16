@@ -1,5 +1,6 @@
 package com.example.alpha.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -31,6 +33,8 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout home_Relative;
     AppBarLayout appbar;
     ActionBar actionBar;
+    CircularImageView profilePic;
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -68,9 +72,14 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        profilePic = findViewById(R.id.ProfilePic);
 
         home_Relative = findViewById(R.id.home_relative);
 
+        profilePic.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MyProfile.class);
+            startActivity(intent);
+        });
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

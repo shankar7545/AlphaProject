@@ -2,14 +2,13 @@
 <resources>
     <color name="colorPrimary">#FF0F0470</color>
     <color name="darkPrimary">#07031e</color>
-    <color name="colorPrimaryDark">#FF0F0470</color>
+    <color name="colorPrimaryDark">#FF061223</color>
     <color name="colorAccent">#388E3C</color>
     <color name="white">#ffffff</color>
     <color name="blue">#FF0F0470</color>
     <color name="black">#000000</color>
     <color name="colorPurple">#983CFF</color>
-
-
+    <color name="colorPrimaryDark2">#061223</color>
 
 
     <color name="colorPrimaryLight">#1E88E5</color>
@@ -51,8 +50,8 @@
     <color name="grey_20">#cccccc</color>
     <color name="grey_40">#999999</color>
     <color name="grey_60">#666666</color>
-    <color name="grey_80">#37474F</color>
-    <color name="grey_90">#263238</color>
+    <color name="grey_80">#E2061223</color>
+    <color name="grey_90">#E2061223</color>
 
 
     <!--Material color list from https://material.io/guidelines/style/color.html-->
