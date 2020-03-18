@@ -23,11 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
+        <activity android:name=".Activity.DashboardActivity"></activity>
         <activity
             android:name=".Activity.LoginActivity"
             android:configChanges="orientation"
-            android:screenOrientation="fullSensor"></activity>
+            android:screenOrientation="fullSensor" />
         <activity android:name=".Wallet.TransactionsActivity" />
+        <activity android:name=".Activity.RazorpaySection" />
         <activity android:name=".Activity.ChainActivity" />
         <activity android:name=".Activity.FigerPrintActivity" />
         <activity android:name=".Registration.ReferCodeAcitvity" />
@@ -37,6 +39,11 @@
         <activity
             android:name=".Activity.HomeActivity"
             android:configChanges="orientation" />
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_TfooHqhKgVhKEq" />
+
         <activity android:name=".Registration.self_details" />
         <activity android:name=".Registration.verificaton_phone" />
         <activity android:name=".Registration.verification_code" />

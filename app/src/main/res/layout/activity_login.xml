@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:text="New user? "
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/blue_grey_300" />
+                        android:textColor="@color/blue_grey_100" />
 
                     <TextView
                         android:id="@+id/sign_up"

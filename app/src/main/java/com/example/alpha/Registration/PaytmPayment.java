@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.alpha.Activity.HomeActivity;
+import com.example.alpha.Activity.RazorpaySection;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -50,11 +51,13 @@ public class PaytmPayment extends AppCompatActivity {
                     try {
                         final String mUserName = mAmount.getText().toString().trim();
 
-                        Intent i = new Intent(getApplicationContext(), ConfirmAmount.class);
+                        Intent i = new Intent(getApplicationContext(), RazorpaySection.class);
 
                         Bundle bundle = new Bundle();
                         i.putExtra("Amount", mUserName);
                         i.putExtra("MID", paytmKey.getPaytmkey());
+                        i.putExtra("Amount", "1");
+
                         i.putExtras(bundle);
                         startActivity(i);
 

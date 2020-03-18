@@ -26,9 +26,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -127,52 +130,62 @@ public class TransactionsActivity extends AppCompatActivity {
 
                 String transType = model.getTransactionType();
                 {
-                    if (transType.equals("credited")) {
-                        holder.transactionType.setText("Received from");
-                        holder.transactionImage.setImageResource(R.drawable.transaction_received);
-                        holder.transactionStatus.setText("Credited");
-                        holder.transactionName.setText(model.getTransferredFrom());
-                        holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
-                        holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
+                    switch (transType) {
+                        case "credited":
+                            holder.transactionType.setText("Received from");
+                            holder.transactionImage.setImageResource(R.drawable.ic_arrow_down_black);
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.green_700));
+                            holder.transactionStatus.setText("Credited");
+                            holder.transactionName.setText(model.getTransferredFrom());
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
 
-                    } else if (transType.equals("debited")) {
-                        holder.transactionType.setText("Paid To");
-                        holder.transactionImage.setImageResource(R.drawable.transaction_send);
-                        holder.transactionStatus.setText("Debited");
-                        holder.transactionName.setText(model.getTransferredTo());
-                        holder.transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
-                        holder.transactionAmount.setTextColor(getResources().getColor(R.color.red_500));
+                            break;
+                        case "debited":
+                            holder.transactionType.setText("Paid To");
+                            holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.colorPrimaryDark));
+                            holder.transactionStatus.setText("Debited");
+                            holder.transactionName.setText(model.getTransferredTo());
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
 
+                            break;
+                        case "added":
+                            holder.transactionType.setText("Added To");
+                            holder.transactionImage.setImageResource(R.drawable.ic_wallet);
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.blue_600));
+                            holder.transactionStatus.setText("Added");
+                            holder.transactionName.setText("Wallet");
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
+                            break;
                     }
                 }
 
 
-                progressBarLayout.setVisibility(View.GONE);
+                holder.transactionLayout.setOnClickListener(v -> {
 
 
-                holder.transactionLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    final Dialog dialog = new Dialog(Objects.requireNonNull(TransactionsActivity.this));
+                    dialog.setContentView(R.layout.fragment_success_request);
+
+                    fab = dialog.findViewById(R.id.bt_action);
+
+                    transactionDate = dialog.findViewById(R.id.success_date);
+                    transactionTime = dialog.findViewById(R.id.success_time);
+                    transferredFrom = dialog.findViewById(R.id.success_name);
+                    transactionAmount = dialog.findViewById(R.id.success_money);
+                    transactionType = dialog.findViewById(R.id.success_type);
+                    transactionStatus = dialog.findViewById(R.id.status);
+                    transactionId = dialog.findViewById(R.id.txnorderid);
 
 
-                        final Dialog dialog = new Dialog(TransactionsActivity.this);
-                        dialog.setContentView(R.layout.fragment_success_request);
-
-                        fab = dialog.findViewById(R.id.bt_action);
-
-                        transactionDate = dialog.findViewById(R.id.success_date);
-                        transactionTime = dialog.findViewById(R.id.success_time);
-                        transferredFrom = dialog.findViewById(R.id.success_name);
-                        transactionAmount = dialog.findViewById(R.id.success_money);
-                        transactionType = dialog.findViewById(R.id.success_type);
-                        transactionStatus = dialog.findViewById(R.id.status);
-                        transactionId = dialog.findViewById(R.id.txnorderid);
-
-
-                        String transType = model.getTransactionType();
-                        {
-                            if (transType.equals("credited")) {
+                    String transType1 = model.getTransactionType();
+                    {
+                        switch (transType1) {
+                            case "credited":
                                 transactionDate.setText(model.getTransactionDate());
                                 transactionTime.setText(model.getTransactionTime());
                                 transactionAmount.setText(model.getTransactionAmount());
@@ -182,7 +195,8 @@ public class TransactionsActivity extends AppCompatActivity {
                                 transactionId.setText(model.getTransactionId());
                                 transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
 
-                            } else if (transType.equals("debited")) {
+                                break;
+                            case "debited":
                                 transactionDate.setText(model.getTransactionDate());
                                 transactionTime.setText(model.getTransactionTime());
                                 transactionAmount.setText(model.getTransactionAmount());
@@ -193,23 +207,28 @@ public class TransactionsActivity extends AppCompatActivity {
                                 transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
 
 
-                            }
+                                break;
+                            case "added":
+                                transactionDate.setText(model.getTransactionDate());
+                                transactionTime.setText(model.getTransactionTime());
+                                transactionAmount.setText(model.getTransactionAmount());
+                                transferredFrom.setText("Wallet");
+                                transactionType.setText("Added to:  ");
+                                transactionStatus.setText("ADDED");
+                                transactionId.setText(model.getTransactionId());
+                                transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+
+                                break;
                         }
-
-
-                        dialog.show();
-
-
-                        fab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-
-                            }
-                        });
-
-
                     }
+
+
+                    dialog.show();
+
+
+                    fab.setOnClickListener(v1 -> dialog.dismiss());
+
+
                 });
             }
 

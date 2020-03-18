@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grey_5"
     android:orientation="vertical"
     tools:context=".Wallet.TransactionsActivity">
 
     <include
         android:id="@+id/subjecttoolbar"
-        layout="@layout/matchtoolbar" />
+        layout="@layout/toolbar_default" />
 
     <LinearLayout
         android:id="@+id/progress_bar1"
@@ -61,7 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
+                    android:visibility="visible">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
 
@@ -81,7 +83,7 @@
                     android:layout_gravity="center_vertical"
                     android:tint="@android:color/white"
                     app:lottie_autoPlay="true"
-                    app:lottie_fileName="stopwatch.json"
+                    app:lottie_fileName="search.json"
                     app:lottie_loop="true" />
 
                 <TextView
@@ -89,9 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="No subjects found"
+                    android:text="No Transactions found"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/grey_40"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />
 
                 <TextView
@@ -100,9 +102,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:gravity="center"
-                    android:text="Check Internet !"
+                    android:text="Add some Money!"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/grey_40" />
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
 
 

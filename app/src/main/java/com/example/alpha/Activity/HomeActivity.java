@@ -1,11 +1,7 @@
 package com.example.alpha.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,9 +12,15 @@ import com.example.alpha.Fragments.MeFragment;
 import com.example.alpha.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -29,64 +31,80 @@ import androidx.fragment.app.Fragment;
 public class HomeActivity extends AppCompatActivity {
     private static long back_pressed;
     DatabaseReference mRef;
+    TextView userName;
 
     RelativeLayout home_Relative;
     AppBarLayout appbar;
     ActionBar actionBar;
+    private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     CircularImageView profilePic;
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            menuItem -> {
 
 
-                    Fragment selectedFragment = null;
+                Fragment selectedFragment = null;
+                switch (menuItem.getItemId()) {
 
-                    switch (menuItem.getItemId()) {
+                    case R.id.nav_home:
 
-                        case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
+                        selectedFragment = new HomeFragment();
 
-                            break;
-                        case R.id.nav_me:
-                            selectedFragment = new MeFragment();
+                        break;
+                    case R.id.nav_me:
+                        selectedFragment = new MeFragment();
 
-                            break;
+                        break;
 
-                        case R.id.nav_earn:
-                            selectedFragment = new EarnFragment();
+                    case R.id.nav_earn:
+                        selectedFragment = new EarnFragment();
+                        break;
 
-                            break;
-
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
-                            selectedFragment).commit();
-
-                    return true;
                 }
+                assert selectedFragment != null;
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                        selectedFragment).commit();
+
+                return true;
             };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         profilePic = findViewById(R.id.ProfilePic);
 
         home_Relative = findViewById(R.id.home_relative);
+        mRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        userName = findViewById(R.id.userName);
 
         profilePic.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MyProfile.class);
             startActivity(intent);
         });
+        mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
 
+                userName.setText(mUserName);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId(R.id.nav_home);
     }
 
-    public void refreshMyData() {
+
+
+    /*public void refreshMyData() {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId(R.id.nav_home);
@@ -108,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
         //snackbar.show();
 
 
-    }
+    } */
 
 
     @Override

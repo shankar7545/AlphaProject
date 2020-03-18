@@ -1,7 +1,8 @@
 package com.example.alpha.Activity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
+import com.example.alpha.Common.Common;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,10 +41,11 @@ public class FigerPrintActivity extends AppCompatActivity {
     TextView topText;
     DatabaseReference mRef, mPin, x;
     LinearLayout progressBar;
+    ProgressDialog progressDialog;
     TextView textU;
     LinearLayout loogut, fingerPrintLayout;
     private PinView pinView;
-
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,126 +60,152 @@ public class FigerPrintActivity extends AppCompatActivity {
         loogut = findViewById(R.id.logout);
 
 
-        loogut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        loogut.setOnClickListener(v -> new AlertDialog.Builder(FigerPrintActivity.this)
+                .setMessage(R.string.end_session)
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    FirebaseAuth.getInstance().signOut();
 
-                new AlertDialog.Builder(FigerPrintActivity.this)
-                        .setMessage(R.string.end_session)
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                FirebaseAuth.getInstance().signOut();
-
-                                Intent i = new Intent(FigerPrintActivity.this, LoginActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("logoutState", "logout");
-                                i.putExtras(bundle);
-                                startActivity(i);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
+                    Intent i = new Intent(FigerPrintActivity.this, LoginActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("logoutState", "logout");
+                    i.putExtras(bundle);
+                    startActivity(i);
+                    finish();
+                })
+                .setNegativeButton("No", null)
+                .show());
 
 
+        //ProgressBar
+        progressDialog = new ProgressDialog(FigerPrintActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog_new);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+
+        //Check Internet
+        if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
+            try {
+                mPin = FirebaseDatabase.getInstance().getReference("Users")
+                        .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+                mPin.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        String userName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
+
+                        topText.setText("Welcome " + userName);
+
+                        progressDialog.dismiss();
+
+
+                        if (dataSnapshot.child("pin").exists()) {
+
+                            final String mPin = Objects.requireNonNull(dataSnapshot.child("pin").getValue()).toString();
+
+                            pinView.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    final String pin = Objects.requireNonNull(pinView.getText()).toString();
+                                    if ((pin.length() == 4) && (pin.equals(mPin))) {
+                                        pinView.setLineColor(getResources().getColor(R.color.green_800));
+                                        textU.setTextColor(getResources().getColor(R.color.green_800));
+                                        textU.setText("Verification Successfull");
+                                        ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE)))
+                                                .hideSoftInputFromWindow(pinView.getWindowToken(), 0);
+
+                                        // progressBar.setVisibility(View.VISIBLE);
+                                        startlogin();
+
+                                    } else {
+                                        pinView.setLineColor(Color.RED);
+                                        textU.setText("INCORRECT PIN");
+                                        textU.setTextColor(Color.RED);
+                                    }
+                                    if (pin.length() < 4) {
+                                        pinView.setLineColor(Color.DKGRAY);
+                                        textU.setText("Enter 4 digit Login Pin");
+                                        textU.setTextColor(Color.DKGRAY);
+                                    }
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+
+                        } else {
+                            fingerPrintLayout.setVisibility(View.GONE);
+                            topText.setText("Create Secure PIN");
+                            textU.setTextColor(Color.DKGRAY);
+                            textU.setText("Create 4 digit PIN");
+
+                            pinView.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                    final String pin = pinView.getText().toString();
+                                    if (pin.length() == 4) {
+                                        mPin.child("pin").setValue(pin);
+                                        textU.setText("PIN Created Successfully");
+                                        //progressBar.setVisibility(View.VISIBLE);
+                                        startlogin();
+                                    }
+
+                                }
+                            });
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+        } else {
+            progressDialog.dismiss();
+            dialog = new Dialog(FigerPrintActivity.this);
+            dialog.setContentView(R.layout.dialog_warning);
+            dialog.setCancelable(false);
+            dialog.show();
+            final Button wifienable = dialog.findViewById(R.id.enablewifi);
+            wifienable.setOnClickListener(v -> {
+                dialog.dismiss();
+                startActivity(FigerPrintActivity.this.getIntent());
+
+            });
+        }
 
         //check Pin
-        mPin = FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
-        mPin.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String userName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
-
-                topText.setText("Welcome " + userName);
-
-
-                if (dataSnapshot.child("pin").exists()) {
-
-                    final String mPin = Objects.requireNonNull(dataSnapshot.child("pin").getValue()).toString();
-
-                    pinView.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            final String pin = Objects.requireNonNull(pinView.getText()).toString();
-                            if ((pin.length() == 4) && (pin.equals(mPin))) {
-                                pinView.setLineColor(getResources().getColor(R.color.green_800));
-                                textU.setTextColor(getResources().getColor(R.color.green_800));
-                                textU.setText("Verification Successfull");
-                                ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE)))
-                                        .hideSoftInputFromWindow(pinView.getWindowToken(), 0);
-
-                                // progressBar.setVisibility(View.VISIBLE);
-                                startlogin();
-
-                            } else {
-                                pinView.setLineColor(Color.RED);
-                                textU.setText("INCORRECT PIN");
-                                textU.setTextColor(Color.RED);
-                            }
-                            if (pin.length() < 4) {
-                                pinView.setLineColor(Color.DKGRAY);
-                                textU.setText("Enter 4 digit Login Pin");
-                                textU.setTextColor(Color.DKGRAY);
-                            }
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-
-                        }
-                    });
-
-
-                } else {
-                    fingerPrintLayout.setVisibility(View.GONE);
-                    topText.setText("Create Secure PIN");
-                    textU.setTextColor(Color.DKGRAY);
-                    textU.setText("Create 4 digit PIN");
-
-                    pinView.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-
-                            final String pin = pinView.getText().toString();
-                            if (pin.length() == 4) {
-                                mPin.child("pin").setValue(pin);
-                                textU.setText("PIN Created Successfully");
-                                //progressBar.setVisibility(View.VISIBLE);
-                                startlogin();
-                            }
-
-                        }
-                    });
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
     }
@@ -203,12 +233,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                     public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
                         //authSuccess= findViewById(R.id.auth_success);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressBar.setVisibility(View.VISIBLE);
-                            }
-                        });
+                        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
 
                         startlogin();
 
@@ -245,6 +270,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
         //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
+
 
        /* mRef = FirebaseDatabase.getInstance().getReference("Users");
         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -296,7 +322,7 @@ public class FigerPrintActivity extends AppCompatActivity {
             ActivityCompat.finishAffinity(this);
             System.exit(0);
         } else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FigerPrintActivity.this, "Press once again to exit", Toast.LENGTH_SHORT).show();
             back_pressed = System.currentTimeMillis();
 
         }

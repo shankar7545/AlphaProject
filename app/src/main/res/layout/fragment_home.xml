@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/grey_5"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
@@ -31,6 +31,19 @@
                 android:layout_margin="15dp"
                 android:visibility="visible" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/lato_black"
+                android:text="Functions"
+                android:textColor="@color/colorPrimaryDark1"
+                android:textSize="15sp">
+
+            </TextView>
+
             <include layout="@layout/layout_functions" />
 
             <TextView
@@ -40,14 +53,14 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/lato_black"
                 android:text="Dashboard"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimaryDark1"
                 android:textSize="15sp">
 
             </TextView>
 
             <include
                 android:id="@+id/cse_toolbar"
-                layout="@layout/layout_dashboard" />
+                layout="@layout/layout_dashboard_new" />
 
 
             <androidx.core.widget.NestedScrollView
@@ -107,7 +120,7 @@
                 android:focusable="true"
                 android:scaleType="fitXY"
                 android:tint="@color/white"
-                app:backgroundTint="@color/yellow_800"
+                app:backgroundTint="@color/colorPrimaryDark"
                 app:fabCustomSize="50dp"
                 app:rippleColor="@color/white"
                 app:srcCompat="@drawable/refresh2x" />

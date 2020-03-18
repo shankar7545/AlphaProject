@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="Your username"
-                android:textColor="@color/grey_40"
+                android:textColor="@color/grey_10"
                 android:textSize="10sp" />
 
             <TextView
@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="SHANKAR"
+                android:fontFamily="@font/lato_black"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>

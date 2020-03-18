@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.alpha.R;
 import com.example.alpha.Registration.self_details;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -20,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -92,44 +90,26 @@ public class LoginActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             final String logoutState = bundle.getString("logoutState");
+            assert logoutState != null;
             if (logoutState.equals("logout")) {
-                sign_up.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
+                sign_up.setOnClickListener(v -> Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show());
             }
 
         } else {
-            sign_up.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            sign_up.setOnClickListener(v -> {
 
-                    Intent registration = new Intent(LoginActivity.this, self_details.class);
-                    startActivity(registration);
-                    finish();
+                Intent registration = new Intent(LoginActivity.this, self_details.class);
+                startActivity(registration);
 
-                }
             });
         }
 
 
+        mAuthListener = firebaseAuth -> {
+            if (firebaseAuth.getCurrentUser() != null) {
 
-
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() != null) {
-
-                    startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
-                }
+                startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
             }
-
         };
 
 
@@ -147,13 +127,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Snackbar.make(login_Relative, e.getMessage(), Snackbar.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
-                signin.setAlpha(1f);
-            }
+        }).addOnFailureListener(e -> {
+            Snackbar.make(login_Relative, e.getMessage(), Snackbar.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
+            signin.setAlpha(1f);
         });
     }
 

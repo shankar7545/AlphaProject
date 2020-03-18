@@ -5,15 +5,16 @@
     <item
         android:id="@+id/nav_earn"
         android:icon="@drawable/ic_course"
-        android:title="Learn"></item>
+        android:title="Learn" />
 
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/home"
-        android:title="Home"></item>
+        android:title="Home" />
+
 
     <item
         android:id="@+id/nav_me"
-        android:icon="@drawable/me"
-        android:title="Me"></item>
+        android:icon="@drawable/ic_swap_horiz"
+        android:title="History" />
 </menu>

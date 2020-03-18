@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp"
     app:cardCornerRadius="4dp"
+    android:layout_marginStart="3dp"
+    android:layout_marginEnd="3dp"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -23,13 +20,13 @@
         <ImageView
             android:id="@+id/transactionImage"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:scaleType="fitCenter"
-            android:src="@drawable/transaction_send">
+            android:src="@drawable/ic_arrow_up_black">
 
         </ImageView>
 
@@ -47,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="Paid to"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/transactionName"
@@ -56,7 +53,7 @@
                 android:layout_marginBottom="2dp"
                 android:text="Shankar Chowdary"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
 
@@ -70,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="17-12-2018"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
 
                 <View
                     android:layout_width="2dp"
@@ -87,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="06:09 PM"
-                    android:textSize="10dp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -109,7 +106,7 @@
                 android:gravity="center"
                 android:text="Status"
                 android:textColor="@color/green_500"
-                android:textSize="12dp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
