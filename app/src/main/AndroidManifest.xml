@@ -3,18 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alpha">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
@@ -23,11 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Activity.DashboardActivity"></activity>
-        <activity
-            android:name=".Activity.LoginActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="fullSensor" />
+        <activity android:name=".Profile.ChangePassword"></activity>
+        <activity android:name=".Tutorials.TutorialActivity" />
+        <activity android:name=".Course.CourseActivity" />
+        <activity android:name=".Profile.EditDetails" />
+        <activity android:name=".Activity.HelpActivity" />
+        <activity android:name=".Activity.DashboardActivity" />
+        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Wallet.TransactionsActivity" />
         <activity android:name=".Activity.RazorpaySection" />
         <activity android:name=".Activity.ChainActivity" />
@@ -36,14 +26,7 @@
         <activity android:name=".Registration.PaytmPayment" />
         <activity android:name=".Activity.MyProfile" />
         <activity android:name=".Registration.Signup_Activity" />
-        <activity
-            android:name=".Activity.HomeActivity"
-            android:configChanges="orientation" />
-
-        <meta-data
-            android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_TfooHqhKgVhKEq" />
-
+        <activity android:name=".Activity.HomeActivity" />
         <activity android:name=".Registration.self_details" />
         <activity android:name=".Registration.verificaton_phone" />
         <activity android:name=".Registration.verification_code" />
@@ -59,6 +42,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_TfooHqhKgVhKEq" />
+
+        <receiver android:name="com.allyants.notifyme.NotificationPublisher" />
+        <receiver android:name="com.allyants.notifyme.BootNotifyMe">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

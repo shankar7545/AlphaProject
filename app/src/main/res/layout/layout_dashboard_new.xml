@@ -15,7 +15,7 @@
         android:id="@+id/cse"
         android:layout_width="180dp"
         android:layout_height="95dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardBackgroundColor="@color/colorPrimaryPink"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">
@@ -71,7 +71,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="175dp"
         android:layout_height="95dp"
-        app:cardBackgroundColor="@color/blue_800"
+        app:cardBackgroundColor="@color/blue_900"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">

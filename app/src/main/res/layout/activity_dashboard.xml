@@ -3,14 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Activity.DashboardActivity">
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_default" />
 
-    <include
-        android:id="@+id/cse_toolbar"
-        layout="@layout/layout_dashboard" />
+    <RelativeLayout
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_smlarge"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:layout_marginRight="@dimen/spacing_smlarge"
+                android:layout_marginBottom="@dimen/spacing_smlarge"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:tint="@color/white"
+                app:backgroundTint="@color/colorPrimary"
+                app:fabCustomSize="50dp"
+                app:rippleColor="@color/white"
+                app:srcCompat="@drawable/refresh2x" />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/cse_toolbar"
+            layout="@layout/layout_dashboard" />
+
+    </RelativeLayout>
+
+
 </LinearLayout>

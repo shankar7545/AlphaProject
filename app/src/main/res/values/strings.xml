@@ -19,4 +19,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="beginner">Beginner</string>
     <string name="end_session">Are you sure you want to end the session?</string>
+    <string name="shankar">SHANKAR</string>
+    <string name="date">Date</string>
+    <string name="type">Type</string>
 </resources>

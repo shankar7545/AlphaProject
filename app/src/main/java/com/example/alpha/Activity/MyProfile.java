@@ -1,13 +1,17 @@
 package com.example.alpha.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alpha.Profile.ChangePassword;
 import com.example.alpha.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,18 +35,24 @@ public class MyProfile extends AppCompatActivity {
     Button saveprofile;
     TextView logout;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    LinearLayout tab1, tab4;
     private Object View;
+    DatabaseReference mUser;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-
+        myprofiletoolbar = findViewById(R.id.myprofiletoolbar);
+        setSupportActionBar(myprofiletoolbar);
+        mUser = FirebaseDatabase.getInstance().getReference("Users").child(selfUid);
         logout = findViewById(R.id.logout);
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        myprofiletoolbar = findViewById(R.id.myprofiletoolbar);
-        setSupportActionBar(myprofiletoolbar);
+        tab1 = findViewById(R.id.tab1);
+        tab4 = findViewById(R.id.tab4);
+
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         userName = findViewById(R.id.userName);
         email = findViewById(R.id.email);
@@ -63,12 +73,12 @@ public class MyProfile extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show());
 
-        mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
-                String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
-                String mEmail = Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString();
+                final String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+                final String mEmail = Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString();
 
 
                 userName.setText(mUserName);
@@ -82,6 +92,18 @@ public class MyProfile extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+        });
+
+        tab1.setOnClickListener(v -> {
+            // Intent intent = new Intent(MyProfile.this, EditDetails.class);
+            //startActivity(intent);
+
+            editDetails();
+        });
+
+        tab4.setOnClickListener(v -> {
+            Intent intent = new Intent(MyProfile.this, ChangePassword.class);
+            startActivity(intent);
         });
 
     }
@@ -126,5 +148,58 @@ public class MyProfile extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void editDetails() {
+        try {
+            dialog = new Dialog(MyProfile.this);
+            dialog.setContentView(R.layout.edit_details_dialog);
+            dialog.setCancelable(false);
+            final Button finish, cancel;
+
+            finish = dialog.findViewById(R.id.finish);
+            cancel = dialog.findViewById(R.id.cancelBtn);
+
+            TextInputEditText emailAddress, fullName;
+            emailAddress = dialog.findViewById(R.id.emailAddress);
+            fullName = dialog.findViewById(R.id.fullName);
+            emailAddress.setEnabled(false);
+            mUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String mEmail = dataSnapshot.child("email").getValue().toString();
+                    String mName = dataSnapshot.child("name").getValue().toString();
+
+                    emailAddress.setText(mEmail);
+                    fullName.setText(mName);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+            dialog.show();
+            finish.setOnClickListener(view -> {
+
+                cancel.setEnabled(false);
+                mUser.child("name").setValue(Objects.requireNonNull(fullName.getText()).toString());
+                finish.setText("Updated");
+                cancel.setEnabled(true);
+                dialog.dismiss();
+
+            });
+
+            cancel.setOnClickListener(v -> dialog.dismiss());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 }

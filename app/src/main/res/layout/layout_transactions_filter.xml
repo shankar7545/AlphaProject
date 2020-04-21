@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:layout_marginStart="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginEnd="3dp"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/roundenddesign_black"
-        android:gravity="center"
-        android:text="Date"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black" />
+        <Button
+            android:id="@+id/date"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1.4"
+            android:background="@drawable/roundenddesign_black"
+            android:gravity="center"
+            android:text="@string/date"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
 
-
-</LinearLayout>
+        <Button
+            android:id="@+id/type"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1.4"
+            android:background="@drawable/roundenddesign_black"
+            android:gravity="center"
+            android:text="@string/type"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

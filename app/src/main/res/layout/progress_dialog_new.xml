@@ -17,6 +17,17 @@
             android:layout_height="wrap_content"
             android:theme="@style/ProgressBar.colorPrimaryDark" />
 
+        <TextView
+            android:id="@+id/Ptext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="Upgrading .."
+            android:visibility="gone">
+
+        </TextView>
+
 
     </LinearLayout>
 </RelativeLayout>

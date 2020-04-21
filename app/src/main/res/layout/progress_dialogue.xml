@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:orientation="vertical"
     android:padding="10dp">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="no_internet_connection.json"
-        app:lottie_loop="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,20 +12,146 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/mainHeading"
+            android:id="@+id/doNotCloseApp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:text="Please donot close App"
             android:textSize="18dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/subHeading"
+            android:id="@+id/parent_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:text="It will be done Quickly" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/paymentDisplayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:paddingStart="5dp">
+
+        <ImageView
+            android:id="@+id/paymentGreenCheck"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/green_chechk"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/paymentProgressBar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:theme="@style/ProgressBar.colorPrimaryDark"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/paymentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="25dp"
+            android:fontFamily="@font/lato_black"
+            android:text="Payment Processing"
+            android:textColor="@color/grey_80"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/transactionDisplayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:paddingStart="5dp">
+
+        <ImageView
+            android:id="@+id/transactionGreenCheck"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/green_chechk"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/transactionProgressBar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:theme="@style/ProgressBar.colorPrimaryDark"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/transactionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="25dp"
+            android:fontFamily="@font/lato_black"
+            android:text="Building Transactions"
+            android:textColor="@color/grey_80"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/levelDisplayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:paddingStart="5dp">
+
+        <ImageView
+            android:id="@+id/levelGreenCheck"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/green_chechk"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/levelProgressBar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:theme="@style/ProgressBar.colorPrimaryDark"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/levelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="25dp"
+            android:fontFamily="@font/lato_black"
+            android:text="Upgrading Level"
+            android:textColor="@color/grey_80"
+            android:textSize="14sp"
+            android:visibility="visible" />
 
 
     </LinearLayout>
@@ -42,24 +160,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar_dialog"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
-            android:theme="@style/ProgressBar.Blue"
+            android:theme="@style/ProgressBar.colorPrimaryDark"
             android:visibility="visible" />
 
         <TextView
+            android:id="@+id/progress_bar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/lato_black"
             android:text="Processing..." />
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/main_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/lato_black"
+        android:gravity="center"
+        android:text="UPGRADING TO LEVEL ONE"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18dp">
+
+    </TextView>
 
 </LinearLayout>

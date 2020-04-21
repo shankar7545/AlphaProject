@@ -5,7 +5,7 @@
     android:id="@+id/home_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     tools:context=".Activity.HomeActivity">
 
 
@@ -19,6 +19,9 @@
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/white"
         android:layout_above="@id/bottom_navigation"
 
         >
@@ -38,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@color/colorPrimary"
         android:visibility="visible"
         app:itemIconTint="@color/color_state_primary"
         app:itemTextColor="@color/color_state_primary"

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.alpha.Activity.DashboardActivity;
@@ -280,8 +279,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -298,7 +295,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         String p1_updated_bal = Integer.toString(p1_bal_Int + 50);
 
                         mWallet.child(p1).child("balance").setValue(p1_updated_bal);
-                        subHeading.setText("Transfering money");
 
                         //AutoLoginCode
                         //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
@@ -454,7 +450,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                         //Upgrading level
                         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("1");
-                        subHeading.setText("Sucessfully upgraded to Level One");
 
 
                         new Handler().postDelayed(new Runnable() {
@@ -510,8 +505,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -529,7 +522,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         String p2_updated_bal = Integer.toString(p2_bal_Int + 100);
 
                         mWallet.child(p2).child("balance").setValue(p2_updated_bal);
-                        subHeading.setText("Transfering money");
 
                         //AutoLoginCode
                         //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
@@ -641,7 +633,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                         //Upgrading level
                         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("2");
-                        subHeading.setText("Sucessfully upgraded to Level Two");
 
 
                         new Handler().postDelayed(new Runnable() {
@@ -678,7 +669,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                 String level = dataSnapshot.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").getValue().toString();
 
-                outerloop:
                 if (level.equals("2")) {
                     String user_bal = dataSnapshot.child("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").getValue().toString();
                     int user_bal_Int = Integer.parseInt(user_bal);
@@ -698,8 +688,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         dialog = new Dialog(getContext());
                         dialog.setContentView(R.layout.progress_dialogue);
                         dialog.setCancelable(false);
-                        final TextView mainHeading = dialog.findViewById(R.id.mainHeading);
-                        final TextView subHeading = dialog.findViewById(R.id.subHeading);
                         dialog.show();
 
 
@@ -717,7 +705,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                         String p3_updated_bal = Integer.toString(p3_bal_Int + 400);
 
                         mWallet.child(p3).child("balance").setValue(p3_updated_bal);
-                        subHeading.setText("Transfering money");
 
                         //AutoLoginCode
                         //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
@@ -791,7 +778,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
                         //Upgrading level
                         mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("level").setValue("3");
-                        subHeading.setText("Sucessfully upgraded to Level Three");
 
 
                         new Handler().postDelayed(new Runnable() {
@@ -823,12 +809,9 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     public void onStart() {
         super.onStart();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        new Handler().postDelayed(() -> {
 
 
-            }
         }, 0);
     }
 

@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class IntroActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 1000;
+    private static int SPLASH_TIME_OUT = 300;
     FirebaseDatabase database;
     DatabaseReference matchdb, updatenotice, maintaindb, mRef;
     FirebaseAuth.AuthStateListener mAuthListener;
@@ -29,7 +29,7 @@ public class IntroActivity extends AppCompatActivity {
             startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             finish();
 
-        }, 1000);
+        }, SPLASH_TIME_OUT);
 
 
     }

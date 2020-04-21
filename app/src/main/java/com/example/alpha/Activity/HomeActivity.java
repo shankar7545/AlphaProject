@@ -2,6 +2,7 @@ package com.example.alpha.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout home_Relative;
     AppBarLayout appbar;
     ActionBar actionBar;
+    ImageButton help;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     CircularImageView profilePic;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -78,11 +80,21 @@ public class HomeActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
         userName = findViewById(R.id.userName);
+        help = findViewById(R.id.help);
+
 
         profilePic.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MyProfile.class);
             startActivity(intent);
         });
+
+        help.setOnClickListener(v ->
+        {
+            Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
+            startActivity(intent);
+        });
+
+
         mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

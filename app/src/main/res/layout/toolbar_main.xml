@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimary">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/ProfilePic"
@@ -61,7 +61,7 @@
 
 
         <ImageButton
-            android:id="@+id/bt_filter"
+            android:id="@+id/notification"
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:tint="@android:color/white"
-            app:srcCompat="@drawable/ic_help_black_24dp" />
+            app:srcCompat="@drawable/ic_help_white" />
 
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

@@ -2,6 +2,7 @@ package com.example.alpha.Wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alpha.Activity.HomeActivity;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,18 +38,18 @@ public class walletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        toolbar = (Toolbar) findViewById(R.id.dreamcoinWallet);
+        toolbar = findViewById(R.id.dreamcoinWallet);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My Wallet");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        progress_total = (ProgressBar) findViewById(R.id.progress_wallet);
+        progress_total = findViewById(R.id.progress_wallet);
         progress_total.setVisibility(View.VISIBLE);
-        view_transactions = (Button) findViewById(R.id.view_transactions);
-        total_balance = (TextView) findViewById(R.id.walletBalance);
-        received_balanceT = (TextView) findViewById(R.id.received_balance);
-        withdraw_balanceT = (TextView) findViewById(R.id.withdrawable_balance);
-        rec_prog = (ProgressBar) findViewById(R.id.progress_depo);
-        with_prog = (ProgressBar) findViewById(R.id.progress_winning);
+        view_transactions = findViewById(R.id.view_transactions);
+        total_balance = findViewById(R.id.walletBalance);
+        received_balanceT = findViewById(R.id.received_balance);
+        withdraw_balanceT = findViewById(R.id.withdrawable_balance);
+        rec_prog = findViewById(R.id.progress_depo);
+        with_prog = findViewById(R.id.progress_winning);
         rec_prog.setVisibility(View.VISIBLE);
         with_prog.setVisibility(View.VISIBLE);
         total_balance.setVisibility(View.GONE);
@@ -113,15 +113,15 @@ public class walletActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent gotohome = new Intent(walletActivity.this, HomeActivity.class);
-            gotohome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(gotohome);
-        } else {
-            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

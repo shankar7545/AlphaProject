@@ -1,12 +1,13 @@
 package com.example.alpha.Activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +15,17 @@ import com.example.alpha.R;
 import com.example.alpha.Registration.self_details;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import dmax.dialog.SpotsDialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,12 +33,13 @@ public class LoginActivity extends AppCompatActivity {
     private static long back_pressed;
     public FirebaseAuth logAuth;
     public DatabaseReference loginDatabse;
-    public EditText email, password;
+    public TextInputEditText email, password;
     public ProgressBar progressBar;
     public Button signin;
     public String login_email, login_password;
-    public RelativeLayout login_Relative;
+    public LinearLayout login_Relative;
     public TextView forgetPasswrod;
+
     TextView sign_up;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
@@ -49,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.l_password);
 
         progressBar = findViewById(R.id.progress_bar);
+        forgetPasswrod = findViewById(R.id.forgot_password1);
+
         /*---------------------------------------------------------*/
 
 
@@ -57,28 +65,73 @@ public class LoginActivity extends AppCompatActivity {
         signin = findViewById(R.id.fab);
 
 
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String get value from edittext
-                progressBar.setVisibility(View.VISIBLE);
+        signin.setOnClickListener(v -> {
+            //String get value from edittext
+            signin.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
 
-                signin.setAlpha(0f);
-                login_email = email.getText().toString();
-                login_password = password.getText().toString();
+            login_email = email.getText().toString();
+            login_password = password.getText().toString();
 
-                if (!login_email.isEmpty() && !login_password.isEmpty()) {
-                    signin.setAlpha(0f);
+            if (!login_email.isEmpty() && !login_password.isEmpty()) {
 
-                    startLogin(login_email, login_password);
-                } else {
-                    signin.setAlpha(1f);
-                    progressBar.setVisibility(View.GONE);
+                startLogin(login_email, login_password);
+            } else {
+                signin.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
 
-                    Toast.makeText(LoginActivity.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
-                }
-
+                Toast.makeText(LoginActivity.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
             }
+
+        });
+        //Forget Password
+
+        forgetPasswrod.setOnClickListener(v -> {
+            final AlertDialog progressdialog = new SpotsDialog.Builder()
+                    .setContext(LoginActivity.this)
+                    .setMessage("Requesting...")
+                    .build();
+
+
+            final Dialog dialog = new Dialog(LoginActivity.this);
+            dialog.setContentView(R.layout.forgetpass_layout);
+            dialog.setCancelable(false);
+            dialog.getWindow().setLayout(800, 600);
+            //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            final TextInputEditText reset_email = dialog.findViewById(R.id.reset_email);
+            final Button reset_button = dialog.findViewById(R.id.reset_button);
+            final Button reset_cancel = dialog.findViewById(R.id.reset_cancel);
+
+
+            reset_button.setOnClickListener(v12 -> {
+                progressdialog.show();
+                if (Objects.requireNonNull(reset_email.getText()).toString().isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Please Enter Registered Email", Toast.LENGTH_SHORT).show();
+                    progressdialog.dismiss();
+                } else {
+                    logAuth.sendPasswordResetEmail(reset_email.getText().toString()).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            progressdialog.dismiss();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            progressdialog.dismiss();
+                        }
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                        progressdialog.dismiss();
+                    });
+                }
+            });
+
+            reset_cancel.setOnClickListener(v1 -> dialog.dismiss());
+
+            dialog.show();
+
+
         });
 
         //Firebase Declaration;
@@ -128,9 +181,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }).addOnFailureListener(e -> {
-            Snackbar.make(login_Relative, e.getMessage(), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(login_Relative, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG).show();
             progressBar.setVisibility(View.GONE);
-            signin.setAlpha(1f);
+            signin.setVisibility(View.VISIBLE);
         });
     }
 
