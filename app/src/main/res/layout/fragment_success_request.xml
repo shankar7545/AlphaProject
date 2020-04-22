@@ -41,15 +41,69 @@
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/w_text"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:layout_marginTop="@dimen/spacing_mlarge"
                         android:gravity="center_vertical"
-                        android:text="This Transaction is successfull"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                        android:textColor="@color/grey_40" />
+                        android:orientation="horizontal"
+                        android:padding="@dimen/spacing_middle">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="22dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="1dp"
+                                    android:backgroundTint="@color/grey_80"
+                                    android:src="@drawable/rupee" />
+
+                                <TextView
+                                    android:id="@+id/success_money"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="1548.0"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                    android:textColor="@color/grey_80"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="AMOUNT"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/grey_80" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_black"
+                            android:gravity="center_vertical"
+                            android:text="Requested"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/grey_40"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -312,68 +366,15 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/w_text"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_mlarge"
+                        android:layout_marginBottom="@dimen/spacing_small"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/spacing_middle">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="AMOUNT"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:textColor="@color/grey_80" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="22dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginTop="1dp"
-                                    android:backgroundTint="@color/grey_80"
-                                    android:src="@drawable/rupee" />
-
-                                <TextView
-                                    android:id="@+id/success_money"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-                                    android:text="1548.0"
-                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                                    android:textColor="@color/grey_80"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="Requested"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/grey_40"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
+                        android:text="This Transaction is successfull"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        android:textColor="@color/grey_80" />
 
 
                 </LinearLayout>
@@ -393,7 +394,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="CLOSE"
+                android:text="@string/okay"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:textColor="@android:color/white"
                 app:fontFamily="sans-serif-medium" />

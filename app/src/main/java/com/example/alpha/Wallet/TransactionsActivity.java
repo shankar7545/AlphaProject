@@ -145,11 +145,11 @@ public class TransactionsActivity extends AppCompatActivity {
                         case "debited":
                             holder.transactionType.setText("Paid To");
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.colorPrimaryDark));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.colorPrimaryPink));
                             holder.transactionStatus.setText("Debited");
                             holder.transactionName.setText(model.getTransferredTo());
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
 
 
                             break;
@@ -205,7 +205,7 @@ public class TransactionsActivity extends AppCompatActivity {
                                 transactionType.setText("TRANSFERED TO :  ");
                                 transactionStatus.setText("DEBITED");
                                 transactionId.setText(model.getTransactionId());
-                                transactionStatus.setTextColor(getResources().getColor(R.color.red_500));
+                                transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
 
 
                                 break;

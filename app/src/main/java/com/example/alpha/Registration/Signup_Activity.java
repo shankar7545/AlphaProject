@@ -3,7 +3,6 @@ package com.example.alpha.Registration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -14,6 +13,7 @@ import com.example.alpha.Model.UserClass;
 import com.example.alpha.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Signup_Activity extends AppCompatActivity {
 
     public ProgressBar progressBar;
-    EditText editTextName, editTextEmail, editTextPassword, editTextReferCode;
+    TextInputEditText editTextName, editTextEmail, editTextPassword, editTextReferCode;
     Button next;
     Button finish;
     FirebaseFirestore db = FirebaseFirestore.getInstance();

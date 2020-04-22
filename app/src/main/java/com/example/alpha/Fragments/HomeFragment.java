@@ -149,11 +149,11 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         //listName.add("");
 
         //image3
-        listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image3.jpg?alt=media&token=4f248df3-b3ba-43da-8560-9cd1b2822926");
+        listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image2.jpeg?alt=media&token=0e1e079d-18c0-4858-9ca0-f088ac32ac8d");
         //listName.add("");
 
         //image1
-        listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image1.jpeg?alt=media&token=eb02880d-080b-453a-bddf-39e0672cdb3e");
+        listUrl.add("https://firebasestorage.googleapis.com/v0/b/jobtrackingsystem-83bad.appspot.com/o/image4.jpg?alt=media&token=e8788eef-f8fb-4c86-be13-2d0258d43527");
         //listName.add("");
 
 

@@ -63,16 +63,15 @@
                             android:text="@string/beginner"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80" />
-
                         <TextView
                             android:id="@+id/beginnerText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:layout_marginEnd="25dp"
-                            android:layout_weight="1"
-                            android:clickable="false"
                             android:gravity="end"
+                            android:clickable="false"
                             android:text="Unlocked"
                             android:textColor="@color/colorPrimary" />
 
@@ -106,15 +105,7 @@
                         android:visibility="visible"
                         android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/beginnerUpgradeButton"
-                            android:layout_width="160dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="end"
-                            android:background="@drawable/btn_rounded_green"
-                            android:text="Upgrade"
-                            android:textColor="@android:color/white"
-                            android:visibility="gone" />
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -229,14 +220,23 @@
 
                         </LinearLayout>
 
+                        <Button
+                            android:id="@+id/beginnerUpgradeButton"
+                            android:layout_width="160dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/btn_rounded_green"
+                            android:text="Upgrade"
+                            android:textColor="@android:color/white"
+                            android:visibility="gone" />
                         <ProgressBar
                             android:id="@+id/beginnerUpgradePB"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="67dp"
                             android:layout_marginBottom="8dp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="8dp"
                             android:theme="@style/ProgressBar.colorPrimaryDark"
                             android:visibility="gone" />
                         <View
@@ -298,16 +298,15 @@
                             android:text="  Bronze"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80" />
-
                         <TextView
                             android:id="@+id/bronzeText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_gravity="center"
                             android:layout_marginEnd="25dp"
-                            android:layout_weight="1"
-                            android:clickable="false"
                             android:gravity="end"
+                            android:clickable="false"
                             android:text="Locked"
                             android:textColor="@color/colorPrimaryDark" />
 
@@ -481,15 +480,14 @@
                             android:fontFamily="@font/lato_black"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="@color/grey_80" />
-
                         <TextView
                             android:id="@+id/silverText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="25dp"
                             android:layout_weight="1"
                             android:clickable="false"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="25dp"
                             android:gravity="end"
                             android:text="Locked"
                             android:textColor="@color/colorPrimaryDark" />

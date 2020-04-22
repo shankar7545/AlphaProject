@@ -269,9 +269,9 @@ public class FigerPrintActivity extends AppCompatActivity {
                                     textU.setTextColor(Color.RED);
                                 }
                                 if (pin.length() < 4) {
-                                    pinView.setLineColor(Color.DKGRAY);
+                                    pinView.setLineColor(getResources().getColor(R.color.colorPrimaryDark1));
                                     textU.setText("Enter 4 digit Login Pin");
-                                    textU.setTextColor(Color.DKGRAY);
+                                    textU.setTextColor(getResources().getColor(R.color.colorPrimaryDark1));
                                 }
                             }
 
@@ -302,10 +302,10 @@ public class FigerPrintActivity extends AppCompatActivity {
                             @Override
                             public void afterTextChanged(Editable s) {
 
-                                final String pin = pinView.getText().toString();
+                                final String pin = Objects.requireNonNull(pinView.getText()).toString();
                                 if (pin.length() == 4) {
                                     mPin.child("pin").setValue(pin);
-                                    textU.setText("PIN Created Successfully");
+                                    textU.setText(R.string.pin_created_successfully);
                                     //progressBar.setVisibility(View.VISIBLE);
                                     startlogin();
                                 }

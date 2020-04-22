@@ -3,8 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".Registration.Signup_Activity">
+
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="480dp"
+        android:background="@drawable/btn_rounded_red"
+        android:text="@string/finish"
+        android:textColor="@android:color/white" />
 
 
     <LinearLayout
@@ -19,16 +32,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="40dp">
+            android:padding="40dp"
+            tools:ignore="UselessParent">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_marginLeft="@dimen/spacing_medium"
                 android:layout_marginBottom="@dimen/spacing_middle"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@color/blue_600"
                 android:textStyle="bold" />
@@ -37,7 +50,6 @@
                 android:layout_width="40dp"
                 android:layout_height="4dp"
                 android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_marginLeft="@dimen/spacing_medium"
                 android:background="@color/blue_600" />
 
             <TextView
@@ -45,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingTop="10dp"
-                android:text="Just few more steps and you're finished!"
+                android:text="@string/just_few_more_steps_and_you_re_finished"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
 
@@ -53,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="We hate Paperwork too!"
+                android:text="@string/we_hate_paperwork_too"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
 
@@ -61,68 +73,83 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Enter email and password."
+                android:text="@string/enter_email_and_password"
 
                 android:textColor="@color/grey_800"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="15dp"
-                android:hint="Full name"
-                android:inputType="textPersonName"
-                android:textColor="@color/grey_900">
-
+                    android:layout_height="match_parent"
+                    android:hint="@string/full_name"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_900"
+                    android:textSize="15sp" />
                 <requestFocus />
 
-            </EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/email"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="15dp"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/grey_900" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_900"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            <EditText
-                android:id="@+id/password"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/grey_900" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:passwordToggleDrawable="@drawable/password_view"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/grey_900" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_gravity="end"
-        android:layout_marginLeft="175dp"
-        android:layout_marginTop="480dp"
-        android:background="@drawable/btn_rounded_red"
-        android:text="FINISH"
-        android:textColor="@android:color/white" />
-
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="250dp"
+        android:layout_marginStart="250dp"
         android:layout_marginTop="480dp"
-        android:theme="@style/ProgressBar.Blue"
+        android:theme="@style/ProgressBar.colorPrimary"
         android:visibility="gone" />
 
 </RelativeLayout>

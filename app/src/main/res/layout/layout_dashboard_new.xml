@@ -8,14 +8,14 @@
     android:orientation="horizontal">
 
     <View
-        android:layout_width="15dp"
+        android:layout_width="10dp"
         android:layout_height="0dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cse"
         android:layout_width="180dp"
         android:layout_height="95dp"
-        app:cardBackgroundColor="@color/colorPrimaryPink"
+        app:cardBackgroundColor="@color/red_500"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">
@@ -71,7 +71,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="175dp"
         android:layout_height="95dp"
-        app:cardBackgroundColor="@color/blue_900"
+        app:cardBackgroundColor="@color/blue_600"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">

@@ -11,31 +11,90 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Profile.ChangePassword"></activity>
-        <activity android:name=".Tutorials.TutorialActivity" />
-        <activity android:name=".Course.CourseActivity" />
-        <activity android:name=".Profile.EditDetails" />
-        <activity android:name=".Activity.HelpActivity" />
-        <activity android:name=".Activity.DashboardActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Wallet.TransactionsActivity" />
-        <activity android:name=".Activity.RazorpaySection" />
-        <activity android:name=".Activity.ChainActivity" />
-        <activity android:name=".Activity.FigerPrintActivity" />
-        <activity android:name=".Registration.ReferCodeAcitvity" />
-        <activity android:name=".Registration.PaytmPayment" />
-        <activity android:name=".Activity.MyProfile" />
-        <activity android:name=".Registration.Signup_Activity" />
-        <activity android:name=".Activity.HomeActivity" />
-        <activity android:name=".Registration.self_details" />
+        <activity
+            android:name=".Profile.ChangePassword"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Tutorials.TutorialActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Course.CourseActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Profile.EditDetails"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.HelpActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.DashboardActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Wallet.TransactionsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.RazorpaySection"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.ChainActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.FigerPrintActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Registration.ReferCodeAcitvity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Registration.PaytmPayment"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.MyProfile"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Registration.Signup_Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Registration.self_details"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".Registration.verificaton_phone" />
         <activity android:name=".Registration.verification_code" />
-        <activity android:name=".Registration.ConfirmAmount" />
-        <activity android:name=".Wallet.walletActivity" />
+        <activity
+            android:name=".Registration.ConfirmAmount"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Wallet.walletActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity
             android:name=".Activity.IntroActivity"
-            android:theme="@style/Theme.Design.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +127,7 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

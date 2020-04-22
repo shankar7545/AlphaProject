@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -48,9 +49,9 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         {
 
             Intent intent = getIntent();
-            amount = intent.getExtras().getString("Amount");
+            amount = Objects.requireNonNull(intent.getExtras()).getString("Amount");
             mid = intent.getExtras().getString("MID");
-            customer = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            customer = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
             custid = customer.substring(0, 5).toUpperCase();
 
             if (!mid.isEmpty() && !amount.isEmpty() && !custid.isEmpty()) {
@@ -71,7 +72,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         Log.e("checksum ", " respon true " + bundle.toString());
         Toast.makeText(this, "" + bundle.toString(), Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "Done: " + String.valueOf(payamount), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Done: " + payamount, Toast.LENGTH_SHORT).show();
 
         String response = bundle.getString("RESPMSG");
         String responsecode = bundle.getString("RESPCODE");

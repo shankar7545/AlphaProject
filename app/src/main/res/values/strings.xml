@@ -22,4 +22,25 @@
     <string name="shankar">SHANKAR</string>
     <string name="date">Date</string>
     <string name="type">Type</string>
+    <string name="okay">OKAY</string>
+    <string name="functions">Functions</string>
+    <string name="full_name">Full name</string>
+    <string name="email_address">Email Address</string>
+    <string name="finish">FINISH</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="just_few_more_steps_and_you_re_finished">Just few more steps and you\'re finished!</string>
+    <string name="we_hate_paperwork_too">We hate Paperwork too!</string>
+    <string name="enter_email_and_password">Enter email and password.</string>
+    <string name="password">Password</string>
+    <string name="new_user">New user?</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="welcome_back">Welcome Back,</string>
+    <string name="todo">TODO</string>
+    <string name="email">Email</string>
+    <string name="enter_registered_email">Enter registered email</string>
+    <string name="reset">RESET</string>
+    <string name="cancel">CANCEL</string>
+    <string name="pin_created_successfully">PIN Created Successfully</string>
 </resources>

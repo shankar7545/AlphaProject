@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:orientation="horizontal"
     android:weightSum="4">
 
@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:srcCompat="@drawable/ic_course"
-            app:tint="@color/colorPrimaryPink" />
+            app:tint="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,8 +38,6 @@
         </TextView>
 
     </LinearLayout>
-
-
 
 
 
@@ -60,7 +58,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:srcCompat="@drawable/ic_wallet"
-            app:tint="@color/colorPrimaryPink" />
+            app:tint="@color/red_600" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,41 +70,6 @@
         </TextView>
 
     </LinearLayout>
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            app:srcCompat="@drawable/ic_security"
-            app:tint="@color/colorPrimaryPink" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Security"
-            android:textColor="@color/black"
-            android:textSize="12sp">
-
-        </TextView>
-
-    </LinearLayout>
-
-
 
 
 
@@ -126,12 +89,43 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:srcCompat="@drawable/ic_share"
-            app:tint="@color/colorPrimaryPink" />
+            app:tint="@color/red_600" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Refer"
+            android:textColor="@color/black"
+            android:textSize="12sp">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:clickable="false"
+            app:srcCompat="@drawable/ic_security"
+            app:tint="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Security"
             android:textColor="@color/black"
             android:textSize="12sp">
 

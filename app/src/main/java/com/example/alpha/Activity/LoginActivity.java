@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             final Dialog dialog = new Dialog(LoginActivity.this);
             dialog.setContentView(R.layout.forgetpass_layout);
             dialog.setCancelable(false);
-            dialog.getWindow().setLayout(800, 600);
+            Objects.requireNonNull(dialog.getWindow()).setLayout(800, 600);
             //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             final TextInputEditText reset_email = dialog.findViewById(R.id.reset_email);
             final Button reset_button = dialog.findViewById(R.id.reset_button);

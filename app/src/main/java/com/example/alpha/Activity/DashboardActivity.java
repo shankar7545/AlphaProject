@@ -350,7 +350,19 @@ public class DashboardActivity extends AppCompatActivity {
                         beginnerChildText.setText("REFER ONE MORE");
                         beginnerChildText.setTextColor(getResources().getColor(R.color.colorPrimary));
                         beginnerChildText.setTypeface(beginnerChildText.getTypeface(), Typeface.BOLD);
-                        beginnerChildText.setOnClickListener(v -> Toast.makeText(DashboardActivity.this, "Refer Clicked", Toast.LENGTH_SHORT).show());
+                        beginnerChildText.setOnClickListener(v -> {
+                            try {
+                                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                                shareIntent.setType("text/plain");
+                                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Dream Winner");
+                                String shareMessage = "\nInterested to play PUBG Tounarments? Want to make some cash out of it?? Try out DreamWinner, an eSports Platform. Join Daily PUBG Matches & Get Rewards on Each Kill you Score. Get Huge Prize on Getting Chicken Dinner. Just Download the DreamWinner Android App & Register and Prove your Skills \n\n";
+                                shareMessage = shareMessage + "Download Link:\n" + "\n https://dreamwinner.in";
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                                startActivity(Intent.createChooser(shareIntent, "choose one"));
+                            } catch (Exception e) {
+                                //e.toString();
+                            }
+                        });
 
 
                     } else {

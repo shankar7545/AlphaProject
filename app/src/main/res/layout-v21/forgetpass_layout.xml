@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,16 +17,17 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Enter registered email"
+            android:text="@string/enter_registered_email"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_weight="2"
+        android:weightSum="2"
         android:orientation="horizontal">
 
         <Button
@@ -34,8 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/grey_40"
-            android:text="CANCEL"
-            android:textColor="@android:color/white" />
+            android:text="@string/cancel"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/reset_button"
@@ -43,8 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
-            android:text="RESET"
-            android:textColor="@android:color/white" />
+            android:text="@string/reset"
+            android:textColor="@android:color/white"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,11 +62,12 @@
             android:id="@+id/reset_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter registered email"
+            android:hint="@string/enter_registered_email"
             android:inputType="textAutoComplete"
             android:maxLines="1"
             android:singleLine="true"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>
