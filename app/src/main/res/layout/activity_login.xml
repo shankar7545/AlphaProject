@@ -54,12 +54,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_mlarge" />
-
-
-
 
 
         <TextView
@@ -201,6 +195,9 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_mlarge" />
 
     </LinearLayout>
 
