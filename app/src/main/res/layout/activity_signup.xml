@@ -15,8 +15,8 @@
         android:layout_gravity="end"
         android:layout_marginStart="175dp"
         android:layout_marginTop="480dp"
-        android:background="@drawable/btn_rounded_red"
-        android:text="@string/finish"
+        android:background="@drawable/btn_rounded_blue_gray"
+        android:text="@string/next"
         android:textColor="@android:color/white" />
 
 
@@ -79,14 +79,15 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/full_name"
                     android:inputType="textNoSuggestions"
@@ -94,8 +95,8 @@
                     android:singleLine="true"
                     android:textColor="@color/grey_900"
                     android:textSize="15sp" />
-                <requestFocus />
 
+                <requestFocus />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -134,7 +135,8 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@color/grey_900" />
+                    android:textColor="@color/grey_900"
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,5 +153,28 @@
         android:layout_marginTop="480dp"
         android:theme="@style/ProgressBar.colorPrimary"
         android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/login_C"
+            android:textColor="@color/white"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -1,10 +1,13 @@
 package com.example.alpha.Activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -16,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allyants.notifyme.NotifyMe;
 import com.chaos.view.PinView;
 import com.example.alpha.Common.Common;
 import com.example.alpha.R;
@@ -32,6 +34,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
@@ -48,6 +51,7 @@ public class FigerPrintActivity extends AppCompatActivity {
     private PinView pinView;
     Dialog dialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +64,28 @@ public class FigerPrintActivity extends AppCompatActivity {
         textU = findViewById(R.id.textView_noti);
         loogut = findViewById(R.id.logout);
 
+        //FingerPrint Check
+        Context context = this;
 
-       /* loogut.setOnClickListener(v -> new AlertDialog.Builder(FigerPrintActivity.this)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //Fingerprint API only available on from Android 6.0 (M)
+            FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+            assert fingerprintManager != null;
+            if (!fingerprintManager.isHardwareDetected()) {
+                // Device doesn't support fingerprint authentication
+                fingerPrintLayout.setVisibility(View.GONE);
+            } else if (!fingerprintManager.hasEnrolledFingerprints()) {
+                // User hasn't enrolled any fingerprints to authenticate with
+                fingerPrintLayout.setVisibility(View.GONE);
+
+            } else {
+                // Everything is ready for fingerprint authentication
+                fingerPrintLayout.setVisibility(View.VISIBLE);
+
+            }
+        }
+
+        loogut.setOnClickListener(v -> new AlertDialog.Builder(FigerPrintActivity.this)
                 .setMessage(R.string.end_session)
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
@@ -75,15 +99,15 @@ public class FigerPrintActivity extends AppCompatActivity {
                     finish();
                 })
                 .setNegativeButton("No", null)
-                .show()); */
+                .show());
 
-        loogut.setOnClickListener(new View.OnClickListener() {
+        /*loogut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                 NotifyMe notifyMe = new NotifyMe.Builder(getApplicationContext())
                         .title("This is a Test")
-                        .content("open now to get messege")
+                        .content("open now to get message")
                         .color(255, 0, 0, 255)
                         .led_color(255, 255, 255, 255)
                         .addAction(intent, "Done")
@@ -92,7 +116,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                         .rrule("FREQ=MINUTELY;INTERVAL=5;COUNT=2")
                         .build();
             }
-        });
+        });*/
 
 
         //ProgressBar
@@ -351,6 +375,7 @@ public class FigerPrintActivity extends AppCompatActivity {
             });
         }
     }
+
     @Override
     public void onBackPressed() {
         if (back_pressed + 2000 > System.currentTimeMillis()) {

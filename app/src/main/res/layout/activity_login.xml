@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_Relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/grey_5"
     android:orientation="vertical">
 
     <LinearLayout
@@ -42,17 +41,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_middle" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_large" />
-
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="160dp" />
 
 
 
@@ -65,7 +54,9 @@
             android:textColor="@color/blue_grey_800"
             android:textStyle="bold" />
 
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/l_email"
             android:layout_width="match_parent"
@@ -82,6 +73,7 @@
             <requestFocus />
 
         </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:layout_width="0dp"
@@ -96,6 +88,7 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:textColor="@color/blue_grey_800"
             android:textStyle="bold" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,34 +111,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_medium" />
-
-        <Button
-            android:id="@+id/fab"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginLeft="-4dp"
-            android:layout_marginRight="-4dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/login"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:theme="@style/ProgressBar.colorPrimaryDark"
-            android:visibility="gone">
-
-        </ProgressBar>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/spacing_medium" />
+            android:layout_height="10dp" />
 
 
         <TextView
@@ -153,53 +119,79 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|end"
-            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginStart="10dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/forgot_password"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/blue_grey_500"
-            android:textStyle="bold"
-            tools:ignore="RtlHardcoded" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_large" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent">
 
-            <TextView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/new_user"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/blue_grey_500" />
-
-            <TextView
-                android:id="@+id/sign_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/sign_up"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+                android:scaleType="fitXY"
+                android:tint="@color/white"
+                app:backgroundTint="@color/blue_grey_800"
+                app:fabCustomSize="55dp"
+                app:rippleColor="@color/white"
+                app:srcCompat="@drawable/ic_arrow_right" />
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:theme="@style/ProgressBar.colorPrimary"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
 
         <View
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_mlarge" />
 
+
     </LinearLayout>
 
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:textStyle="bold">
+
+        </TextView>
+
+    </LinearLayout>
+</RelativeLayout>

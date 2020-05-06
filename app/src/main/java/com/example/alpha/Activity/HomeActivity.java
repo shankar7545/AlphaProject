@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
 
         help.setOnClickListener(v ->
         {
-            Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ChainActivity.class);
             startActivity(intent);
         });
 

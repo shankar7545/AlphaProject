@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.R;
-import com.example.alpha.Registration.self_details;
+import com.example.alpha.Registration.Signup_Activity;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -35,12 +37,12 @@ public class LoginActivity extends AppCompatActivity {
     public DatabaseReference loginDatabse;
     public TextInputEditText email, password;
     public ProgressBar progressBar;
-    public Button signin;
+    public FloatingActionButton signin;
     public String login_email, login_password;
-    public LinearLayout login_Relative;
+    public RelativeLayout login_Relative;
     public TextView forgetPasswrod;
 
-    TextView sign_up;
+    LinearLayout sign_up;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
@@ -151,9 +153,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             sign_up.setOnClickListener(v -> {
 
-                Intent registration = new Intent(LoginActivity.this, self_details.class);
+                Intent registration = new Intent(LoginActivity.this, Signup_Activity.class);
                 startActivity(registration);
-
             });
         }
 
