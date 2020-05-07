@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.alpha.Activity.HomeActivity;
 import com.example.alpha.Activity.RazorpaySection;
+import com.example.alpha.Levels.beginnerActivity;
 import com.example.alpha.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -80,8 +80,7 @@ public class PaytmPayment extends AppCompatActivity {
         }));
 
         skip.setOnClickListener(v -> {
-            Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
-            startActivity(intent);
+            onBackPressed();
         });
     }
 
@@ -102,7 +101,7 @@ public class PaytmPayment extends AppCompatActivity {
 
                     new Handler().postDelayed(() -> {
 
-                        Intent intent = new Intent(PaytmPayment.this, HomeActivity.class);
+                        Intent intent = new Intent(PaytmPayment.this, beginnerActivity.class);
                         startActivity(intent);
                         finish();
                     }, 1000);

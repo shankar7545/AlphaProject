@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.Model.AchievementsClass;
-import com.example.alpha.Model.ReferClass;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
 import com.example.alpha.R;
@@ -296,13 +295,13 @@ public class Signup_Activity extends AppCompatActivity {
 
 
                         //ReferDB
-                        ReferClass referClass = new ReferClass(
+                       /* ReferClass referClass = new ReferClass(
                                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                                 mUserName);
 
 
                         assert mUserName != null;
-                        mReferDB.child(mUserName).setValue(referClass);
+                        mReferDB.child(mUserName).setValue(referClass); */
 
 
                         progressDialog.dismiss();

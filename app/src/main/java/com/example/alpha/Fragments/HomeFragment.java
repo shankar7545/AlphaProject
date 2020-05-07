@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.example.alpha.Activity.DashboardActivity;
+import com.example.alpha.Levels.beginnerActivity;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         layoutOne = mView.findViewById(R.id.layoutOne);
         layoutOne.setOnClickListener(v -> {
 
-            Intent intent = new Intent(getContext(), DashboardActivity.class);
+            Intent intent = new Intent(getContext(), beginnerActivity.class);
             startActivity(intent);
 
         });

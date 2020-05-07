@@ -520,7 +520,6 @@ public class DashboardActivity extends AppCompatActivity {
     private void referDetails(final String mReferCode) {
         try {
 
-
             mFirebase = FirebaseDatabase.getInstance().getReference();
 
             mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -559,12 +558,9 @@ public class DashboardActivity extends AppCompatActivity {
 
 
                     Toast.makeText(DashboardActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                        }
+                    new Handler().postDelayed(() -> {
+                        Intent intent = new Intent(DashboardActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }, 2000);
 
 
@@ -589,6 +585,8 @@ public class DashboardActivity extends AppCompatActivity {
 
                 }
             });
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

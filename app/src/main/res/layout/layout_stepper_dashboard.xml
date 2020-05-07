@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/spacing_large"
+        android:paddingRight="@dimen/spacing_large">
+
+        <!--top line-->
+
+        <LinearLayout
+            android:layout_width="@dimen/spacing_xlarge"
+            android:layout_height="@dimen/spacing_mlarge"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+
+        <!--section title-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/PaymentRelative"
+                    android:layout_width="@dimen/spacing_xlarge"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:background="@drawable/shape_round_solid"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_40"
+                    android:minHeight="?attr/actionBarSize" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/spacing_large"
+                android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_label_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:gravity="center_vertical"
+                    android:onClick="clickLabel"
+                    android:paddingLeft="@dimen/spacing_small"
+                    android:paddingRight="@dimen/spacing_small"
+                    android:textStyle="bold"
+                    android:text="Payment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/PaymentImageView"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/red_check"
+                            android:visibility="visible" />
+
+                        <ProgressBar
+                            android:id="@+id/PaymentProgress"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:theme="@style/ProgressBar.Green"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/PaymentText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_gravity="center"
+                            android:text="Payment Incomplete"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:visibility="visible"
+                            android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="1dp"
+                                    android:src="@drawable/rupee" />
+
+                                <TextView
+                                    android:id="@+id/transactionAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="50"
+                                    android:textColor="@color/green_800"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/paymentButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minWidth="0dp"
+                        android:onClick="clickAction"
+                        android:text="PAY NOW"
+                        android:theme="@style/Button.Primary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--section description-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/ReferCodeRelative"
+                    android:layout_width="@dimen/spacing_xlarge"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:background="@drawable/shape_round_solid"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_40" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/spacing_large"
+                android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_label_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:gravity="center_vertical"
+                    android:onClick="clickLabel"
+                    android:paddingLeft="@dimen/spacing_small"
+                    android:paddingRight="@dimen/spacing_small"
+                    android:text="Refercode"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/referCode"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="4dp"
+                        android:digits="@string/refername"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="8"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/colorPrimary"
+
+                        >
+
+                        <requestFocus />
+
+                    </EditText>
+
+
+                    <Button
+                        android:id="@+id/referCodeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:minWidth="0dp"
+                        android:onClick="clickAction"
+                        android:text="S U B M I T"
+                        android:visibility="visible"
+                        android:theme="@style/Button.Primary" />
+
+                    <ProgressBar
+                        android:id="@+id/referCodeProgressBar"
+                        android:layout_width="35dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="24dp"
+                        android:theme="@style/ProgressBar.colorPrimary"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!--section confirmation-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/step_confirmation"
+                    android:layout_width="@dimen/spacing_xlarge"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:background="@drawable/shape_round_solid"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:background="@color/grey_40" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/spacing_large"
+                android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_label_confirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_xlarge"
+                    android:gravity="center_vertical"
+                    android:onClick="clickLabel"
+                    android:paddingLeft="@dimen/spacing_small"
+                    android:paddingRight="@dimen/spacing_small"
+                    android:text="Status"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90" />
+
+                <LinearLayout
+                    android:id="@+id/lyt_confirmation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/you_are_now_eligible_to_upgrade_to_bronze"
+                        android:textColor="@color/colorPrimary"
+                        android:lines="2"
+                        android:visibility="visible"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--bottom line-->
+
+        <LinearLayout
+            android:layout_width="@dimen/spacing_xlarge"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey_10" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="U P G R A D E"
+            android:textStyle="bold"
+            android:textColor="@color/white">
+
+        </TextView>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+
