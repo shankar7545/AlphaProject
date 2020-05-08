@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Levels.beginnerActivity"></activity>
+        <activity android:name=".Levels.LevelActivity"></activity>
+        <activity android:name=".Levels.beginnerActivity" />
         <activity
             android:name=".Profile.ChangePassword"
             android:screenOrientation="portrait"

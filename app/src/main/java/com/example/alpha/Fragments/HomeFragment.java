@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.request.RequestOptions;
+import com.example.alpha.Levels.LevelActivity;
 import com.example.alpha.Levels.beginnerActivity;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
@@ -126,6 +127,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         walletLayout.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), walletActivity.class);
             startActivity(intent);
+        });
+        SecurityLayout = mView.findViewById(R.id.securityLayout);
+        SecurityLayout.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), LevelActivity.class));
         });
     }
 

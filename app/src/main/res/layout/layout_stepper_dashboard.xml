@@ -248,18 +248,15 @@
 
                     <EditText
                         android:id="@+id/referCode"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginBottom="4dp"
                         android:digits="@string/refername"
                         android:inputType="textNoSuggestions"
                         android:maxLength="8"
-                        android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"
-
                         >
-
                         <requestFocus />
 
                     </EditText>
@@ -394,24 +391,34 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/logout"
+        android:id="@+id/upgrade"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/grey_60"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/upgradeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="U P G R A D E"
             android:textStyle="bold"
+            android:visibility="visible"
             android:textColor="@color/white">
 
         </TextView>
+
+        <ProgressBar
+            android:id="@+id/upgradeProgressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:theme="@style/ProgressBar.White"
+            android:visibility="gone" />
+
 
     </LinearLayout>
 
