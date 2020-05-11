@@ -1,7 +1,11 @@
 package com.example.alpha.Levels;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.Fragments.BronzeFragment;
 import com.example.alpha.R;
 import com.google.android.material.tabs.TabLayout;
@@ -35,7 +39,7 @@ public class LevelActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Dahboard");
+        getSupportActionBar().setTitle("Dashboard");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -45,6 +49,8 @@ public class LevelActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        // viewPager.setOnTouchListener((arg0, arg1) -> true);  //to stop scrolling
     }
 
 
@@ -53,7 +59,7 @@ public class LevelActivity extends AppCompatActivity {
         adapter.addFragment(BronzeFragment.newInstance(), "BRONZE");
         adapter.addFragment(BronzeFragment.newInstance(), "SILVER");
         adapter.addFragment(BronzeFragment.newInstance(), "GOLD");
-        adapter.addFragment(BronzeFragment.newInstance(), "DIAMOND");
+        adapter.addFragment(BronzeFragment.newInstance(), "PLATINUM");
         viewPager.setAdapter(adapter);
     }
 
@@ -88,5 +94,24 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        if (item.getItemId() == R.id.help) {
+            Intent intent = new Intent(LevelActivity.this, HelpActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

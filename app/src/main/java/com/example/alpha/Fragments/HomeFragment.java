@@ -99,24 +99,40 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference();
         scoresRef.keepSynced(true);
 
-
-
-
-        FunctionOnclick();
-
-
         layoutOne = mView.findViewById(R.id.layoutOne);
-        layoutOne.setOnClickListener(v -> {
 
-            Intent intent = new Intent(getContext(), beginnerActivity.class);
-            startActivity(intent);
 
-        });
+        try {
+
+            mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String Achievement = dataSnapshot.child("Achievement").getValue().toString();
+
+                    if (Achievement.equals("Beginner")) {
+                        layoutOne.setOnClickListener(v -> startActivity(new Intent(getContext(), beginnerActivity.class)));
+                    } else {
+                        layoutOne.setOnClickListener(v -> startActivity(new Intent(getContext(), LevelActivity.class)));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 
         //CheckingLevelUpgrades();
         //loadTransactions();
+        FunctionOnclick();
         Slider();
         return mView;
 

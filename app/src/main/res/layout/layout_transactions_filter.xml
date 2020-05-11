@@ -27,7 +27,7 @@
             android:layout_weight="1.4"
             android:background="@drawable/roundenddesign_black"
             android:gravity="center"
-            android:text="@string/date"
+            android:text="@string/type"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
@@ -41,7 +41,7 @@
             android:layout_weight="1.4"
             android:background="@drawable/roundenddesign_black"
             android:gravity="center"
-            android:text="@string/type"
+            android:text="Level"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />

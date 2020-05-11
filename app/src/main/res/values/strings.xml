@@ -12,6 +12,10 @@
     <string name="wallet_balance">Wallet Balance</string>
 
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
     //Google Login
     <string name="web_client_id">xxxxxxxx..place your web client id here</string>
     <string name="HIDE" />

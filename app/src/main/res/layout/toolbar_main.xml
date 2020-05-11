@@ -18,6 +18,16 @@
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
 
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_menu" />
+
+
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/ProfilePic"
             android:layout_width="42dp"
@@ -29,6 +39,7 @@
             app:civ_border_width="1.5dp"
             app:civ_shadow="true"
             app:civ_shadow_radius="0"
+            android:visibility="gone"
             app:srcCompat="@drawable/refer" />
 
 
@@ -37,22 +48,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tool_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:text="Your username"
                 android:textColor="@color/grey_10"
+                android:visibility="visible"
                 android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:text="SHANKAR"
                 android:fontFamily="@font/lato_black"
                 android:textColor="@color/white"

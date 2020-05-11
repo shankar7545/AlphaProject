@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'  //Spots Dialog
     implementation 'com.github.jakebonk:NotifyMe:1.0.1' //Notifications
     implementation 'com.facebook.shimmer:shimmer:0.4.0' //Shimmer Layout
+    implementation 'com.hootsuite.android:nachos:1.1.1' // material chips
 
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
@@ -74,13 +75,4 @@ dependencies {
     implementation('com.paytm:pgplussdk:1.4.4') {
         transitive = true
     }
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:+'
-    implementation 'androidx.constraintlayout:constraintlayout:+'
-}
-
-dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:+'
 }

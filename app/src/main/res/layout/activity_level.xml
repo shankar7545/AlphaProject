@@ -14,14 +14,9 @@
         android:background="@color/blue_500"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <include
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:contentInsetStartWithNavigation="0dp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            layout="@layout/toolbar_default" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -31,7 +26,7 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="3dp"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextAppearance="@style/TextAppearance.Subhead.Bold"
             app:tabTextColor="@color/grey_10" />

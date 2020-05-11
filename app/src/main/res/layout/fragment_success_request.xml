@@ -60,75 +60,6 @@
                         android:layout_margin="@dimen/spacing_middle"
                         android:background="@drawable/line_dash_grey_20" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_mlarge"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/spacing_middle">
-
-                        <LinearLayout
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/success_type"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="TO"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:textColor="@color/grey_80" />
-
-                            <TextView
-                                android:id="@+id/success_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="Pappu Singha"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/grey_80"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:gravity="center_vertical"
-                                android:text="Order ID:"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:textColor="@color/grey_80" />
-
-                            <TextView
-                                android:id="@+id/txnorderid"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:layout_marginBottom="4dp"
-                                android:text=""
-                                android:textColor="@color/grey_80"
-                                android:textSize="16dp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -198,6 +129,7 @@
 
                     </LinearLayout>
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -207,10 +139,88 @@
                         android:padding="@dimen/spacing_middle">
 
                         <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/success_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="TO"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/grey_80" />
+
+                            <TextView
+                                android:id="@+id/success_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Pappu Singha"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_80"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:gravity="center_vertical"
+                                android:text="Order ID:"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/grey_80" />
+
+                            <TextView
+                                android:id="@+id/txnorderid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginBottom="4dp"
+                                android:text=""
+                                android:textColor="@color/grey_80"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_mlarge"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/spacing_middle">
+
+
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="AMOUNT"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/grey_80" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -238,13 +248,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:text="AMOUNT"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                                android:textColor="@color/grey_80" />
 
 
                         </LinearLayout>

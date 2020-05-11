@@ -17,6 +17,16 @@
         android:paddingTop="15dp"
         android:paddingEnd="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal"
+            android:textColor="@color/darkPrimary"
+            android:textSize="18sp"
+            android:fontFamily="@font/baloo"
+            android:layout_marginBottom="5dp" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,20 +43,123 @@
                 android:tint="@color/colorPrimaryDark"
                 app:srcCompat="@drawable/ic_person" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_first_name"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/profile_first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Full name"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"
+
+                        android:text="Shankar Chowdary"
+                        android:textColorHint="@color/grey_40"
+                        android:textSize="14sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Full name"
-                    android:inputType="text"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:text="Edit"
+                    android:visibility="gone"
+                    android:focusable="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:text="Cancel"
+                    android:focusable="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:tint="@color/colorPrimaryDark"
+                app:srcCompat="@drawable/ic_face" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="User Name"
+                    android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="Shankar Chowdary"
-                    android:textColorHint="@color/grey_40"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:tint="@color/colorPrimaryDark"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Phone Number"
+                    android:inputType="textAutoComplete"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -96,7 +209,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/purple_800"
+        android:background="@color/colorPrimary"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:orientation="vertical">

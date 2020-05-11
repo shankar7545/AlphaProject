@@ -3,6 +3,7 @@ package com.example.alpha.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,9 +11,11 @@ import android.widget.Toast;
 import com.example.alpha.Fragments.EarnFragment;
 import com.example.alpha.Fragments.HomeFragment;
 import com.example.alpha.Fragments.MeFragment;
+import com.example.alpha.Profile.EditDetails;
 import com.example.alpha.R;
-import com.google.android.material.appbar.AppBarLayout;
+import com.example.alpha.Wallet.walletActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +28,12 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,9 +42,13 @@ public class HomeActivity extends AppCompatActivity {
     TextView userName;
 
     RelativeLayout home_Relative;
-    AppBarLayout appbar;
-    ActionBar actionBar;
-    ImageButton help;
+
+    private ActionBar actionBar;
+    private Toolbar toolbar;
+
+    LinearLayout profileLayoutM, walletLayoutM, logoutLayoutM;
+
+    ImageButton help, menu;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     CircularImageView profilePic;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -77,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.ProfilePic);
 
         home_Relative = findViewById(R.id.home_relative);
+
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
         userName = findViewById(R.id.userName);
@@ -112,8 +124,56 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.setSelectedItemId(R.id.nav_home);
+
+
+        initNavigationMenu();
+
+        menuOnclick();
+
+
+
     }
 
+
+    private void initNavigationMenu() {
+        NavigationView nav_view = findViewById(R.id.nav_view);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        menu = findViewById(R.id.menu);
+        menu.setOnClickListener(v -> {
+
+            drawer.openDrawer(GravityCompat.START);
+
+        });
+
+    }
+
+
+    private void menuOnclick() {
+        profileLayoutM = findViewById(R.id.profileLayoutM);
+        walletLayoutM = findViewById(R.id.walletLayoutM);
+        logoutLayoutM = findViewById(R.id.logoutLayoutM);
+
+        profileLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, EditDetails.class)));
+
+        walletLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, walletActivity.class)));
+
+        logoutLayoutM.setOnClickListener(v -> new AlertDialog.Builder(HomeActivity.this)
+                .setMessage(R.string.end_session)
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("logoutState", "logout");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton("No", null)
+                .show());
+
+    }
 
 
     /*public void refreshMyData() {

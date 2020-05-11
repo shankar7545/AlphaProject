@@ -11,8 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Levels.LevelActivity"></activity>
-        <activity android:name=".Levels.beginnerActivity" />
+        <activity android:name=".Wallet.TransactionFilterActivity"></activity>
+        <activity
+            android:name=".Levels.LevelActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Levels.beginnerActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Profile.ChangePassword"
             android:screenOrientation="portrait"
