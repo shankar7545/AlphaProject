@@ -39,7 +39,7 @@ import androidx.fragment.app.Fragment;
 public class HomeActivity extends AppCompatActivity {
     private static long back_pressed;
     DatabaseReference mRef;
-    TextView userName;
+    TextView userName, nameM, userNameM;
 
     RelativeLayout home_Relative;
 
@@ -92,6 +92,10 @@ public class HomeActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
         userName = findViewById(R.id.userName);
+        userNameM = findViewById(R.id.userNameM);
+        nameM = findViewById(R.id.nameM);
+
+
         help = findViewById(R.id.help);
 
 
@@ -107,12 +111,15 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
+                String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
 
                 userName.setText(mUserName);
+                userNameM.setText(mUserName);
+                nameM.setText(mName);
 
             }
 

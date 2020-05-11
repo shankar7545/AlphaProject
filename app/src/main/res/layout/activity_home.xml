@@ -122,6 +122,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/userNameM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/spacing_medium"
@@ -129,7 +130,7 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                         <TextView
-                            android:id="@+id/email"
+                            android:id="@+id/nameM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shankar Chowdary"
