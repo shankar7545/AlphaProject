@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alpha.Model.AchievementsClass;
 import com.example.alpha.Model.ReferClass;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
@@ -43,7 +42,7 @@ public class Signup_Activity extends AppCompatActivity {
     Button finish;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
-    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mLevel, mRef, mLogin, mUsers;
+    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mChain, mRef, mLogin, mUsers;
 
     LinearLayout login;
     private Dialog dialog;
@@ -69,8 +68,8 @@ public class Signup_Activity extends AppCompatActivity {
         mUsers = FirebaseDatabase.getInstance().getReference("Users");
         mReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
         mTransactions = FirebaseDatabase.getInstance().getReference("Transactions");
-        mLevel = FirebaseDatabase.getInstance().getReference("Level");
         mLogin = FirebaseDatabase.getInstance().getReference("Login");
+        mChain = FirebaseDatabase.getInstance().getReference("Chain");
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth.getInstance().signOut();
 
@@ -154,52 +153,48 @@ public class Signup_Activity extends AppCompatActivity {
 
             });
 
-            finish.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final String mUserName = editTextuserName.getText().toString().trim();
+            finish.setOnClickListener(view -> {
+                final String mUserName = editTextuserName.getText().toString().trim();
 
 
-                    final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
-                    promodb.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
+                final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
+                promodb.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
 
-                            if (mUserName.isEmpty()) {
-                                editTextuserName.setError("Enter Username");
-                                editTextuserName.requestFocus();
-                                return;
-                            } else if (mUserName.length() < 5) {
-                                editTextuserName.setError("Enter 5 Letters");
-                                editTextuserName.requestFocus();
-                                return;
-                            } else if (checkdataSnapshot.hasChild(mUserName)) {
-                                editTextuserName.setError("Username Exists");
-                                editTextuserName.requestFocus();
-                            } else {
+                        if (mUserName.isEmpty()) {
+                            editTextuserName.setError("Enter Username");
+                            editTextuserName.requestFocus();
+                            return;
+                        } else if (mUserName.length() < 5) {
+                            editTextuserName.setError("Enter 5 Letters");
+                            editTextuserName.requestFocus();
+                            return;
+                        } else if (checkdataSnapshot.hasChild(mUserName)) {
+                            editTextuserName.setError("Username Exists");
+                            editTextuserName.requestFocus();
+                        } else {
 
-                                registerUser(mUserName);
-                                dialog.dismiss();
-
-                            }
-                        }
-
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            registerUser(mUserName);
+                            dialog.dismiss();
 
                         }
-                    });
+                    }
 
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
             });
 
 
             cancel.setOnClickListener(v -> dialog.dismiss());
+            next.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,8 +248,7 @@ public class Signup_Activity extends AppCompatActivity {
 
 
                         mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user);
-
-
+                        mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Achievement").setValue("Beginner");
                         mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .child("Chain").child("parent").child("p1").setValue("null");
 
@@ -265,6 +259,9 @@ public class Signup_Activity extends AppCompatActivity {
 
                         mWallet.child("balance").setValue("0");
                         mWallet.child("withdrawable").setValue("0");
+                        mWallet.child("Status").child("status").setValue("free");
+                        mWallet.child("Status").child("uid").setValue("free");
+
 
 
                         TransactionCount_class transactionCount_class = new TransactionCount_class(
@@ -281,9 +278,17 @@ public class Signup_Activity extends AppCompatActivity {
                         mWallet.child("Transactions").child("count").setValue(transactionCount_class);
 
 
-                        //AchieveMents
+                        //Chain
 
-                        AchievementsClass achievementsClass = new AchievementsClass(
+
+                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid1").child("uid").setValue("null");
+                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid1").child("username").setValue("null");
+
+                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid2").child("uid").setValue("null");
+                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid2").child("username").setValue("null");
+
+
+                        /*AchievementsClass achievementsClass = new AchievementsClass(
                                 "unlocked",
                                 "locked",
                                 "locked",
@@ -292,7 +297,7 @@ public class Signup_Activity extends AppCompatActivity {
                         );
 
                         mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                                .child("Achievements").setValue(achievementsClass);
+                                .child("Achievements").setValue(achievementsClass); */
 
 
                         //ReferDB
@@ -310,6 +315,7 @@ public class Signup_Activity extends AppCompatActivity {
                     } else {
                         Toast.makeText(Signup_Activity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
+                        progressDialog.dismiss();
                         next.setVisibility(View.VISIBLE);
 
                     }

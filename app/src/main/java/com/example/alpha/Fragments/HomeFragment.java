@@ -104,11 +104,11 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
         try {
 
-            mRef.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            mRef.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String Achievement = dataSnapshot.child("Achievement").getValue().toString();
+                    String Achievement = dataSnapshot.getValue().toString();
 
                     if (Achievement.equals("Beginner")) {
                         layoutOne.setOnClickListener(v -> startActivity(new Intent(getContext(), beginnerActivity.class)));

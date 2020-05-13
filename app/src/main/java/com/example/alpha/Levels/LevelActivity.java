@@ -9,10 +9,18 @@ import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.Fragments.BronzeFragment;
 import com.example.alpha.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -21,15 +29,22 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 public class LevelActivity extends AppCompatActivity {
+    private static long back_pressed;
 
     public ViewPager viewPager;
     public TabLayout tabLayout;
+
+
+    DatabaseReference mUser;
+    private final String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
 
+        mUser = FirebaseDatabase.getInstance().getReference("Users");
         initToolbar();
         initComponent();
 
@@ -51,6 +66,38 @@ public class LevelActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         // viewPager.setOnTouchListener((arg0, arg1) -> true);  //to stop scrolling
+
+        mUser.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String mAchievement = dataSnapshot.getValue().toString();
+
+                switch (mAchievement) {
+                    case "Bronze":
+                        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
+
+                        break;
+                    case "Silver":
+                        Objects.requireNonNull(tabLayout.getTabAt(1)).select();
+
+                        break;
+                    case "Gold":
+                        Objects.requireNonNull(tabLayout.getTabAt(2)).select();
+
+                        break;
+                    case "Diamond":
+                        Objects.requireNonNull(tabLayout.getTabAt(3)).select();
+                        break;
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -59,7 +106,8 @@ public class LevelActivity extends AppCompatActivity {
         adapter.addFragment(BronzeFragment.newInstance(), "BRONZE");
         adapter.addFragment(BronzeFragment.newInstance(), "SILVER");
         adapter.addFragment(BronzeFragment.newInstance(), "GOLD");
-        adapter.addFragment(BronzeFragment.newInstance(), "PLATINUM");
+        adapter.addFragment(BronzeFragment.newInstance(), "DIAMOND");
+
         viewPager.setAdapter(adapter);
     }
 
@@ -114,4 +162,10 @@ public class LevelActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
+    }
 }

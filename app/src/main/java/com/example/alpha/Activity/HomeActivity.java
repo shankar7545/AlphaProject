@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Toolbar toolbar;
 
-    LinearLayout profileLayoutM, walletLayoutM, logoutLayoutM;
+    LinearLayout profileLayoutM, walletLayoutM, logoutLayoutM, chainLayoutM;
 
     ImageButton help, menu;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -160,10 +160,12 @@ public class HomeActivity extends AppCompatActivity {
         profileLayoutM = findViewById(R.id.profileLayoutM);
         walletLayoutM = findViewById(R.id.walletLayoutM);
         logoutLayoutM = findViewById(R.id.logoutLayoutM);
+        chainLayoutM = findViewById(R.id.chainLayoutM);
+
 
         profileLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, EditDetails.class)));
-
         walletLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, walletActivity.class)));
+        chainLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ChainActivity.class)));
 
         logoutLayoutM.setOnClickListener(v -> new AlertDialog.Builder(HomeActivity.this)
                 .setMessage(R.string.end_session)

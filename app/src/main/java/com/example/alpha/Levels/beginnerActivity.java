@@ -63,7 +63,7 @@ public class beginnerActivity extends AppCompatActivity {
 
 
     final String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-    private DatabaseReference mFirebase, mUsers, mChain, mWallet, mAchievement;
+    private DatabaseReference mFirebase, mUsers, mChain, mWallet, mAchievement, mReferCodeDB;
 
 
     RelativeLayout PaymentRelative, ReferCodeRelative;
@@ -89,7 +89,7 @@ public class beginnerActivity extends AppCompatActivity {
         mUsers = FirebaseDatabase.getInstance().getReference("Users");
         mChain = FirebaseDatabase.getInstance().getReference("Chain");
         mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
-
+        mReferCodeDB = FirebaseDatabase.getInstance().getReference("ReferCode");
 
         upgrade = findViewById(R.id.upgrade);
         upgrade.setEnabled(false);
@@ -144,7 +144,7 @@ public class beginnerActivity extends AppCompatActivity {
         }
 
         view_list.get(0).setVisibility(View.VISIBLE);
-        hideSoftKeyboard();
+        //hideSoftKeyboard();
 
     }
 
@@ -177,6 +177,7 @@ public class beginnerActivity extends AppCompatActivity {
                     paymentButton.setText("PAY NOW");
                     paymentButton.setOnClickListener(v -> {
                         startActivity(new Intent(beginnerActivity.this, PaytmPayment.class));
+                        finish();
                     });
 
                 }
@@ -443,15 +444,22 @@ public class beginnerActivity extends AppCompatActivity {
 
                         mWallet.child(p1).child("Status").child("status").setValue("free");
                         mWallet.child(p1).child("Status").child("uid").setValue("null");
+
+                        //Adding ReferCode
+
+                        mReferCodeDB.child(user_userName).child("uid").setValue(selfUid);
+                        mReferCodeDB.child(user_userName).child("username").setValue(user_userName);
+
+
                         new Handler().postDelayed(() -> {
                             progressDialog.dismiss();
                             upgradeProgressBar.setVisibility(View.GONE);
                             upgradeTextView.setVisibility(View.VISIBLE);
                             upgradeTextView.setText("U P G R A D E D");
-
+                            startActivity(new Intent(beginnerActivity.this, LevelActivity.class));
+                            finish();
                         }, 1000);
 
-                        Toast.makeText(beginnerActivity.this, "Successfull", Toast.LENGTH_SHORT).show();
 
 
                     } else {
@@ -555,9 +563,9 @@ public class beginnerActivity extends AppCompatActivity {
     }
 
 
-    public void hideSoftKeyboard() {
+    /*public void hideSoftKeyboard() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-    }
+    } */
 
 
     //ReferCode
@@ -568,9 +576,8 @@ public class beginnerActivity extends AppCompatActivity {
             editTextReferCode.setEnabled(false);
             referCodeButton.setVisibility(View.GONE);
             referCodeProgressBar.setVisibility(View.VISIBLE);
-            final DatabaseReference ReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
 
-            ReferDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            mReferCodeDB.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
 
@@ -580,6 +587,8 @@ public class beginnerActivity extends AppCompatActivity {
                         referCodeProgressBar.setVisibility(View.GONE);
                         referCodeButton.setVisibility(View.VISIBLE);
                         editTextReferCode.setEnabled(true);
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
 
                     } else if (checkdataSnapshot.hasChild(mReferCode)) {
 
@@ -592,6 +601,8 @@ public class beginnerActivity extends AppCompatActivity {
                         referCodeProgressBar.setVisibility(View.GONE);
                         referCodeButton.setVisibility(View.VISIBLE);
                         editTextReferCode.setEnabled(true);
+
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
                     }
 
@@ -617,7 +628,7 @@ public class beginnerActivity extends AppCompatActivity {
             mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String referUid = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
+                    String referUid = dataSnapshot.child("ReferCode").child(mReferCode).child("uid").getValue().toString();
                     String childCount = dataSnapshot.child("Users").child(referUid).child("childCount").getValue().toString();
                     String parentStatus = dataSnapshot.child("Users").child(referUid).child("parentStatus").getValue().toString();
                     String userName = dataSnapshot.child("Users").child(selfUid).child("username").getValue().toString();
@@ -638,10 +649,12 @@ public class beginnerActivity extends AppCompatActivity {
                                 mChain.child(referUid).child("uid2").child("uid").setValue(selfUid);
                                 mChain.child(referUid).child("uid2").child("username").setValue(userName);
                                 mFirebase.child("Users").child(referUid).child("childCount").setValue("2");
+                                mReferCodeDB.child(mReferCode).setValue(null);
 
                             } else {
                                 //editTextReferCode.setError("Limit Exceeded");
                                 //editTextReferCode.requestFocus();
+                                mReferCodeDB.child(mReferCode).setValue(null);
                                 Toast.makeText(beginnerActivity.this, "Limit exceeded , Try another Refer Code", Toast.LENGTH_SHORT).show();
                                 referCodeProgressBar.setVisibility(View.GONE);
                                 referCodeButton.setVisibility(View.VISIBLE);
@@ -685,7 +698,7 @@ public class beginnerActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                    String uid_p1 = dataSnapshot.child("ReferDB").child(mReferCode).child("uid").getValue().toString();
+                    String uid_p1 = dataSnapshot.child("ReferCode").child(mReferCode).child("uid").getValue().toString();
 
                     String uid_p2 = dataSnapshot.child("Users").child(uid_p1).child("Chain").child("parent").child("p1").getValue().toString();
                     String uid_p3 = dataSnapshot.child("Users").child(uid_p2).child("Chain").child("parent").child("p1").getValue().toString();

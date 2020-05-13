@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:paddingLeft="@dimen/spacing_large"
         android:paddingRight="@dimen/spacing_large">
@@ -181,24 +181,18 @@
 
 
                     <LinearLayout
+                        android:id="@+id/usernameDisplay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Username(s)"
-                            android:layout_marginStart="7dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                         <com.hootsuite.nachos.NachoTextView
                             android:id="@+id/et_tag"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:enabled="false"
-                            android:layout_marginTop="@dimen/spacing_middle"
+                            android:layout_marginBottom="5dp"
                             android:background="@android:color/transparent">
 
                             <requestFocus />
@@ -207,14 +201,30 @@
 
                     </LinearLayout>
 
-                    <Button
+                    <LinearLayout
                         android:id="@+id/referButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:minWidth="0dp"
-                        android:text="S H A R E   N O W"
-                        android:theme="@style/Button.Primary" />
+                        android:layout_height="45dp"
+                        android:layout_marginBottom="10dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:background="@color/grey_5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="@dimen/spacing_large">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_black"
+                            android:text="  Share Now"
+                            android:textColor="@color/blue" />
+
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -386,6 +396,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingStart="10dp"
+                        android:visibility="gone"
                         android:paddingEnd="@dimen/spacing_large">
 
 
@@ -511,7 +522,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/upgradeLayout"
+        android:id="@+id/upgradeLayoutBronze"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
