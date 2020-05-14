@@ -15,6 +15,7 @@ import com.example.alpha.Levels.LevelActivity;
 import com.example.alpha.Levels.beginnerActivity;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
+import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.ViewHolder.TransactionView;
 import com.example.alpha.Wallet.walletActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -146,7 +147,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         });
         SecurityLayout = mView.findViewById(R.id.securityLayout);
         SecurityLayout.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), LevelActivity.class));
+            startActivity(new Intent(getContext(), PaytmPayment.class));
         });
     }
 

@@ -4,9 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.JSONParser;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,29 +27,43 @@ import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTransactionCallback {
     int payamount;
     String amount = "";
-    DatabaseReference myWalletAmount;
-    String id = UUID.randomUUID().toString();
     String custid = "", mid, customer = "";
     int liveorderid, uniqueid;
     DatabaseReference paytmchangedb, mWallet, mTrasaction, mUser, mRef, mAutoReferCode;
+    DatabaseReference myWalletAmount, mFirebase;
+
+    String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+
+    String id = UUID.randomUUID().toString();
+    String childid = "PW" + id.substring(0, 5).toUpperCase();
+    String extraid = id.substring(0, 4).toUpperCase();
+    private Calendar c = Calendar.getInstance();
+    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+    private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+    private String timeformat = time.format(c.getTime());
+    private String datetime = dateformat.format(c.getTime());
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_amount);
-
+        myWalletAmount = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid);
+        mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
 
         {
 
@@ -70,36 +89,123 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     @Override
     public void onTransactionResponse(Bundle bundle) {
         Log.e("checksum ", " respon true " + bundle.toString());
-        Toast.makeText(this, "" + bundle.toString(), Toast.LENGTH_SHORT).show();
-
-        Toast.makeText(this, "Done: " + payamount, Toast.LENGTH_SHORT).show();
 
         String response = bundle.getString("RESPMSG");
         String responsecode = bundle.getString("RESPCODE");
 
         if (response.equals("Txn Success") || responsecode.equals("01")) {
-            mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
-            mTrasaction = FirebaseDatabase.getInstance().getReference("Transactions");
-            mUser = FirebaseDatabase.getInstance().getReference("Users");
+            try {
+                mFirebase = FirebaseDatabase.getInstance().getReference();
+                mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mWallet.child(selfUid).child("balance").setValue("50");
+                        mFirebase.child("Users").child(selfUid).child("paymentStatus").setValue("true");
+
+                        String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
+                                .child("username").getValue()).toString();
+
+                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
 
 
-            mWallet.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue("50");
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "added",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    "Wallet",
+                                    childid,
+                                    "50",
+                                    1,
+                                    "beginner"
+                            );
+                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
 
-            mUser.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("payment").setValue("true");
-            mRef = FirebaseDatabase.getInstance().getReference();
+                        } else {
 
-            mRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "added",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    "Wallet",
+                                    childid,
+                                    "50",
+                                    1,
+                                    "beginner"
 
-                }
+                            );
+                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                        }
 
+                        //sendTransaction in user
+
+
+                        if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                .child("history").exists()) {
+                            long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+                                    .child("history").getChildrenCount();
+
+                            long sizeR = countR + 1;
+
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "added",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    "Wallet",
+                                    childid,
+                                    "50",
+                                    sizeR,
+                                    "beginner"
+                            );
+                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+
+                        } else {
+
+                            Transaction_Class send_transaction_class = new Transaction_Class(
+                                    "added",
+                                    datetime,
+                                    timeformat,
+                                    user_userName,
+                                    "Wallet",
+                                    childid,
+                                    "50",
+                                    1,
+                                    "beginner"
+                            );
+                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                //inflate view
+                View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+                ((TextView) custom_view.findViewById(R.id.message)).setText("Transaction Successful!");
+                ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_done_black_24dp);
+                ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.green_500));
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(custom_view);
+                toast.show();
+                finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             finish();
         } else {
@@ -132,16 +238,15 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     @Override
     public void onErrorLoadingWebPage(int i, String s, String s1) {
         Log.e("checksum ", " error loading pagerespon true " + s + "  s1 " + s1);
-        Toast.makeText(this, "" + s + " " + s1, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "onErrorLoadingWebPage", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void onBackPressedCancelTransaction() {
         Log.e("checksum ", " cancel call back respon  ");
-        Toast.makeText(this, "Canceled transaction", Toast.LENGTH_SHORT).show();
-
-
+        String msg = "Transaction failed!";
+        showToast(msg);
         finish();
     }
 
@@ -149,14 +254,14 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     public void onTransactionCancel(String s, Bundle bundle) {
         Log.e("checksum ", "  transaction cancel ");
         finish();
-        Toast.makeText(this, "" + s, Toast.LENGTH_SHORT).show();
+        showToast(s);
     }
 
     public class sendUserDetailTOServerdd extends AsyncTask<ArrayList<String>, Void, String> {
 
         //private String orderId , mid, custid, amt;
-        String url = "rnt.30c.myftpupload.com/paytm/generateChecksum.php";
-        String varifyurl = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + "DW" + id.substring(0, 5).toUpperCase();
+        String url = "https://khelaghorbd.in/paytm/generateChecksum.php";
+        String varifyurl = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + childid;
         // "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID"+orderId;
         String CHECKSUMHASH = "";
         private ProgressDialog dialog = new ProgressDialog(ConfirmAmount.this);
@@ -173,7 +278,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                 JSONParser jsonParser = new JSONParser(ConfirmAmount.this);
                 String param =
                         "MID=" + mid +
-                                "&ORDER_ID=" + "DW" + id.substring(0, 5).toUpperCase() +
+                                "&ORDER_ID=" + childid +
                                 "&CUST_ID=" + custid +
                                 "&CHANNEL_ID=WAP&TXN_AMOUNT=" + amount + "&WEBSITE=DEFAULT" +
                                 "&CALLBACK_URL=" + varifyurl + "&INDUSTRY_TYPE_ID=Retail";
@@ -215,7 +320,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
             HashMap<String, String> paramMap = new HashMap<String, String>();
             //these are mandatory parameters
             paramMap.put("MID", mid); //MID provided by paytm
-            paramMap.put("ORDER_ID", "DW" + id.substring(0, 5).toUpperCase());
+            paramMap.put("ORDER_ID", childid);
             paramMap.put("CUST_ID", custid);
             paramMap.put("CHANNEL_ID", "WAP");
             paramMap.put("TXN_AMOUNT", amount);
@@ -237,7 +342,30 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
         }
 
+
     }
 
+    private void showToast(String msg) {
+
+        try {
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+
+            //inflate view
+            View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+            ((TextView) custom_view.findViewById(R.id.message)).setText(msg);
+            ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close_black_24dp);
+            ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.red_400));
+
+            toast.setView(custom_view);
+            toast.show();
+            finish();
+
+            new Handler().postDelayed(toast::cancel, 800);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

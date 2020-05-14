@@ -10,6 +10,8 @@
 
     <LinearLayout
         android:id="@+id/chainLayoutUser"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

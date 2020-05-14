@@ -50,7 +50,7 @@ public class FigerPrintActivity extends AppCompatActivity {
     LinearLayout loogut, fingerPrintLayout;
     private PinView pinView;
     Dialog dialog;
-
+    ProgressDialog bar;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,13 @@ public class FigerPrintActivity extends AppCompatActivity {
         pinView = findViewById(R.id.pinView);
         textU = findViewById(R.id.textView_noti);
         loogut = findViewById(R.id.logout);
+
+
+        bar = new ProgressDialog(FigerPrintActivity.this);
+        bar.setCancelable(false);
+        bar.setMessage("Loading ..");
+        bar.setIndeterminate(true);
+        bar.setCanceledOnTouchOutside(false);
 
         //FingerPrint Check
         Context context = this;
@@ -101,23 +108,6 @@ public class FigerPrintActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show());
 
-        /*loogut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
-                NotifyMe notifyMe = new NotifyMe.Builder(getApplicationContext())
-                        .title("This is a Test")
-                        .content("open now to get message")
-                        .color(255, 0, 0, 255)
-                        .led_color(255, 255, 255, 255)
-                        .addAction(intent, "Done")
-                        .large_icon(R.drawable.icon)
-                        .small_icon(R.drawable.fireman)
-                        .rrule("FREQ=MINUTELY;INTERVAL=5;COUNT=2")
-                        .build();
-            }
-        });*/
-
 
         //ProgressBar
         progressDialog = new ProgressDialog(FigerPrintActivity.this);
@@ -130,18 +120,15 @@ public class FigerPrintActivity extends AppCompatActivity {
         //Handler
 
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
-                    mPin();
+        handler.postDelayed(() -> {
+            if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
+                mPin();
 
-                } else {
+            } else {
 
-                    checkInternet();
-                }
-                //handler.postDelayed(this, 5000);
+                checkInternet();
             }
+            //handler.postDelayed(this, 5000);
         }, 0);
 
     }
@@ -169,7 +156,9 @@ public class FigerPrintActivity extends AppCompatActivity {
                     public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
                         //authSuccess= findViewById(R.id.auth_success);
-                        runOnUiThread(() -> progressBar.setVisibility(View.VISIBLE));
+
+                        runOnUiThread(() -> bar.show());
+
 
                         startlogin();
 
@@ -191,13 +180,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                 .build();
         //biometricPrompt.authenticate(promptInfo);
 
-        findViewById(R.id.fingerPrintLayout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                biometricPrompt.authenticate(promptInfo);
-            }
-        });
+        findViewById(R.id.fingerPrintLayout).setOnClickListener(v -> biometricPrompt.authenticate(promptInfo));
     }
 
 
@@ -285,6 +268,7 @@ public class FigerPrintActivity extends AppCompatActivity {
                                             .hideSoftInputFromWindow(pinView.getWindowToken(), 0);
 
                                     // progressBar.setVisibility(View.VISIBLE);
+                                    bar.show();
                                     startlogin();
 
                                 } else {
@@ -329,8 +313,11 @@ public class FigerPrintActivity extends AppCompatActivity {
                                 final String pin = Objects.requireNonNull(pinView.getText()).toString();
                                 if (pin.length() == 4) {
                                     mPin.child("pin").setValue(pin);
+                                    pinView.setLineColor(getResources().getColor(R.color.green_800));
+                                    textU.setTextColor(getResources().getColor(R.color.green_800));
                                     textU.setText(R.string.pin_created_successfully);
                                     //progressBar.setVisibility(View.VISIBLE);
+                                    bar.show();
                                     startlogin();
                                 }
 
@@ -368,9 +355,8 @@ public class FigerPrintActivity extends AppCompatActivity {
 
             dialog.show();
             wifienable.setOnClickListener(v -> {
-                //dialog.dismiss();
+                dialog.dismiss();
                 checkInternet();
-
 
             });
         }
@@ -390,9 +376,5 @@ public class FigerPrintActivity extends AppCompatActivity {
         }
     }
 
-    public void sendNotification(View view) {
-
-
-    }
 
 }

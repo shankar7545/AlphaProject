@@ -50,16 +50,31 @@ public class PaytmPayment extends AppCompatActivity {
                     final PaytmKey paytmKey = dataSnapshot.getValue(PaytmKey.class);
                     try {
                         final String mUserName = mAmount.getText().toString().trim();
+                        final String mgateway = dataSnapshot.child("gateway").getValue().toString();
 
-                        Intent i = new Intent(getApplicationContext(), RazorpaySection.class);
+                        if (mgateway.equals("paytm")) {
+                            Intent i = new Intent(getApplicationContext(), ConfirmAmount.class);
 
-                        Bundle bundle = new Bundle();
-                        i.putExtra("Amount", mUserName);
-                        i.putExtra("MID", paytmKey.getPaytmkey());
-                        i.putExtra("Amount", "1");
+                            Bundle bundle = new Bundle();
+                            i.putExtra("MID", paytmKey.getPaytmkey());
+                            i.putExtra("Amount", "1");
 
-                        i.putExtras(bundle);
-                        startActivity(i);
+                            i.putExtras(bundle);
+                            startActivity(i);
+                        }
+
+                        if (mgateway.equals("razorpay")) {
+                            Intent i = new Intent(getApplicationContext(), RazorpaySection.class);
+
+                            Bundle bundle = new Bundle();
+                            i.putExtra("MID", paytmKey.getPaytmkey());
+                            i.putExtra("Amount", "1");
+
+                            i.putExtras(bundle);
+                            startActivity(i);
+                        }
+
+
 
 
                     } catch (Exception e) {
