@@ -66,7 +66,8 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     //Functions
 
-    LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
+    FloatingActionButton walletLayout, SecurityLayout, ReferLayout, courseLayout;
+
     //Dashboard
     private DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mTransactionsRecycler, dbPaytm, mTransactions1, mAchievements;
 

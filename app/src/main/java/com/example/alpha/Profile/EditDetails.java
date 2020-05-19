@@ -1,13 +1,17 @@
 package com.example.alpha.Profile;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.R;
@@ -29,11 +33,13 @@ public class EditDetails extends AppCompatActivity {
     Toolbar toolbar;
     private KeyListener listener;
 
-    LinearLayout updateChanges, editFNLayout, displayFNLayout;
+    LinearLayout updateChanges, displayFNLayout;
     TextView editNameText, cancelNameText;
-    TextInputEditText nameD, nameE, phoneNum, userName, email;
+    TextInputEditText nameD, phoneNum, userName, email;
     DatabaseReference mUser;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    private Dialog dialog;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +54,10 @@ public class EditDetails extends AppCompatActivity {
         mUser = FirebaseDatabase.getInstance().getReference("Users");
 
         updateChanges = findViewById(R.id.update_changes);
-        editFNLayout = findViewById(R.id.editFNLayout);
         displayFNLayout = findViewById(R.id.displayFNLayout);
 
 
         nameD = findViewById(R.id.display_full_name);
-        nameE = findViewById(R.id.edit_full_name);
         phoneNum = findViewById(R.id.profile_phone);
         userName = findViewById(R.id.profile_username);
         email = findViewById(R.id.profile_email);
@@ -66,7 +70,8 @@ public class EditDetails extends AppCompatActivity {
         userName.setKeyListener(null);
         email.setKeyListener(null);
         email.setFocusable(false);
-
+        nameD.setKeyListener(null);
+        nameD.setFocusable(false);
 
         loadDetails();
         EditDetailMethod();
@@ -74,37 +79,14 @@ public class EditDetails extends AppCompatActivity {
 
     private void EditDetailMethod() {
 
-        nameD.setClickable(false);
-        nameD.setFocusable(false);
-        nameD.setFocusableInTouchMode(false);
-
         cancelNameText.setVisibility(View.GONE);
         editNameText.setVisibility(View.VISIBLE);
-
         updateChanges.setVisibility(View.GONE);
+
         editNameText.setOnClickListener(v -> {
-
-            editNameText.setVisibility(View.GONE);
-            cancelNameText.setVisibility(View.VISIBLE);
-            updateChanges.setVisibility(View.VISIBLE);
-
-            editFNLayout.setVisibility(View.VISIBLE);
-            displayFNLayout.setVisibility(View.GONE);
-
+            editDetails();
         });
 
-        cancelNameText.setOnClickListener(v -> {
-
-            updateChanges.setVisibility(View.GONE);
-            editNameText.setVisibility(View.VISIBLE);
-            cancelNameText.setVisibility(View.GONE);
-
-            displayFNLayout.setVisibility(View.VISIBLE);
-            editFNLayout.setVisibility(View.GONE);
-
-            editFNLayout.requestFocus();
-
-        });
 
 
     }
@@ -121,7 +103,6 @@ public class EditDetails extends AppCompatActivity {
                 String mEmail = Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString();
 
                 nameD.setText(mName);
-                nameE.setText(mName);
                 email.setText(mEmail);
                 userName.setText(mUserName);
             }
@@ -131,6 +112,60 @@ public class EditDetails extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void editDetails() {
+        try {
+            dialog = new Dialog(EditDetails.this);
+            dialog.setContentView(R.layout.edit_details_dialog);
+            dialog.setCancelable(false);
+            final Button finish, cancel;
+
+            finish = dialog.findViewById(R.id.finish);
+            cancel = dialog.findViewById(R.id.cancelBtn);
+
+            TextInputEditText emailAddress, fullName;
+            emailAddress = dialog.findViewById(R.id.emailAddress);
+            fullName = dialog.findViewById(R.id.fullName);
+            emailAddress.setEnabled(false);
+            mUser.child(selfUid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String mEmail = dataSnapshot.child("email").getValue().toString();
+                    String mName = dataSnapshot.child("name").getValue().toString();
+
+                    emailAddress.setText(mEmail);
+                    fullName.setText(mName);
+                    fullName.requestFocus();
+                    fullName.setSelection(fullName.getText().length());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+            dialog.show();
+            finish.setOnClickListener(view -> {
+
+                cancel.setEnabled(false);
+                mUser.child(selfUid).child("name").setValue(Objects.requireNonNull(fullName.getText()).toString());
+                Toast.makeText(EditDetails.this, "Updated", Toast.LENGTH_SHORT).show();
+                finish.setText("Updated");
+                cancel.setEnabled(true);
+                dialog.dismiss();
+
+            });
+
+            cancel.setOnClickListener(v -> dialog.dismiss());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 

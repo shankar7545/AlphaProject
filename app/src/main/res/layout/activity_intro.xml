@@ -12,51 +12,47 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash" />
+        android:background="@color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginTop="90dp"
             android:scaleType="centerInside"
-            android:src="@drawable/paytm_assist_icon"
-            android:visibility="gone" />
+            android:src="@drawable/refer"
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/rectangle_splash"
-            android:gravity="center"
             android:id="@+id/text"
-            android:padding="10dp"
             android:text="@string/app_name"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
+            android:textColor="@color/black"
+            android:fontFamily="@font/baloo"
+            android:textSize="25sp" />
 
         <ProgressBar
-            style="?android:attr/progressBarStyleSmallInverse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:theme="@style/ProgressBar.White" />
+            android:id="@+id/progress_indeterminate"
+            android:layout_width="80dp"
+            android:layout_height="25sp"
+            android:indeterminate="true"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:theme="@style/ProgressBar.Blue" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Loading..." />
+            android:text="Loading Data"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
 
 
     </LinearLayout>

@@ -50,7 +50,7 @@ public class FigerPrintActivity extends AppCompatActivity {
     LinearLayout loogut, fingerPrintLayout;
     private PinView pinView;
     Dialog dialog;
-    ProgressDialog bar;
+    public ProgressDialog bar;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -376,5 +376,11 @@ public class FigerPrintActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bar != null && bar.isShowing()) {
+            bar.dismiss();
+        }
+    }
 }

@@ -82,53 +82,6 @@
                     android:visibility="visible"
                     android:focusable="true" />
 
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/editFNLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:background="@color/transparent"
-                android:tint="@color/colorPrimaryDark"
-                app:srcCompat="@drawable/ic_person" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_full_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Full name"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:maxLength="30"
-                        android:textColorHint="@color/grey_40"
-                        android:textSize="14sp" />
-
-                    <requestFocus />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
                 <TextView
                     android:id="@+id/cancelNameText"
                     android:layout_width="wrap_content"
@@ -140,12 +93,12 @@
                     android:textColor="@color/colorPrimary"
                     android:layout_marginEnd="10dp"
                     android:layout_centerVertical="true"
-                    android:visibility="visible"
                     android:text="Cancel"
+                    android:visibility="gone"
                     android:focusable="true" />
+
             </RelativeLayout>
         </LinearLayout>
-
 
 
         <LinearLayout

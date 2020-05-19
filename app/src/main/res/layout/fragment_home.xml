@@ -31,35 +31,22 @@
                 android:layout_margin="10dp"
                 android:visibility="visible" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/lato_black"
-                android:text="@string/functions"
-                android:textColor="@color/colorPrimaryDark1"
-                android:textSize="15sp">
 
-            </TextView>
-
-
-            <include layout="@layout/layout_functions" />
+            <include layout="@layout/layout_functions_color" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/lato_black"
-                android:text="@string/dashboard"
-                android:textColor="@color/colorPrimaryDark1"
-                android:textSize="15sp">
+                android:text="Dashboard"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/black"
+                app:fontFamily="sans-serif-medium" />
 
-            </TextView>
+
             <include
                 android:id="@+id/cse_toolbar"
                 layout="@layout/layout_dashboard_new" />
@@ -105,7 +92,7 @@
             android:layout_alignParentBottom="true"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

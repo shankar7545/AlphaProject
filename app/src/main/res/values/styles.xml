@@ -24,6 +24,10 @@
         <item name="colorAccent">@color/colorPrimaryPink</item>
     </style>
 
+    <style name="ProgressBar.Blue" parent="@style/AppTheme">
+        <item name="colorPrimary">@color/blue_900</item>
+        <item name="colorAccent">@color/blue_900</item>
+    </style>
 
     <style name="ProgressBar.White" parent="@style/AppTheme">
         <item name="colorPrimary">@color/white</item>

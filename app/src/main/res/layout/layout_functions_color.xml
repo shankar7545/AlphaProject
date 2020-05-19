@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:text="Functions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:fontFamily="sans-serif-medium" />
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_smlarge"
+        android:layout_marginRight="@dimen/spacing_smlarge"
+        app:flexWrap="nowrap"
+        app:justifyContent="space_between">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/orange_400"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_course" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Course"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/walletLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/deep_purple_400"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_wallet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Wallet"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/red_300"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Refer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/securityLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/purple_300"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_security" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Security"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+</LinearLayout>

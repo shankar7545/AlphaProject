@@ -65,7 +65,6 @@
                     android:textColorHint="@color/grey_40"
                     android:textSize="14sp">
 
-                    <requestFocus />
 
                 </com.google.android.material.textfield.TextInputEditText>
 

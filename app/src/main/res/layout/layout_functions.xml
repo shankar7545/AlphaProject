@@ -58,7 +58,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:srcCompat="@drawable/ic_wallet"
-            app:tint="@color/red_600" />
+            app:tint="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             app:srcCompat="@drawable/ic_share"
-            app:tint="@color/red_600" />
+            app:tint="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
