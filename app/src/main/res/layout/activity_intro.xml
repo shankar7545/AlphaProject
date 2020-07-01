@@ -48,9 +48,10 @@
             android:theme="@style/ProgressBar.Blue" />
 
         <TextView
+            android:id="@+id/textDisplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading Data"
+            android:text="Connecting Server"
             android:textColor="@color/black"
             android:textSize="11sp" />
 

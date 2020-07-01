@@ -3,10 +3,323 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/grey_5"
     tools:context=".Activity.HelpActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_default" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:scrollingCache="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/spacing_medium">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                android:text="Frequently Asked Questions"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/black"
+                app:fontFamily="sans-serif-medium" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/onClickOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:onClick="onClick"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+
+                        <ImageButton
+                            android:id="@+id/img_btn_one"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:clickable="false"
+                            android:layout_marginStart="5dp"
+                            android:background="@color/transparent"
+                            android:tint="@color/grey_40"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="15sp"
+                            android:text="What is Hotstar Premium Membership?"
+                            android:textColor="@color/grey_80" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lorem_ipsum" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/onClickTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:onClick="onClick"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/img_btn_two"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:clickable="false"
+                            android:background="@color/transparent"
+                            android:tint="@color/grey_40"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="How does this plan help me?"
+                            android:textSize="15sp"
+                            android:textColor="@color/grey_80" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hey BABY, How are you , I hope You are doing fine. I am doing Fine Two" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/img_btn_three"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:tint="@color/grey_40"
+                            android:layout_marginStart="5dp"
+                            android:clickable="false"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Text"
+                            android:textSize="15sp"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="35dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lorem_ipsum" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:minHeight="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/img_btn_four"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:tint="@color/grey_40"
+                            android:layout_marginStart="5dp"
+                            android:clickable="false"
+                            app:srcCompat="@drawable/ic_arrow_right" />
+
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Text"
+                            android:textSize="15sp"
+                            android:textColor="@color/grey_80" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandFour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="35dp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lorem_ipsum" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <include layout="@layout/layout_contact_support" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </LinearLayout>

@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "4.5"
         multiDexEnabled true
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -32,25 +32,22 @@ dependencies {
 
     implementation 'androidx.cardview:cardview:1.0.0' //cardView
     implementation 'com.google.android.material:material:1.1.0' //Material
-    implementation "com.google.android.material:material:1.2.0-alpha06" //Material
+    implementation "com.google.android.material:material:1.3.0-alpha01" //Material
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' //Support
     implementation 'com.mikhaellopez:circularimageview:3.2.0'  // circle image view
 
     //GLide  (Image slider)
-    implementation "com.github.bumptech.glide:glide:4.9.0"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
+    implementation "com.github.bumptech.glide:glide:4.10.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.10.0"
     implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
 
 
     //Firebase
     implementation 'com.firebaseui:firebase-ui-database:4.0.1'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
-    implementation 'com.google.firebase:firebase-database:19.3.0'
-    implementation 'com.google.firebase:firebase-firestore:21.4.3'
-    implementation 'com.google.firebase:firebase-messaging:20.1.6'
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-messaging:20.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
-    implementation 'com.google.firebase:firebase-functions:19.0.2'
 
 
     implementation 'com.razorpay:checkout:1.4.9'   //Razorpay
@@ -61,11 +58,18 @@ dependencies {
     implementation 'de.blox:graphview:0.6.1'  //GraphView
     implementation 'com.github.d-max:spots-dialog:1.1@aar'  //Spots Dialog
     implementation 'com.github.jakebonk:NotifyMe:1.0.1' //Notifications
-    implementation 'com.facebook.shimmer:shimmer:0.4.0' //Shimmer Layout
     implementation 'com.hootsuite.android:nachos:1.1.1' // material chips
     implementation 'com.google.android:flexbox:0.3.2'   // google flexible box
+    implementation 'com.facebook.shimmer:shimmer:0.4.0'  //shimmer layout
 
-    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.github.tiagohm:CodeView:0.4.0' //Codeview
+
+    implementation 'com.tuyenmonkey:mkloader:1.4.0'  //Custom Loaders
+
+    implementation 'androidx.browser:browser:1.2.0' //Chrome CustomLinks
+
+
+
 
 
     testImplementation 'junit:junit:4.13'
@@ -78,3 +82,6 @@ dependencies {
         transitive = true
     }
 }
+
+
+

@@ -6,7 +6,7 @@
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
                     <corners android:bottomLeftRadius="15dp" android:bottomRightRadius="15dp" android:radius="60dp" android:topLeftRadius="15dp" android:topRightRadius="15dp" />
-                    <solid android:color="@color/light_blue_400" />
+                    <solid android:color="@color/green_400" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
                 </shape>
@@ -20,7 +20,7 @@
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
                     <corners android:bottomLeftRadius="15dp" android:bottomRightRadius="15dp" android:radius="60dp" android:topLeftRadius="15dp" android:topRightRadius="15dp" />
-                    <solid android:color="@color/light_blue_400" />
+                    <solid android:color="@color/green_400" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
                 </shape>
@@ -34,8 +34,8 @@
         <layer-list>
             <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
                 <shape android:shape="rectangle">
-                    <corners android:bottomLeftRadius="15dp" android:bottomRightRadius="15dp" android:radius="60dp" android:topLeftRadius="15dp" android:topRightRadius="15dp" />
-                    <solid android:color="@color/colorPrimary" />
+                    <corners android:bottomLeftRadius="15dp" android:bottomRightRadius="0dp" android:radius="60dp" android:topLeftRadius="0dp" android:topRightRadius="15dp" />
+                    <solid android:color="@color/colorPrimaryDark1" />
                     <padding android:bottom="0dp" android:left="0dp" android:right="0dp" android:top="0dp" />
                     <size android:width="110dp" android:height="40dp" />
                 </shape>

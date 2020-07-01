@@ -4,133 +4,165 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:orientation="horizontal"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:orientation="vertical"
     android:weightSum="4">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            app:srcCompat="@drawable/ic_course"
-            app:tint="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Course"
-            android:textColor="@color/black"
-            android:textSize="12sp">
-
-        </TextView>
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/walletLayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            app:srcCompat="@drawable/ic_wallet"
-            app:tint="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wallet"
-            android:textColor="@color/black"
-            android:textSize="12sp">
-
-        </TextView>
-
-    </LinearLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:text="Functions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:fontFamily="sans-serif-medium" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            app:srcCompat="@drawable/ic_share"
-            app:tint="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Refer"
-            android:textColor="@color/black"
-            android:textSize="12sp">
-
-        </TextView>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:baselineAligned="false">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/securityLayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/orange_400"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                android:clickable="false"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_course" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:clickable="false"
-            app:srcCompat="@drawable/ic_security"
-            app:tint="@color/colorPrimary" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Course"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Security"
-            android:textColor="@color/black"
-            android:textSize="12sp">
+        </LinearLayout>
 
-        </TextView>
+
+        <LinearLayout
+            android:id="@+id/walletLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/deep_purple_400"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                android:clickable="false"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_wallet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Wallet"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/referLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/red_300"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                android:clickable="false"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Refer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/securityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_xsmall"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/purple_300"
+                app:elevation="0dp"
+                app:fabSize="normal"
+                android:clickable="false"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_security" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="Security"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

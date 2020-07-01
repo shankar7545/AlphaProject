@@ -15,13 +15,12 @@ public class UserClass {
         this.email = email;
     }
 
-    public UserClass(String email, String name, String password, String paymentStatus, String username, String level, String parentStatus
+    public UserClass(String email, String name, String password, String paymentStatus, String level, String parentStatus
             , String date, String childCount) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.paymentStatus = paymentStatus;
-        this.username = username;
         this.level = level;
         this.parentStatus = parentStatus;
         this.date = date;
@@ -72,13 +71,6 @@ public class UserClass {
         return childCount;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public void setChildCount(String childCount) {
         this.childCount = childCount;

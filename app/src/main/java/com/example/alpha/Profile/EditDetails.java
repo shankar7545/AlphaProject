@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,7 @@ import androidx.appcompat.widget.Toolbar;
 public class EditDetails extends AppCompatActivity {
     Toolbar toolbar;
     private KeyListener listener;
-
+    ProgressBar progressBar;
     LinearLayout updateChanges, displayFNLayout;
     TextView editNameText, cancelNameText;
     TextInputEditText nameD, phoneNum, userName, email;
@@ -55,6 +56,7 @@ public class EditDetails extends AppCompatActivity {
 
         updateChanges = findViewById(R.id.update_changes);
         displayFNLayout = findViewById(R.id.displayFNLayout);
+        progressBar = findViewById(R.id.progressBar);
 
 
         nameD = findViewById(R.id.display_full_name);
@@ -73,6 +75,8 @@ public class EditDetails extends AppCompatActivity {
         nameD.setKeyListener(null);
         nameD.setFocusable(false);
 
+
+        progressBar.setVisibility(View.VISIBLE);
         loadDetails();
         EditDetailMethod();
     }
@@ -93,6 +97,7 @@ public class EditDetails extends AppCompatActivity {
 
     private void loadDetails() {
 
+
         mUser.child(selfUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -105,6 +110,7 @@ public class EditDetails extends AppCompatActivity {
                 nameD.setText(mName);
                 email.setText(mEmail);
                 userName.setText(mUserName);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -139,6 +145,7 @@ public class EditDetails extends AppCompatActivity {
                     fullName.setText(mName);
                     fullName.requestFocus();
                     fullName.setSelection(fullName.getText().length());
+
                 }
 
                 @Override

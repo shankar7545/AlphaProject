@@ -318,7 +318,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "bronze",
+                                    ""
                             );
                             mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
 
@@ -333,7 +334,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "bronze",
+                                    ""
 
                             );
                             mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
@@ -360,7 +362,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     sizeR,
-                                    "level1"
+                                    "bronze",
+                                    ""
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -375,7 +378,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "bronze",
+                                    ""
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -399,7 +403,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     sizeP,
-                                    "level1"
+                                    "bronze",
+                                    ""
 
 
                             );
@@ -422,7 +427,8 @@ public class beginnerActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "bronze",
+                                    ""
 
                             );
                             mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
@@ -542,7 +548,7 @@ public class beginnerActivity extends AppCompatActivity {
         setCheckedStep(index);
         index++;
         current_step = index;
-        success_step = index > success_step ? index : success_step;
+        success_step = Math.max(index, success_step);
         ViewAnimation.expand(view_list.get(index));
     }
 

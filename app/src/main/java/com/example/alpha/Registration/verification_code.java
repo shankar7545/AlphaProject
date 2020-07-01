@@ -76,25 +76,22 @@ public class verification_code extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.otp);
         String mobile = getIntent().getStringExtra("mobile");
-        verify = (Button) findViewById(R.id.verify);
+        verify = findViewById(R.id.verify);
         ph_num = findViewById(R.id.phone_number);
 
 
-        verify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        verify.setOnClickListener(view -> {
 
 
-                String code = editTextCode.getText().toString().trim();
-                if (code.isEmpty() || code.length() < 6) {
-                    editTextCode.setError("Enter valid code");
-                    editTextCode.requestFocus();
-                    return;
-                }
-
-                //verifying the code entered manually
-                verifyVerificationCode(code);
+            String code = editTextCode.getText().toString().trim();
+            if (code.isEmpty() || code.length() < 6) {
+                editTextCode.setError("Enter valid code");
+                editTextCode.requestFocus();
+                return;
             }
+
+            //verifying the code entered manually
+            verifyVerificationCode(code);
         });
 
     }

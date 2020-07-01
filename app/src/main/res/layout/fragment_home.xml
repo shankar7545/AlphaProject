@@ -9,30 +9,24 @@
     android:orientation="vertical"
     tools:context=".Fragments.HomeFragment">
 
-
-
-    <RelativeLayout
-        android:id="@+id/recycler"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:ignore="UselessParent">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.glide.slider.library.SliderLayout
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_margin="10dp"
+                android:layout_height="160dp"
+                android:layout_margin="2dp"
                 android:visibility="visible" />
 
-
-            <include layout="@layout/layout_functions_color" />
+            <include layout="@layout/layout_functions" />
 
 
             <TextView
@@ -41,7 +35,7 @@
                 android:text="Dashboard"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/black"
                 app:fontFamily="sans-serif-medium" />
@@ -85,36 +79,8 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone">
 
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_smlarge"
-                android:layout_marginTop="@dimen/spacing_middle"
-                android:layout_marginRight="@dimen/spacing_smlarge"
-                android:layout_marginBottom="@dimen/spacing_smlarge"
-                android:clickable="true"
-                android:focusable="true"
-                android:scaleType="fitXY"
-                android:tint="@color/white"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:fabCustomSize="50dp"
-                app:rippleColor="@color/white"
-                app:srcCompat="@drawable/refresh2x" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

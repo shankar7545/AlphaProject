@@ -39,7 +39,7 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
     int payamount;
     DatabaseReference myWalletAmount, mFirebase, mWallet;
     String id = UUID.randomUUID().toString();
-    String childid = "PW" + id.substring(0, 5).toUpperCase();
+    String childid = "RZPY" + id.substring(0, 8).toUpperCase();
     String extraid = id.substring(0, 4).toUpperCase();
     private Calendar c = Calendar.getInstance();
     private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -87,7 +87,7 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
             mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mWallet.child(selfUid).child("balance").setValue("50");
+                    mWallet.child(selfUid).child("Balance").child("mainBalance").setValue("50");
                     mFirebase.child("Users").child(selfUid).child("paymentStatus").setValue("true");
 
                     String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
@@ -105,7 +105,8 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
                                 childid,
                                 "50",
                                 1,
-                                "beginner"
+                                "beginner",
+                                "Razorpay"
                         );
                         mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
 
@@ -120,7 +121,8 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
                                 childid,
                                 "50",
                                 1,
-                                "beginner"
+                                "beginner",
+                                "Razorpay"
 
                         );
                         mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
@@ -148,7 +150,8 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
                                 childid,
                                 "50",
                                 sizeR,
-                                "beginner"
+                                "beginner",
+                                "Razorpay"
                         );
                         mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -163,7 +166,8 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
                                 childid,
                                 "50",
                                 1,
-                                "beginner"
+                                "beginner",
+                                "Razorpay"
                         );
                         mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 

@@ -1,9 +1,15 @@
 package com.example.alpha.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,19 +31,25 @@ public class IntroActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 500;
     DatabaseReference mData, updatenotice, maintaindb, mRef;
     FirebaseAuth.AuthStateListener mAuthListener;
-    TextView textView;
+    TextView textDisplay;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    Uri uriNotification;
+    private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_intro);
 
+        textDisplay = findViewById(R.id.textDisplay);
+
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-            finish();
+            //startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+            //finish();
+            connectFirebase();
         }, SPLASH_TIME_OUT);
+
 
 
     }
@@ -49,7 +61,12 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String data = dataSnapshot.child("data").getValue().toString();
+                uriNotification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(IntroActivity.this, uriNotification);
+                r.play();
+
+
+                textDisplay.setText("Connected");
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
                 finish();
             }
@@ -61,6 +78,36 @@ public class IntroActivity extends AppCompatActivity {
         });
 
     }
+
+    private void sharedPreference() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Name", "Shankar");
+        editor.apply();
+
+        String name = preferences.getString("Name", "");
+        if (!name.equalsIgnoreCase("")) {
+            name = name + "  Sethi";  /* Edit the value here*/
+
+            textDisplay.setText(name);
+
+        }
+
+        String value = preferences.getString("Name", null);
+        if (value == null) {
+            // the key does not exist
+            textDisplay.setText("null");
+
+        } else {
+            // handle the value
+            textDisplay.setText(value);
+
+            editor.clear();
+            editor.commit();
+        }
+
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

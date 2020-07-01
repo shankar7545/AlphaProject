@@ -1,9 +1,18 @@
 package com.example.alpha.Activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.text.InputFilter;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,11 +20,14 @@ import android.widget.Toast;
 import com.example.alpha.Fragments.EarnFragment;
 import com.example.alpha.Fragments.HomeFragment;
 import com.example.alpha.Fragments.MeFragment;
+import com.example.alpha.Levels.LevelActivity;
+import com.example.alpha.Profile.ChangePassword;
 import com.example.alpha.Profile.EditDetails;
 import com.example.alpha.R;
 import com.example.alpha.Wallet.walletActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,18 +47,22 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class HomeActivity extends AppCompatActivity {
     private static long back_pressed;
     DatabaseReference mRef;
     TextView userName, nameM, userNameM;
+    private Dialog dialog;
 
     RelativeLayout home_Relative;
 
     private ActionBar actionBar;
     private Toolbar toolbar;
 
-    LinearLayout profileLayoutM, walletLayoutM, logoutLayoutM, chainLayoutM;
+    ProgressBar progressUsername;
+    private SwipeRefreshLayout swipe_refresh;
+
 
     ImageButton help, menu;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -85,20 +101,31 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setSelectedItemId(R.id.nav_home);
+
+
+        initNavigationMenu();
+        initComponent();
+        menuOnclick();
+
+
+    }
+
+    private void initComponent() {
         profilePic = findViewById(R.id.ProfilePic);
-
         home_Relative = findViewById(R.id.home_relative);
-
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-
         userName = findViewById(R.id.userName);
         userNameM = findViewById(R.id.userNameM);
         nameM = findViewById(R.id.nameM);
-
-
         help = findViewById(R.id.help);
-
-
+        progressUsername = findViewById(R.id.progressUsername);
+        progressUsername.setVisibility(View.VISIBLE);
+        userName.setVisibility(View.GONE);
         profilePic.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MyProfile.class);
             startActivity(intent);
@@ -114,12 +141,22 @@ public class HomeActivity extends AppCompatActivity {
         mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
-                String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
 
-                userName.setText(mUserName);
-                userNameM.setText(mUserName);
-                nameM.setText(mName);
+                if (dataSnapshot.child("username").exists()) {
+                    String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
+                    String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+
+                    userName.setText(mUserName);
+                    userNameM.setText(mUserName);
+                    nameM.setText(mName);
+                    userName.setVisibility(View.VISIBLE);
+                    progressUsername.setVisibility(View.GONE);
+                } else {
+
+                    usernameDialog();
+
+                }
+
 
             }
 
@@ -128,19 +165,107 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        bottomNav.setSelectedItemId(R.id.nav_home);
 
 
-        initNavigationMenu();
-
-        menuOnclick();
-
+        //Swipe Refresh
 
 
     }
 
+    private void usernameDialog() {
+        try {
+            dialog = new Dialog(HomeActivity.this);
+            dialog.setContentView(R.layout.referdialog);
+            dialog.setCancelable(false);
+            Window window = dialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            final TextInputEditText editTextuserName;
+            final TextView heading;
+            final Button finish, cancel;
+            final ProgressBar progress_bar_dialog;
+
+            editTextuserName = dialog.findViewById(R.id.referCode);
+
+            editTextuserName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+            mRef = FirebaseDatabase.getInstance().getReference("Users");
+            DatabaseReference mFirebase = FirebaseDatabase.getInstance().getReference();
+
+            finish = dialog.findViewById(R.id.finish);
+            cancel = dialog.findViewById(R.id.cancelBtn);
+            heading = dialog.findViewById(R.id.heading);
+            progress_bar_dialog = dialog.findViewById(R.id.progress_bar_dialog);
+
+            editTextuserName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+            heading.setText("CREATE UNIQUE USERNAME");
+            dialog.show();
+
+
+            finish.setOnClickListener(view -> {
+                cancel.setVisibility(View.GONE);
+                finish.setVisibility(View.GONE);
+                progress_bar_dialog.setVisibility(View.VISIBLE);
+                final String mUserName = editTextuserName.getText().toString().trim();
+
+
+                final DatabaseReference promodb = FirebaseDatabase.getInstance().getReference("ReferDB");
+                promodb.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot checkdataSnapshot) {
+
+
+                        if (mUserName.isEmpty()) {
+                            editTextuserName.setError("Enter Username");
+                            editTextuserName.requestFocus();
+                            finish.setVisibility(View.VISIBLE);
+                            cancel.setVisibility(View.VISIBLE);
+                            progress_bar_dialog.setVisibility(View.GONE);
+                        } else if (mUserName.length() < 5) {
+                            editTextuserName.setError("Enter 5 Letters");
+                            finish.setVisibility(View.VISIBLE);
+                            cancel.setVisibility(View.VISIBLE);
+                            progress_bar_dialog.setVisibility(View.GONE);
+                            editTextuserName.requestFocus();
+                        } else if (mUserName.length() > 10) {
+                            editTextuserName.setError("Maximum 10 Letters");
+                            finish.setVisibility(View.VISIBLE);
+                            cancel.setVisibility(View.VISIBLE);
+                            progress_bar_dialog.setVisibility(View.GONE);
+                            editTextuserName.requestFocus();
+                        } else if (checkdataSnapshot.hasChild(mUserName)) {
+                            editTextuserName.setError("Username Exists");
+                            finish.setVisibility(View.VISIBLE);
+                            cancel.setVisibility(View.VISIBLE);
+                            progress_bar_dialog.setVisibility(View.GONE);
+                            editTextuserName.requestFocus();
+                        } else {
+                            finish.setVisibility(View.VISIBLE);
+                            cancel.setVisibility(View.VISIBLE);
+                            progress_bar_dialog.setVisibility(View.GONE);
+                            mRef.child(selfUid).child("username").setValue(mUserName);
+                            dialog.dismiss();
+
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            });
+
+
+            cancel.setOnClickListener(v -> onBackPressed());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     private void initNavigationMenu() {
         NavigationView nav_view = findViewById(R.id.nav_view);
@@ -157,22 +282,27 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void menuOnclick() {
-        profileLayoutM = findViewById(R.id.profileLayoutM);
-        walletLayoutM = findViewById(R.id.walletLayoutM);
-        logoutLayoutM = findViewById(R.id.logoutLayoutM);
-        chainLayoutM = findViewById(R.id.chainLayoutM);
 
 
-        profileLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, EditDetails.class)));
-        walletLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, walletActivity.class)));
-        chainLayoutM.setOnClickListener(v -> startActivity(new Intent(HomeActivity.this, ChainActivity.class)));
+        findViewById(R.id.profileLayoutM).setOnClickListener(v -> startActivity(new Intent(this, EditDetails.class)));
+        findViewById(R.id.walletLayoutM).setOnClickListener(v -> startActivity(new Intent(this, walletActivity.class)));
+        findViewById(R.id.chainLayoutM).setOnClickListener(v -> startActivity(new Intent(this, ChainActivity.class)));
+        findViewById(R.id.securityLayoutM).setOnClickListener(v -> startActivity(new Intent(this, ChangePassword.class)));
+        findViewById(R.id.dashboardLayoutM).setOnClickListener(v -> startActivity(new Intent(this, LevelActivity.class)));
+        findViewById(R.id.supportLayoutM).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
 
-        logoutLayoutM.setOnClickListener(v -> new AlertDialog.Builder(HomeActivity.this)
+        findViewById(R.id.logoutLayoutM).setOnClickListener(v -> new AlertDialog.Builder(HomeActivity.this)
                 .setMessage(R.string.end_session)
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+                    editor.apply();
+
+                    Intent intent = new Intent(this, LoginActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("logoutState", "logout");
                     intent.putExtras(bundle);
@@ -182,6 +312,25 @@ public class HomeActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show());
 
+    }
+
+
+    private void pullAndRefresh() {
+        swipeProgress(true);
+        new Handler().postDelayed(() -> {
+
+            initComponent();
+            swipeProgress(false);
+        }, 2000);
+    }
+
+
+    private void swipeProgress(final boolean show) {
+        if (!show) {
+            swipe_refresh.setRefreshing(show);
+            return;
+        }
+        swipe_refresh.post(() -> swipe_refresh.setRefreshing(show));
     }
 
 

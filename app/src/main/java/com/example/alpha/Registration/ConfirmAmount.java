@@ -49,7 +49,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
     String id = UUID.randomUUID().toString();
-    String childid = "PW" + id.substring(0, 5).toUpperCase();
+    String childid = "PYTM" + id.substring(0, 8).toUpperCase();
     String extraid = id.substring(0, 4).toUpperCase();
     private Calendar c = Calendar.getInstance();
     private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -92,6 +92,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
         String response = bundle.getString("RESPMSG");
         String responsecode = bundle.getString("RESPCODE");
+        String paymentmode = bundle.getString("PAYMENTMODE");
+
 
         if (response.equals("Txn Success") || responsecode.equals("01")) {
             try {
@@ -99,7 +101,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                 mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mWallet.child(selfUid).child("balance").setValue("50");
+                        mWallet.child(selfUid).child("Balance").child("mainBalance").setValue("50");
                         mFirebase.child("Users").child(selfUid).child("paymentStatus").setValue("true");
 
                         String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
@@ -117,7 +119,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                                     childid,
                                     "50",
                                     1,
-                                    "beginner"
+                                    "beginner",
+                                    paymentmode
                             );
                             mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
 
@@ -132,7 +135,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                                     childid,
                                     "50",
                                     1,
-                                    "beginner"
+                                    "beginner",
+                                    paymentmode
 
                             );
                             mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
@@ -160,7 +164,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                                     childid,
                                     "50",
                                     sizeR,
-                                    "beginner"
+                                    "beginner",
+                                    paymentmode
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -175,7 +180,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                                     childid,
                                     "50",
                                     1,
-                                    "beginner"
+                                    "beginner",
+                                    paymentmode
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 

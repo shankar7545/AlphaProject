@@ -2,23 +2,23 @@ package com.example.alpha.Activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.R;
+import com.example.alpha.Registration.DialogSignupFragment;
 import com.example.alpha.Registration.Signup_Activity;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +27,8 @@ import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import dmax.dialog.SpotsDialog;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,15 +38,17 @@ public class LoginActivity extends AppCompatActivity {
     public FirebaseAuth logAuth;
     public DatabaseReference loginDatabse;
     public TextInputEditText email, password;
-    public ProgressBar progressBar;
     public FloatingActionButton signin;
     public String login_email, login_password;
     public RelativeLayout login_Relative;
     public TextView forgetPasswrod;
 
+    ProgressDialog bar;
     LinearLayout sign_up;
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
+
+    public static final int DIALOG_QUEST_CODE = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.l_email);
         password = findViewById(R.id.l_password);
 
-        progressBar = findViewById(R.id.progress_bar);
         forgetPasswrod = findViewById(R.id.forgot_password1);
 
         /*---------------------------------------------------------*/
@@ -67,10 +70,17 @@ public class LoginActivity extends AppCompatActivity {
         signin = findViewById(R.id.fab);
 
 
+        LoginActivity.this.bar = new ProgressDialog(LoginActivity.this, R.style.MyAlertDialogStyle);
+        LoginActivity.this.bar.setCancelable(false);
+        LoginActivity.this.bar.setMessage("Signing in...");
+        LoginActivity.this.bar.setIndeterminate(true);
+        LoginActivity.this.bar.setCanceledOnTouchOutside(false);
+
+
+
         signin.setOnClickListener(v -> {
             //String get value from edittext
-            signin.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
+            LoginActivity.this.bar.show();
 
             login_email = email.getText().toString();
             login_password = password.getText().toString();
@@ -79,8 +89,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 startLogin(login_email, login_password);
             } else {
-                signin.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
+
+                LoginActivity.this.bar.dismiss();
 
                 Toast.makeText(LoginActivity.this, "Please Fill all the details", Toast.LENGTH_SHORT).show();
             }
@@ -91,14 +101,15 @@ public class LoginActivity extends AppCompatActivity {
         forgetPasswrod.setOnClickListener(v -> {
             final AlertDialog progressdialog = new SpotsDialog.Builder()
                     .setContext(LoginActivity.this)
-                    .setMessage("Requesting...")
+                    .setMessage("Sending Email...")
                     .build();
 
 
             final Dialog dialog = new Dialog(LoginActivity.this);
             dialog.setContentView(R.layout.forgetpass_layout);
             dialog.setCancelable(false);
-            Objects.requireNonNull(dialog.getWindow()).setLayout(800, 600);
+            Window window = dialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             final TextInputEditText reset_email = dialog.findViewById(R.id.reset_email);
             final Button reset_button = dialog.findViewById(R.id.reset_button);
@@ -153,8 +164,10 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             sign_up.setOnClickListener(v -> {
 
-                Intent registration = new Intent(LoginActivity.this, Signup_Activity.class);
-                startActivity(registration);
+                startActivity(new Intent(LoginActivity.this, Signup_Activity.class));
+                //startActivity(registration);
+
+                // showSignupDialog();
             });
         }
 
@@ -169,37 +182,45 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void showSignupDialog() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogSignupFragment newFragment = new DialogSignupFragment();
+        newFragment.setRequestCode(DIALOG_QUEST_CODE);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
+
+
+    }
 
     private void startLogin(String login_email, String login_password) {
-        logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                progressBar.setVisibility(View.VISIBLE);
-                signin.setAlpha(0f);
-                startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
-                finish();
+        logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(authResult -> {
+            LoginActivity.this.bar.show();
+            signin.setAlpha(0f);
+            startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
+            finish();
 
 
-            }
         }).addOnFailureListener(e -> {
             Snackbar.make(login_Relative, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            signin.setVisibility(View.VISIBLE);
+            LoginActivity.this.bar.dismiss();
+
         });
     }
 
     @Override
     public void onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        } else {
-            Toast.makeText(LoginActivity.this, "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
-
-        }
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setMessage("Close app?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    finish();
+                    ActivityCompat.finishAffinity(this);
+                    System.exit(0);
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     @Override

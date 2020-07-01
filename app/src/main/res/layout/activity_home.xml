@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:visibility="visible"
                 app:itemIconTint="@color/color_state_primary"
                 app:itemTextColor="@color/color_state_primary"
@@ -72,7 +72,7 @@
     <!--navigation drawer menu-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="230dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:visibility="visible"
@@ -337,6 +337,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/supportLayoutM"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -419,6 +420,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/dashboardLayoutM"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -471,6 +473,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/securityLayoutM"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"

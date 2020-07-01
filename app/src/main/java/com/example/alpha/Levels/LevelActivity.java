@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alpha.Activity.HelpActivity;
-import com.example.alpha.Fragments.BronzeFragment;
 import com.example.alpha.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,9 +103,9 @@ public class LevelActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(BronzeFragment.newInstance(), "BRONZE");
-        adapter.addFragment(BronzeFragment.newInstance(), "SILVER");
-        adapter.addFragment(BronzeFragment.newInstance(), "GOLD");
-        adapter.addFragment(BronzeFragment.newInstance(), "DIAMOND");
+        adapter.addFragment(SilverFragment.newInstance(), "SILVER");
+        adapter.addFragment(GoldFragment.newInstance(), "GOLD");
+        adapter.addFragment(DiamondFragment.newInstance(), "DIAMOND");
 
         viewPager.setAdapter(adapter);
     }

@@ -1,7 +1,7 @@
 package com.example.alpha.Wallet;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
@@ -26,8 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -133,34 +131,41 @@ public class TransactionsActivity extends AppCompatActivity {
                 {
                     switch (transType) {
                         case "credited":
-                            holder.transactionType.setText("Received from");
+                            holder.walletAddImage.setVisibility(View.GONE);
+                            holder.transactionType.setText("Received From");
+                            holder.transactionImage.setVisibility(View.VISIBLE);
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_down_black);
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.green_700));
                             holder.transactionStatus.setText("Credited");
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.blue));
                             holder.transactionName.setText(model.getTransferredFrom());
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
-                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
 
                             break;
                         case "debited":
+                            holder.walletAddImage.setVisibility(View.GONE);
                             holder.transactionType.setText("Paid To");
+                            holder.transactionImage.setVisibility(View.VISIBLE);
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.colorPrimaryPink));
                             holder.transactionStatus.setText("Debited");
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red_700));
                             holder.transactionName.setText(model.getTransferredTo());
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
-                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
 
 
                             break;
                         case "added":
                             holder.transactionType.setText("Added To");
-                            holder.transactionImage.setImageResource(R.drawable.ic_wallet);
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(TransactionsActivity.this, R.color.blue_600));
+                            //holder.transactionImage.setImageResource(R.drawable.ic_wallet);
+                            //holder.transactionImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_900));
+                            holder.transactionImage.setVisibility(View.GONE);
+                            holder.walletAddImage.setVisibility(View.VISIBLE);
+                            holder.walletImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white));
                             holder.transactionStatus.setText("Added");
                             holder.transactionName.setText("Wallet");
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
-                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.green_500));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
                             break;
                     }
                 }
@@ -168,8 +173,21 @@ public class TransactionsActivity extends AppCompatActivity {
 
                 holder.transactionLayout.setOnClickListener(v -> {
 
+                    Intent i = new Intent(getApplicationContext(), TransactionExtender.class);
 
-                    final Dialog dialog = new Dialog(Objects.requireNonNull(TransactionsActivity.this));
+                    Bundle bundle = new Bundle();
+                    i.putExtra("transactionDate", model.getTransactionDate());
+                    i.putExtra("transactionTime", model.getTransactionTime());
+                    i.putExtra("transactionAmount", model.getTransactionAmount());
+                    i.putExtra("transferredFrom", model.getTransferredFrom());
+                    i.putExtra("transferredTo", model.getTransferredTo());
+                    i.putExtra("transactionId", model.getTransactionId());
+                    i.putExtra("transactionType", model.getTransactionType());
+
+                    i.putExtras(bundle);
+                    startActivity(i);
+
+                    /*final Dialog dialog = new Dialog(Objects.requireNonNull(TransactionsActivity.this));
                     dialog.setContentView(R.layout.fragment_success_request);
 
                     fab = dialog.findViewById(R.id.bt_action);
@@ -195,6 +213,9 @@ public class TransactionsActivity extends AppCompatActivity {
                                 transactionStatus.setText("CREDITED");
                                 transactionId.setText(model.getTransactionId());
                                 transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+
+
+
 
                                 break;
                             case "debited":
@@ -227,7 +248,7 @@ public class TransactionsActivity extends AppCompatActivity {
                     dialog.show();
 
 
-                    fab.setOnClickListener(v1 -> dialog.dismiss());
+                    fab.setOnClickListener(v1 -> dialog.dismiss()); */
 
 
                 });
@@ -256,8 +277,11 @@ public class TransactionsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-        } else {
-            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+        if (item.getItemId() == R.id.help) {
+            Intent intent = new Intent(TransactionsActivity.this, HelpActivity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

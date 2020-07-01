@@ -1,8 +1,11 @@
 package com.example.alpha.Activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +52,7 @@ public class ChainActivity extends AppCompatActivity {
     RelativeLayout Chain;
     TextView parent, rightChild, leftChild;
     String selfUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    Node node0, node1, node2, node3, node4, node5, node6, node7, node8, node9, node10, node11, node12, node13, node14, node15, node16;
+    Node node0, node1, node2, node3, node4, node5, node6, node7, node8, node9, node10, node11, node12, node13, node14, node15, node16, node17, node18, node19, node20, node21, node22, node23, node24, node25, node26, node27, node28, node29, node30, node31, node32, node33, node34, node35, node36, node37, node38, node39, node40;
     private int nodeCount = 1;
 
 
@@ -63,7 +69,7 @@ public class ChainActivity extends AppCompatActivity {
         GraphView graphView = findViewById(R.id.graph);
 
 
-        ChainActivity.this.bar = new ProgressDialog(ChainActivity.this);
+        ChainActivity.this.bar = new ProgressDialog(ChainActivity.this, R.style.MyAlertDialogStyle);
         ChainActivity.this.bar.setCancelable(false);
         ChainActivity.this.bar.setMessage("Building Chain...");
         ChainActivity.this.bar.setIndeterminate(true);
@@ -103,13 +109,17 @@ public class ChainActivity extends AppCompatActivity {
                     //  Toast.makeText(ChainActivity.this, data.toString(), Toast.LENGTH_SHORT).show();
 
 
-                    if (a.equals("No Child(21)") || a.equals("No Child(22)") || a.equals("No Child(23)") || a.equals("No Child(24)") ||
+                    if (a.equals("No Child") || a.equals("No child") || a.equals("No Child(21)") || a.equals("No Child(22)") || a.equals("No Child(23)") || a.equals("No Child(24)") ||
                             a.equals("No Child(31)") || a.equals("No Child(32)") || a.equals("No Child(33)") || a.equals("No Child(34)") ||
-                            a.equals("No Child(35)") || a.equals("No Child(36)") || a.equals("No Child(37)") || a.equals("No Child(38)")) {
+                            a.equals("No Child(35)") || a.equals("No Child(36)") || a.equals("No Child(37)") || a.equals("No Child(38)") ||
+                            a.equals("No Child(41)") || a.equals("No Child(42)") || a.equals("No Child(43)") || a.equals("No Child(44)") ||
+                            a.equals("No Child(45)") || a.equals("No Child(46)") || a.equals("No Child(47)") || a.equals("No Child(48)") ||
+                            a.equals("No Child(49)") || a.equals("No Child(410)") || a.equals("No Child(411)") || a.equals("No Child(412)") ||
+                            a.equals("No Child(413)") || a.equals("No Child(414)") || a.equals("No Child(415)") || a.equals("No Child(416)")) {
 
 
                     } else {
-                        showBottomSheetDialog(a);
+                        showDialog(a);
                         /*Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                         NotifyMe notifyMe = new NotifyMe.Builder(getApplicationContext())
                                 .title("Money Added Successfully")
@@ -128,9 +138,13 @@ public class ChainActivity extends AppCompatActivity {
 
                 //Change Color
 
-                if (a.equals("No Child(21)") || a.equals("No Child(22)") || a.equals("No Child(23)") || a.equals("No Child(24)") ||
+                if (a.equals("No Child") || a.equals("No child") || a.equals("No Child(21)") || a.equals("No Child(22)") || a.equals("No Child(23)") || a.equals("No Child(24)") ||
                         a.equals("No Child(31)") || a.equals("No Child(32)") || a.equals("No Child(33)") || a.equals("No Child(34)") ||
-                        a.equals("No Child(35)") || a.equals("No Child(36)") || a.equals("No Child(37)") || a.equals("No Child(38)")) {
+                        a.equals("No Child(35)") || a.equals("No Child(36)") || a.equals("No Child(37)") || a.equals("No Child(38)") ||
+                        a.equals("No Child(41)") || a.equals("No Child(42)") || a.equals("No Child(43)") || a.equals("No Child(44)") ||
+                        a.equals("No Child(45)") || a.equals("No Child(46)") || a.equals("No Child(47)") || a.equals("No Child(48)") ||
+                        a.equals("No Child(49)") || a.equals("No Child(410)") || a.equals("No Child(411)") || a.equals("No Child(412)") ||
+                        a.equals("No Child(413)") || a.equals("No Child(414)") || a.equals("No Child(415)") || a.equals("No Child(416)")) {
                     ((SimpleViewHolder) viewHolder).chainLayoutUser.setBackgroundColor(getResources().getColor(R.color.red_800));
                 }
             }
@@ -310,7 +324,7 @@ public class ChainActivity extends AppCompatActivity {
 
                     graph.addEdge(node1, node3);
                     graph.addEdge(node1, node4);
-                    ChainActivity.this.bar.dismiss();
+                    //ChainActivity.this.bar.dismiss();
 
                 }
 
@@ -433,7 +447,9 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node3, node7);
                     graph.addEdge(node3, node8);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeOne(child31UID);
+                    loadGraphThreeTwo(child32UID);
+
                 }
                 if (child31UN.equals("null") && child32UN.equals("null")) {
                     node7 = new Node("No Child(31)");
@@ -444,7 +460,7 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node3, node8);
 
 
-                    ChainActivity.this.bar.dismiss();
+                    //ChainActivity.this.bar.dismiss();
 
                 }
 
@@ -456,7 +472,8 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node3, node7);
                     graph.addEdge(node3, node8);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeOne(child31UID);
+
                 }
 
                 if (child31UN.equals("null") && !child32UN.equals("null")) {
@@ -466,7 +483,10 @@ public class ChainActivity extends AppCompatActivity {
 
                     graph.addEdge(node3, node7);
                     graph.addEdge(node3, node8);
-                    ChainActivity.this.bar.dismiss();
+
+                    loadGraphThreeTwo(child32UID);
+
+
                 }
 
 
@@ -500,7 +520,9 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node4, node9);
                     graph.addEdge(node4, node10);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeThree(child33UID);
+                    loadGraphThreeFour(child34UID);
+
                 }
                 if (child33UN.equals("null") && child34UN.equals("null")) {
                     node9 = new Node("No Child(33)");
@@ -510,7 +532,8 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node4, node9);
                     graph.addEdge(node4, node10);
 
-                    ChainActivity.this.bar.dismiss();
+
+                    //ChainActivity.this.bar.dismiss();
 
                 }
 
@@ -522,7 +545,8 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node4, node9);
                     graph.addEdge(node4, node10);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeThree(child33UID);
+
                 }
 
                 if (child33UN.equals("null") && !child34UN.equals("null")) {
@@ -532,7 +556,9 @@ public class ChainActivity extends AppCompatActivity {
 
                     graph.addEdge(node4, node9);
                     graph.addEdge(node4, node10);
-                    ChainActivity.this.bar.dismiss();
+
+                    loadGraphThreeFour(child34UID);
+
                 }
 
 
@@ -566,7 +592,11 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node5, node11);
                     graph.addEdge(node5, node12);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeFive(child35UID);
+                    loadGraphThreeSix(child36UID);
+
+
+
                 }
                 if (child35UN.equals("null") && child36UN.equals("null")) {
                     node11 = new Node("No Child(35)");
@@ -576,7 +606,7 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node5, node11);
                     graph.addEdge(node5, node12);
 
-                    ChainActivity.this.bar.dismiss();
+                    //ChainActivity.this.bar.dismiss();
 
                 }
 
@@ -588,7 +618,7 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node5, node11);
                     graph.addEdge(node5, node12);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeFive(child35UID);
                 }
 
                 if (child35UN.equals("null") && !child36UN.equals("null")) {
@@ -598,7 +628,9 @@ public class ChainActivity extends AppCompatActivity {
 
                     graph.addEdge(node5, node11);
                     graph.addEdge(node5, node12);
-                    ChainActivity.this.bar.dismiss();
+
+                    loadGraphThreeSix(child36UID);
+
                 }
 
 
@@ -632,7 +664,9 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node6, node13);
                     graph.addEdge(node6, node14);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeSeven(child37UID);
+                    loadGraphThreeEight(child38UID);
+
                 }
                 if (child37UN.equals("null") && child38UN.equals("null")) {
                     node13 = new Node("No Child(37)");
@@ -654,7 +688,7 @@ public class ChainActivity extends AppCompatActivity {
                     graph.addEdge(node6, node13);
                     graph.addEdge(node6, node14);
 
-                    ChainActivity.this.bar.dismiss();
+                    loadGraphThreeSeven(child37UID);
                 }
 
                 if (child37UN.equals("null") && !child38UN.equals("null")) {
@@ -664,6 +698,74 @@ public class ChainActivity extends AppCompatActivity {
 
                     graph.addEdge(node6, node13);
                     graph.addEdge(node6, node14);
+
+                    loadGraphThreeEight(child38UID);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeOne(String child31UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child41UID = chaindataSnapshot.child(child31UID).child("uid1").child("uid").getValue().toString();
+                String child41UN = chaindataSnapshot.child(child31UID).child("uid1").child("username").getValue().toString();
+
+                String child42UID = chaindataSnapshot.child(child31UID).child("uid2").child("uid").getValue().toString();
+                String child42UN = chaindataSnapshot.child(child31UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child41UN.equals("null") && !child42UN.equals("null")) {
+                    node15 = new Node(child41UN);
+                    node16 = new Node(child42UN);
+
+
+                    graph.addEdge(node7, node15);
+                    graph.addEdge(node7, node16);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child41UN.equals("null") && child42UN.equals("null")) {
+                    node15 = new Node("No Child(41)");
+                    node16 = new Node("No Child(42)");
+
+
+                    graph.addEdge(node7, node15);
+                    graph.addEdge(node7, node16);
+
+                    //ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child41UN.equals("null") && child42UN.equals("null")) {
+                    node15 = new Node(child41UN);
+                    node16 = new Node("No Child(42)");
+
+
+                    graph.addEdge(node7, node15);
+                    graph.addEdge(node7, node16);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child41UN.equals("null") && !child42UN.equals("null")) {
+                    node15 = new Node("No Child(41)");
+                    node16 = new Node(child42UN);
+
+
+                    graph.addEdge(node7, node15);
+                    graph.addEdge(node7, node16);
                     ChainActivity.this.bar.dismiss();
                 }
 
@@ -677,6 +779,470 @@ public class ChainActivity extends AppCompatActivity {
         });
 
     }
+
+    private void loadGraphThreeTwo(String child32UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child43UID = chaindataSnapshot.child(child32UID).child("uid1").child("uid").getValue().toString();
+                String child43UN = chaindataSnapshot.child(child32UID).child("uid1").child("username").getValue().toString();
+
+                String child44UID = chaindataSnapshot.child(child32UID).child("uid2").child("uid").getValue().toString();
+                String child44UN = chaindataSnapshot.child(child32UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child43UN.equals("null") && !child44UN.equals("null")) {
+                    node17 = new Node(child43UN);
+                    node18 = new Node(child44UN);
+
+
+                    graph.addEdge(node8, node17);
+                    graph.addEdge(node8, node18);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child43UN.equals("null") && child44UN.equals("null")) {
+                    node17 = new Node("No Child(43)");
+                    node18 = new Node("No Child(44)");
+
+
+                    graph.addEdge(node8, node17);
+                    graph.addEdge(node8, node18);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child43UN.equals("null") && child44UN.equals("null")) {
+                    node17 = new Node(child43UN);
+                    node18 = new Node("No Child(44)");
+
+
+                    graph.addEdge(node8, node17);
+                    graph.addEdge(node8, node18);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child43UN.equals("null") && !child44UN.equals("null")) {
+                    node17 = new Node("No Child(43)");
+                    node18 = new Node(child44UN);
+
+
+                    graph.addEdge(node8, node17);
+                    graph.addEdge(node8, node18);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeThree(String child33UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child45UID = chaindataSnapshot.child(child33UID).child("uid1").child("uid").getValue().toString();
+                String child45UN = chaindataSnapshot.child(child33UID).child("uid1").child("username").getValue().toString();
+
+                String child46UID = chaindataSnapshot.child(child33UID).child("uid2").child("uid").getValue().toString();
+                String child46UN = chaindataSnapshot.child(child33UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child45UN.equals("null") && !child46UN.equals("null")) {
+                    node19 = new Node(child45UN);
+                    node20 = new Node(child46UN);
+
+
+                    graph.addEdge(node9, node19);
+                    graph.addEdge(node9, node20);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child45UN.equals("null") && child46UN.equals("null")) {
+                    node19 = new Node("No Child(45)");
+                    node20 = new Node("No Child(46)");
+
+
+                    graph.addEdge(node9, node19);
+                    graph.addEdge(node9, node20);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child45UN.equals("null") && child46UN.equals("null")) {
+                    node19 = new Node(child45UN);
+                    node20 = new Node("No Child(46)");
+
+
+                    graph.addEdge(node9, node19);
+                    graph.addEdge(node9, node20);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child45UN.equals("null") && !child46UN.equals("null")) {
+                    node19 = new Node("No Child(45)");
+                    node20 = new Node(child46UN);
+
+
+                    graph.addEdge(node9, node19);
+                    graph.addEdge(node9, node20);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeFour(String child34UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child47UID = chaindataSnapshot.child(child34UID).child("uid1").child("uid").getValue().toString();
+                String child47UN = chaindataSnapshot.child(child34UID).child("uid1").child("username").getValue().toString();
+
+                String child48UID = chaindataSnapshot.child(child34UID).child("uid2").child("uid").getValue().toString();
+                String child48UN = chaindataSnapshot.child(child34UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child47UID.equals("null") && !child48UN.equals("null")) {
+                    node21 = new Node(child47UID);
+                    node22 = new Node(child48UN);
+
+
+                    graph.addEdge(node10, node21);
+                    graph.addEdge(node10, node22);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child47UID.equals("null") && child48UN.equals("null")) {
+                    node21 = new Node("No Child(47)");
+                    node22 = new Node("No Child(48)");
+
+
+                    graph.addEdge(node10, node21);
+                    graph.addEdge(node10, node22);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child47UID.equals("null") && child48UN.equals("null")) {
+                    node21 = new Node(child47UN);
+                    node22 = new Node("No Child(48)");
+
+
+                    graph.addEdge(node10, node21);
+                    graph.addEdge(node10, node22);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child47UID.equals("null") && !child48UN.equals("null")) {
+                    node21 = new Node("No Child(47)");
+                    node22 = new Node(child48UN);
+
+
+                    graph.addEdge(node10, node21);
+                    graph.addEdge(node10, node22);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeFive(String child35UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child49UID = chaindataSnapshot.child(child35UID).child("uid1").child("uid").getValue().toString();
+                String child49UN = chaindataSnapshot.child(child35UID).child("uid1").child("username").getValue().toString();
+
+                String child410UID = chaindataSnapshot.child(child35UID).child("uid2").child("uid").getValue().toString();
+                String child410UN = chaindataSnapshot.child(child35UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child49UN.equals("null") && !child410UN.equals("null")) {
+                    node23 = new Node(child49UN);
+                    node24 = new Node(child410UN);
+
+
+                    graph.addEdge(node11, node23);
+                    graph.addEdge(node11, node24);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child49UN.equals("null") && child410UN.equals("null")) {
+                    node23 = new Node("No Child(49)");
+                    node24 = new Node("No Child(410)");
+
+
+                    graph.addEdge(node11, node23);
+                    graph.addEdge(node11, node24);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child49UN.equals("null") && child410UN.equals("null")) {
+                    node23 = new Node(child49UN);
+                    node24 = new Node("No Child(410)");
+
+
+                    graph.addEdge(node11, node23);
+                    graph.addEdge(node11, node24);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child49UN.equals("null") && !child410UN.equals("null")) {
+                    node23 = new Node("No Child(49)");
+                    node24 = new Node(child410UN);
+
+
+                    graph.addEdge(node11, node23);
+                    graph.addEdge(node11, node24);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeSix(String child36UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child411UID = chaindataSnapshot.child(child36UID).child("uid1").child("uid").getValue().toString();
+                String child411UN = chaindataSnapshot.child(child36UID).child("uid1").child("username").getValue().toString();
+
+                String child412UID = chaindataSnapshot.child(child36UID).child("uid2").child("uid").getValue().toString();
+                String child412UN = chaindataSnapshot.child(child36UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child411UN.equals("null") && !child412UN.equals("null")) {
+                    node25 = new Node(child411UN);
+                    node26 = new Node(child412UN);
+
+
+                    graph.addEdge(node12, node23);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child411UN.equals("null") && child412UN.equals("null")) {
+                    node25 = new Node("No Child(411)");
+                    node26 = new Node("No Child(412)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child411UN.equals("null") && child412UN.equals("null")) {
+                    node25 = new Node(child411UN);
+                    node26 = new Node("No Child(412)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child411UN.equals("null") && !child412UN.equals("null")) {
+                    node25 = new Node("No Child(411)");
+                    node26 = new Node(child412UN);
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeSeven(String child37UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child413UID = chaindataSnapshot.child(child37UID).child("uid1").child("uid").getValue().toString();
+                String child413UN = chaindataSnapshot.child(child37UID).child("uid1").child("username").getValue().toString();
+
+                String child414UID = chaindataSnapshot.child(child37UID).child("uid2").child("uid").getValue().toString();
+                String child414UN = chaindataSnapshot.child(child37UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child413UN.equals("null") && !child414UN.equals("null")) {
+                    node25 = new Node(child413UN);
+                    node26 = new Node(child414UN);
+
+
+                    graph.addEdge(node12, node23);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child413UN.equals("null") && child414UN.equals("null")) {
+                    node25 = new Node("No Child(413)");
+                    node26 = new Node("No Child(414)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child413UN.equals("null") && child414UN.equals("null")) {
+                    node25 = new Node(child413UN);
+                    node26 = new Node("No Child(414)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child413UN.equals("null") && !child414UN.equals("null")) {
+                    node25 = new Node("No Child(413)");
+                    node26 = new Node(child414UN);
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadGraphThreeEight(String child38UID) {
+        mChain.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot chaindataSnapshot) {
+
+                String child415UID = chaindataSnapshot.child(child38UID).child("uid1").child("uid").getValue().toString();
+                String child415UN = chaindataSnapshot.child(child38UID).child("uid1").child("username").getValue().toString();
+
+                String child416UID = chaindataSnapshot.child(child38UID).child("uid2").child("uid").getValue().toString();
+                String child416UN = chaindataSnapshot.child(child38UID).child("uid2").child("username").getValue().toString();
+
+
+                if (!child415UN.equals("null") && !child416UN.equals("null")) {
+                    node25 = new Node(child415UN);
+                    node26 = new Node(child416UN);
+
+
+                    graph.addEdge(node12, node23);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+                if (child415UN.equals("null") && child416UN.equals("null")) {
+                    node25 = new Node("No Child(415)");
+                    node26 = new Node("No Child(416)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+
+                }
+
+                if (!child415UN.equals("null") && child416UN.equals("null")) {
+                    node25 = new Node(child415UN);
+                    node26 = new Node("No Child(416)");
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+
+                    ChainActivity.this.bar.dismiss();
+                }
+
+                if (child415UN.equals("null") && !child416UN.equals("null")) {
+                    node25 = new Node("No Child(415)");
+                    node26 = new Node(child416UN);
+
+
+                    graph.addEdge(node12, node25);
+                    graph.addEdge(node12, node26);
+                    ChainActivity.this.bar.dismiss();
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
 
 
     private void showBottomSheetDialog(String a) {
@@ -700,12 +1266,28 @@ public class ChainActivity extends AppCompatActivity {
         mBottomSheetDialog.setOnDismissListener(dialog -> mBottomSheetDialog = null);
     }
 
+    private void showDialog(String a) {
+
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_contact_dark);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+        dialog.setCancelable(true);
+        TextView usernameDialog = dialog.findViewById(R.id.usernameDialog);
+        usernameDialog.setText(a);
+
+        (dialog.findViewById(R.id.bt_close)).setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+
+    }
+
 
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Chain Layout");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Chain");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

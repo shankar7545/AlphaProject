@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -8,189 +9,165 @@
     tools:context=".Wallet.walletActivity">
 
     <include
-        android:id="@+id/dreamcoinWallet"
+        android:id="@+id/toolbar"
         layout="@layout/toolbar_default" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dreamcoinWallet"
-        android:layout_margin="10dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text=" Total Balance"
-            android:textColor="@color/colorPrimary"
-            android:textSize="28dp"
-            android:textStyle="bold" />
+
+        <include layout="@layout/layout_wallet_balance" />
 
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_below="@+id/resulttoolbar">
 
-            <TextView
-                android:id="@+id/walletBalance"
-                android:layout_width="wrap_content"
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progress_wallet"
-                style="?android:attr/progressBarStyleSmallInverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/grad5"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="6dp">
-
+                android:layout_margin="7dp"
+                app:cardCornerRadius="4dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Received: "
-                        android:textColor="@color/white"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:background="@color/orange_400"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/received_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:text="Level Wise Balance"
+                            android:textColor="@android:color/black"
                             android:textStyle="bold" />
-
-                        <ProgressBar
-                            android:id="@+id/progress_depo"
-                            style="?android:attr/progressBarStyleSmallInverse"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
                     </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/grad1"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="6dp">
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Withdrawable: "
-                        android:textColor="@color/white"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:background="@color/colorPrimary"
                         android:gravity="center"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/withdrawable_balance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
+                        android:orientation="vertical">
 
-                        <ProgressBar
-                            android:id="@+id/progress_winning"
-                            style="?android:attr/progressBarStyleSmallInverse"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone" />
+                            android:layout_marginTop="4dp"
+                            android:orientation="horizontal"
+                            android:padding="7dp"
+                            android:weightSum="6">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/result_sno"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:maxLength="3"
+                                    android:text="#"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="14dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2">
+
+                                <TextView
+                                    android:id="@+id/result_playername"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:text="Level Name"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/result_kill"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="Received"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="14dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/result_winning"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="Total"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                     </LinearLayout>
+
+                    <include layout="@layout/levelwise_balance_view" />
+
                 </LinearLayout>
 
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        <Button
-            android:id="@+id/view_transactions"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:backgroundTint="@color/blue_600"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="VIEW TRANSACTIONS"
-            android:textColor="@color/white" />
+        </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
     <TextView

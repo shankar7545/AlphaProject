@@ -15,15 +15,15 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/ProgressBar.colorPrimaryPink" />
+            android:theme="@style/ProgressBar.Blue" />
 
         <TextView
             android:id="@+id/Ptext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="Upgrading .."
+            android:layout_marginTop="15dp"
+            android:text="Connecting Server"
+            android:textStyle="bold"
             android:visibility="gone">
 
         </TextView>

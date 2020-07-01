@@ -34,6 +34,11 @@
         <item name="colorAccent">@color/white</item>
     </style>
 
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="EditText.Grey" parent="@style/AppTheme">
         <item name="colorControlActivated">@color/grey_60</item>
         <item name="colorControlHighlight">@color/grey_60</item>

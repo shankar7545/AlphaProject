@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:visibility="gone"
     android:layout_marginStart="3dp"
     android:layout_marginTop="3dp"
     android:layout_marginEnd="3dp"
@@ -15,16 +15,31 @@
         android:layout_height="50dp"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/dateFilterButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1"
+            android:background="@drawable/roundenddesign_black"
+            android:gravity="center"
+            android:text="@string/date"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            tools:ignore="ButtonStyle" />
 
 
         <Button
-            android:id="@+id/date"
+            android:id="@+id/typeFilterButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="7dp"
-            android:layout_weight="1.4"
+            android:layout_weight="1"
             android:background="@drawable/roundenddesign_black"
             android:gravity="center"
             android:text="@string/type"
@@ -32,13 +47,13 @@
             android:textColor="@android:color/black"
             tools:ignore="ButtonStyle" />
 
+
         <Button
-            android:id="@+id/type"
+            android:id="@+id/levelFilterButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="25dp"
             android:layout_marginTop="7dp"
-            android:layout_weight="1.4"
+            android:layout_weight="1"
             android:background="@drawable/roundenddesign_black"
             android:gravity="center"
             android:text="Level"

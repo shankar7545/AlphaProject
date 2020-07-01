@@ -54,4 +54,12 @@
     <string name="register">REGISTER</string>
     <string name="login_C">LOGIN</string>
     <string name="you_are_now_eligible_to_upgrade_to_bronze">You are now eligible to upgrade to bronze</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
+        \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
+    </string>
+
+    <string name="OK">OK</string>
+    <string name="CANCEL">CANCEL</string>
 </resources>

@@ -17,14 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="260dp"
         android:orientation="vertical"
         android:visibility="visible">
 
 
         <ProgressBar
             android:id="@+id/progress_indeterminate"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            style="@style/ProgressBar.colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true" />

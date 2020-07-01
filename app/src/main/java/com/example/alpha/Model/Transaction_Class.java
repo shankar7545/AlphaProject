@@ -9,11 +9,13 @@ public class Transaction_Class {
     public String transactionId;
     public String transactionAmount;
     public String transactionLevel;
+    public String paymentMode;
     public long position;
+
 
     public Transaction_Class(String transactionType, String transactionDate, String transactionTime, String transferredFrom,
                              String transferredTo, String transactionId, String transactionAmount, long position,
-                             String transactionLevel) {
+                             String transactionLevel, String paymentMode) {
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.transactionTime = transactionTime;
@@ -23,6 +25,7 @@ public class Transaction_Class {
         this.transactionAmount = transactionAmount;
         this.position = position;
         this.transactionLevel = transactionLevel;
+        this.paymentMode = paymentMode;
 
 
     }
@@ -60,6 +63,14 @@ public class Transaction_Class {
 
     public String getTransactionLevel() {
         return transactionLevel;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
     }
 
     public void setTransactionLevel(String transactionLevel) {

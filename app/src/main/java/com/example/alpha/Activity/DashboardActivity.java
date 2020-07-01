@@ -666,7 +666,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "level1",
+                                    ""
                             );
                             mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
 
@@ -681,7 +682,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "level1",
+                                    ""
 
                             );
                             mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
@@ -709,7 +711,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     sizeR,
-                                    "level1"
+                                    "level1",
+                                    ""
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -724,7 +727,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "level1",
+                                    ""
                             );
                             mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
 
@@ -750,7 +754,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     sizeP,
-                                    "level1"
+                                    "level1",
+                                    ""
 
 
                             );
@@ -773,7 +778,8 @@ public class DashboardActivity extends AppCompatActivity {
                                     childid,
                                     "50",
                                     1,
-                                    "level1"
+                                    "level1",
+                                    ""
 
                             );
                             mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);

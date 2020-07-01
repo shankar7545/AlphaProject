@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,14 +30,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="230dp"
+                android:layout_marginTop="250dp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
 
                 <ProgressBar
                     android:id="@+id/progress_indeterminate"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    style="@style/ProgressBar.colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:indeterminate="true" />
@@ -76,39 +75,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="250dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="@android:color/white"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="search.json"
-                    app:lottie_loop="true" />
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="@dimen/spacing_mlarge"
+                            android:layout_marginRight="@dimen/spacing_mlarge"
+                            android:src="@drawable/shape_circle"
+                            android:tint="@color/grey_20" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_width="70dp"
+                                android:layout_height="@dimen/spacing_middle"
+                                android:background="@color/grey_20" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/spacing_middle"
+                                android:layout_marginTop="@dimen/spacing_middle"
+                                android:background="@color/grey_20" />
+
+                            <View
+                                android:layout_width="40dp"
+                                android:layout_height="@dimen/spacing_middle"
+                                android:layout_marginTop="@dimen/spacing_middle"
+                                android:background="@color/grey_20" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:layout_marginTop="30dp"
                     android:text="No Transactions found"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textSize="25dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:gravity="center"
-                    android:text="Add some Money!"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimary" />
+
             </LinearLayout>
 
 

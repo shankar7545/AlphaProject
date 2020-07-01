@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alpha.R;
@@ -16,22 +18,32 @@ public class TransactionView extends RecyclerView.ViewHolder implements View.OnC
 
     public TextView transactionType, transactionDate, transactionTime, transactionStatus, transferredTo, transactionId, transactionAmount, transactionName;
 
+    public TextView filterText;
+    public RadioButton filterRadio;
     public ItemClickListener itemClickListener;
-    public LinearLayout transactionLayout;
-    public ImageView transactionImage;
+    public LinearLayout transactionLayout, filterLayout;
+    public ImageView transactionImage, walletImage;
+    public RelativeLayout walletAddImage;
 
     public TransactionView(@NonNull View itemView) {
         super(itemView);
-        transactionDate = (TextView) itemView.findViewById(R.id.transactionDate);
-        transactionTime = (TextView) itemView.findViewById(R.id.transactionTime);
-        transactionName = (TextView) itemView.findViewById(R.id.transactionName);
-        transactionType = (TextView) itemView.findViewById(R.id.transactionType);
-        transactionStatus = (TextView) itemView.findViewById(R.id.transactionStatus);
+        transactionDate = itemView.findViewById(R.id.transactionDate);
+        transactionTime = itemView.findViewById(R.id.transactionTime);
+        transactionName = itemView.findViewById(R.id.transactionName);
+        transactionType = itemView.findViewById(R.id.transactionType);
+        transactionStatus = itemView.findViewById(R.id.transactionStatus);
 
 
-        transactionAmount = (TextView) itemView.findViewById(R.id.transactionAmount);
-        transactionImage = (ImageView) itemView.findViewById(R.id.transactionImage);
-        transactionLayout = (LinearLayout) itemView.findViewById(R.id.transactionLayout);
+        filterLayout = itemView.findViewById(R.id.filterLayout);
+        filterText = itemView.findViewById(R.id.filterText);
+        filterRadio = itemView.findViewById(R.id.filterRadio);
+
+        transactionAmount = itemView.findViewById(R.id.transactionAmount);
+        transactionImage = itemView.findViewById(R.id.transactionImage);
+        transactionLayout = itemView.findViewById(R.id.transactionLayout);
+        walletAddImage = itemView.findViewById(R.id.walletAddImage);
+        walletImage = itemView.findViewById(R.id.walletImage);
+
 
 
         itemView.setOnClickListener(this);

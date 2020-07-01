@@ -41,7 +41,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="160dp" />
+            android:layout_height="150dp" />
 
 
 
@@ -120,6 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|end"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/forgot_password"
@@ -148,18 +150,11 @@
                 android:focusable="true"
                 android:scaleType="fitXY"
                 android:tint="@color/white"
-                app:backgroundTint="@color/blue_grey_800"
+                app:backgroundTint="@color/colorPrimary"
                 app:fabCustomSize="55dp"
                 app:rippleColor="@color/white"
                 app:srcCompat="@drawable/ic_arrow_right" />
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:theme="@style/ProgressBar.colorPrimary"
-                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -187,7 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/register"
+            android:text="SIGN UP"
             android:textColor="@color/white"
             android:textStyle="bold">
 
