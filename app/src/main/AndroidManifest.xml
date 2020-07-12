@@ -12,9 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="MissingDefaultResource">
-        <activity android:name=".Activity.SupportActivity"></activity>
-        <activity android:name=".Wallet.TransactionExtender" />
-        <activity android:name=".Wallet.TransactionFilterActivity" />
+        <activity android:name=".Plan.ReferActivity" />
+        <activity
+            android:name=".Plan.OnBoardActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activity.SupportActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Wallet.TransactionExtender"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Wallet.TransactionFilterActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Levels.LevelActivity"
             android:screenOrientation="portrait"
@@ -142,14 +157,14 @@
             </intent-filter>
         </receiver>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
 </manifest>

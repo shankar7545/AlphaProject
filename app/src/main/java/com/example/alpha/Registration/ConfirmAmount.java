@@ -95,6 +95,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
         String paymentmode = bundle.getString("PAYMENTMODE");
 
 
+        assert response != null;
+        assert responsecode != null;
         if (response.equals("Txn Success") || responsecode.equals("01")) {
             try {
                 mFirebase = FirebaseDatabase.getInstance().getReference();

@@ -1,11 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="BaseTheme" />
+
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/indigo_800</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeBackground">@color/blue_grey_600</item>
+        <item name="android:dialogTheme">@style/Dialog.Theme</item>
+    </style>
+
+    <style name="AppThemeShankar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/white</item>
+
     </style>
 
     <style name="ProgressBar.colorPrimary" parent="@style/AppTheme">
@@ -50,6 +64,11 @@
     <style name="Toolbar.Light" parent="@style/AppTheme">
         <item name="colorControlNormal">@color/grey_60</item>
         <item name="android:textColorPrimary">@color/grey_60</item>
+    </style>
+
+    <style name="Toolbar.White" parent="@style/AppTheme">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
     <style name="RippleStyleWhite">
@@ -104,6 +123,12 @@
 
     <style name="RippleStyleBlack" parent="RippleStyleWhite">
         <item name="mrl_rippleColor">#8096989A</item>
+    </style>
+
+    <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>

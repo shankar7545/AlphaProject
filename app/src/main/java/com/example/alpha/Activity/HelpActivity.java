@@ -11,6 +11,7 @@ import com.example.alpha.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,7 +52,7 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Help");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Help");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

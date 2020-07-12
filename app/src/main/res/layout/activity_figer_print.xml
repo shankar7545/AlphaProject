@@ -115,28 +115,31 @@
 
             <LinearLayout
                 android:id="@+id/fingerPrintLayout"
-                android:layout_width="200dp"
+                android:layout_width="205dp"
                 android:layout_height="45dp"
-                android:background="?attr/selectableItemBackground"
+                android:background="@drawable/background_tcx_rectangle_outline"
+                android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_marginTop="25dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:focusable="true">
 
                 <ImageButton
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@color/transparent"
                     android:scaleType="fitXY"
-                    android:tint="@color/blue"
+                    android:clickable="false"
+                    android:tint="@color/blue_grey_800"
                     app:srcCompat="@drawable/ic_fingerprint" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lato_black"
                     android:text=" Login with Touch ID"
-                    android:textColor="@color/blue" />
+                    android:textColor="@color/blue_grey_800" />
 
 
             </LinearLayout>

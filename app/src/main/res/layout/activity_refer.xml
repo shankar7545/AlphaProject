@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Plan.ReferActivity">
+
+    <include
+        layout="@layout/toolbar_default"
+        android:id="@+id/tool_refer" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/noReferOffer"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="65dp"
+            android:src="@drawable/referandearn" />
+
+        <TextView
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Referral Offer Paused!" />
+
+        <TextView
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/referralExpiredText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Referral Offer is currently under maintenance. \10Stay Tuned for further updates!"
+            android:fontFamily="@font/lato" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/referralLL"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/refer" />
+
+                <TextView
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:textColor="#ecab31"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Two Refers are Mandatory"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/lato_black" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/refMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Invite Two friends and join them under Your Refercode"
+                    android:fontFamily="@font/lato" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#302f2f"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Your Refer Code"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:id="@+id/referCode"
+                    android:background="@drawable/dotted_border"
+                    android:padding="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="dreamwinner"
+                    android:textIsSelectable="true"
+                    android:fontFamily="@font/lato_black" />
+
+                <ImageView
+                    android:id="@+id/howrefer"
+                    android:focusable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/refern_n_earn" />
+
+                <Button
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:layout_gravity="center"
+                    android:id="@+id/referButton"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Refer Now"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/lato"
+                    android:backgroundTint="@color/blue_600" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/refer_toolbar"
+        layout="@layout/matchtoolbar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Refer and Earn"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="REFER CODE"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:background="@drawable/roundenddesign"
+                android:id="@+id/invite_code" />
+
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_content_copy_black_24dp"
+                android:layout_gravity="center"
+                android:id="@+id/copycode" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

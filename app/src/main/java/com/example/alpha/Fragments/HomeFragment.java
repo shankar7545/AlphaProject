@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.example.alpha.Levels.LevelActivity;
-import com.example.alpha.Levels.beginnerActivity;
+import com.example.alpha.Activity.ChainActivity;
+import com.example.alpha.Course.CourseActivity;
+import com.example.alpha.Plan.OnBoardActivity;
 import com.example.alpha.R;
-import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.Tutorials.TutorialActivity;
 import com.example.alpha.Wallet.walletActivity;
 import com.glide.slider.library.SliderLayout;
@@ -20,16 +20,11 @@ import com.glide.slider.library.slidertypes.BaseSliderView;
 import com.glide.slider.library.slidertypes.TextSliderView;
 import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
@@ -41,10 +36,10 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
 
     //Functions
 
-    LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
+    private LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
 
 
-    LinearLayout layoutOne, tutorialsLayout;
+    private LinearLayout layoutOne, tutorialsLayout;
     private SliderLayout mDemoSlider;
 
     public HomeFragment() {
@@ -60,9 +55,15 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         //loadTransactions();
         initComponent();
         FunctionOnclick();
+        levelOnCLick();
         Slider();
         return mView;
 
+    }
+
+    private void levelOnCLick() {
+
+        mView.findViewById(R.id.beginnerPlanLayout).setOnClickListener(v -> startActivity(new Intent(getContext(), OnBoardActivity.class)));
     }
 
     private void initComponent() {
@@ -72,28 +73,6 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         tutorialsLayout.setOnClickListener(v -> startActivity(new Intent(getContext(), TutorialActivity.class)));
 
 
-        try {
-
-            mRef.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String Achievement = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                    if (Achievement.equals("Beginner")) {
-                        mView.findViewById(R.id.layoutOne).setOnClickListener(v -> startActivity(new Intent(getContext(), beginnerActivity.class)));
-                    } else {
-                        mView.findViewById(R.id.layoutOne).setOnClickListener(v -> startActivity(new Intent(getContext(), LevelActivity.class)));
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
     }
@@ -106,7 +85,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         });
         SecurityLayout = mView.findViewById(R.id.securityLayout);
         SecurityLayout.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), PaytmPayment.class));
+            startActivity(new Intent(getContext(), ChainActivity.class));
         });
 
         mView.findViewById(R.id.referLayout).setOnClickListener(v -> {
@@ -122,6 +101,9 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                 //e.toString();
             }
         });
+
+
+        mView.findViewById(R.id.courseLayout).setOnClickListener(v -> startActivity(new Intent(getActivity(), CourseActivity.class)));
     }
 
 

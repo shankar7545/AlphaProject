@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.view.View;
@@ -20,13 +19,9 @@ import android.widget.Toast;
 import com.example.alpha.Fragments.EarnFragment;
 import com.example.alpha.Fragments.HomeFragment;
 import com.example.alpha.Fragments.MeFragment;
-import com.example.alpha.Levels.LevelActivity;
-import com.example.alpha.Profile.ChangePassword;
-import com.example.alpha.Profile.EditDetails;
+import com.example.alpha.Model.ReferClass;
 import com.example.alpha.R;
-import com.example.alpha.Wallet.walletActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -40,18 +35,16 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class HomeActivity extends AppCompatActivity {
     private static long back_pressed;
-    DatabaseReference mRef;
+    DatabaseReference mRef, mReferDB;
     TextView userName, nameM, userNameM;
     private Dialog dialog;
 
@@ -69,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
     CircularImageView profilePic;
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             menuItem -> {
-
 
                 Fragment selectedFragment = null;
                 switch (menuItem.getItemId()) {
@@ -91,8 +83,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 assert selectedFragment != null;
 
+                if (Objects.equals(selectedFragment, new HomeFragment())) {
+                    Toast.makeText(this, "Selected Home Fragment", Toast.LENGTH_SHORT).show();
+                }
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
                         selectedFragment).commit();
+
 
                 return true;
             };
@@ -108,10 +104,9 @@ public class HomeActivity extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.nav_home);
 
 
-        initNavigationMenu();
+        //initNavigationMenu();
         initComponent();
-        menuOnclick();
-
+        //menuOnclick();
 
     }
 
@@ -120,8 +115,6 @@ public class HomeActivity extends AppCompatActivity {
         home_Relative = findViewById(R.id.home_relative);
         mRef = FirebaseDatabase.getInstance().getReference("Users");
         userName = findViewById(R.id.userName);
-        userNameM = findViewById(R.id.userNameM);
-        nameM = findViewById(R.id.nameM);
         help = findViewById(R.id.help);
         progressUsername = findViewById(R.id.progressUsername);
         progressUsername.setVisibility(View.VISIBLE);
@@ -147,8 +140,6 @@ public class HomeActivity extends AppCompatActivity {
                     String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
 
                     userName.setText(mUserName);
-                    userNameM.setText(mUserName);
-                    nameM.setText(mName);
                     userName.setVisibility(View.VISIBLE);
                     progressUsername.setVisibility(View.GONE);
                 } else {
@@ -178,6 +169,7 @@ public class HomeActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.referdialog);
             dialog.setCancelable(false);
             Window window = dialog.getWindow();
+            assert window != null;
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             final TextInputEditText editTextuserName;
             final TextView heading;
@@ -242,6 +234,18 @@ public class HomeActivity extends AppCompatActivity {
                             cancel.setVisibility(View.VISIBLE);
                             progress_bar_dialog.setVisibility(View.GONE);
                             mRef.child(selfUid).child("username").setValue(mUserName);
+
+                            //ReferDB
+                            mReferDB = FirebaseDatabase.getInstance().getReference("ReferDB");
+                            ReferClass referClass = new ReferClass(
+                                    selfUid,
+                                    mUserName,
+                                    "0",
+                                    "false");
+
+                            mReferDB.child(mUserName).setValue(referClass);
+
+
                             dialog.dismiss();
 
                         }
@@ -258,7 +262,7 @@ public class HomeActivity extends AppCompatActivity {
             });
 
 
-            cancel.setOnClickListener(v -> onBackPressed());
+            cancel.setOnClickListener(v -> logout());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,73 +271,40 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void initNavigationMenu() {
-        NavigationView nav_view = findViewById(R.id.nav_view);
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
 
-        menu = findViewById(R.id.menu);
-        menu.setOnClickListener(v -> {
 
-            drawer.openDrawer(GravityCompat.START);
-
-        });
-
+        Intent i = new Intent(this, LoginActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("logoutState", "logout");
+        i.putExtras(bundle);
+        startActivity(i);
+        finish();
     }
 
 
-    private void menuOnclick() {
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-
-        findViewById(R.id.profileLayoutM).setOnClickListener(v -> startActivity(new Intent(this, EditDetails.class)));
-        findViewById(R.id.walletLayoutM).setOnClickListener(v -> startActivity(new Intent(this, walletActivity.class)));
-        findViewById(R.id.chainLayoutM).setOnClickListener(v -> startActivity(new Intent(this, ChainActivity.class)));
-        findViewById(R.id.securityLayoutM).setOnClickListener(v -> startActivity(new Intent(this, ChangePassword.class)));
-        findViewById(R.id.dashboardLayoutM).setOnClickListener(v -> startActivity(new Intent(this, LevelActivity.class)));
-        findViewById(R.id.supportLayoutM).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
-
-        findViewById(R.id.logoutLayoutM).setOnClickListener(v -> new AlertDialog.Builder(HomeActivity.this)
-                .setMessage(R.string.end_session)
-                .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
-                    FirebaseAuth.getInstance().signOut();
-
-                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear();
-                    editor.apply();
-
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("logoutState", "logout");
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
-                })
-                .setNegativeButton("No", null)
-                .show());
+        //statusBarColor();
 
     }
 
+    private void statusBarColor() {
 
-    private void pullAndRefresh() {
-        swipeProgress(true);
-        new Handler().postDelayed(() -> {
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-            initComponent();
-            swipeProgress(false);
-        }, 2000);
     }
-
-
-    private void swipeProgress(final boolean show) {
-        if (!show) {
-            swipe_refresh.setRefreshing(show);
-            return;
-        }
-        swipe_refresh.post(() -> swipe_refresh.setRefreshing(show));
-    }
-
-
     /*public void refreshMyData() {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

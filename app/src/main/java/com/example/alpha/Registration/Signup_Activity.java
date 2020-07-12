@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alpha.Model.Balance_class;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
 import com.example.alpha.R;
@@ -37,6 +38,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class Signup_Activity extends AppCompatActivity {
 
@@ -45,7 +47,7 @@ public class Signup_Activity extends AppCompatActivity {
     Button next;
     Button finish;
     private FirebaseAuth mAuth;
-    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mChain, mRef, mLogin, mUsers;
+    private DatabaseReference mFirebase, mReferDB, mWallet, mTransactions, mChain, mRef, mLogin, mUsers, mParent;
 
     TextView txtAgreeTo;
     LinearLayout login;
@@ -81,6 +83,7 @@ public class Signup_Activity extends AppCompatActivity {
         mTransactions = FirebaseDatabase.getInstance().getReference("Transactions");
         mLogin = FirebaseDatabase.getInstance().getReference("Login");
         mChain = FirebaseDatabase.getInstance().getReference("Chain");
+        mParent = FirebaseDatabase.getInstance().getReference("Parent");
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth.getInstance().signOut();
 
@@ -91,9 +94,9 @@ public class Signup_Activity extends AppCompatActivity {
         next.setOnClickListener(view -> {
             //progressBar.setVisibility(View.VISIBLE);
             //next.setVisibility(View.GONE);
-            final String mName = editTextName.getText().toString().trim();
-            final String mEmail = editTextEmail.getText().toString().trim();
-            final String mPassword = editTextPassword.getText().toString().trim();
+            final String mName = Objects.requireNonNull(editTextName.getText()).toString().trim();
+            final String mEmail = Objects.requireNonNull(editTextEmail.getText()).toString().trim();
+            final String mPassword = Objects.requireNonNull(editTextPassword.getText()).toString().trim();
 
 
             try {
@@ -101,7 +104,7 @@ public class Signup_Activity extends AppCompatActivity {
                 //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                 assert imm != null;
                 //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
             } catch (Exception e) {
                 Toast.makeText(this, "Exception Found :" + e, Toast.LENGTH_SHORT).show();
             }
@@ -143,7 +146,7 @@ public class Signup_Activity extends AppCompatActivity {
             }
 
 
-            registerUser(null);
+            registerUser();
 
         });
 
@@ -211,7 +214,7 @@ public class Signup_Activity extends AppCompatActivity {
                             finish.setVisibility(View.VISIBLE);
                             cancel.setVisibility(View.VISIBLE);
                             progress_bar_dialog.setVisibility(View.GONE);
-                            registerUser(mUserName);
+                            registerUser();
                             dialog.dismiss();
 
                         }
@@ -239,7 +242,7 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-    private void registerUser(String mUserName) {
+    private void registerUser() {
 
         //ProgressBar
         progressDialog = new ProgressDialog(this);
@@ -280,27 +283,32 @@ public class Signup_Activity extends AppCompatActivity {
                                 "0"
                         );
 
+                        String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-                        mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user);
-                        mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Achievement").setValue("Beginner");
-                        mUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .child("Chain").child("parent").child("p1").setValue("null");
+                        mUsers.child(selfUid).setValue(user);
+
 
 
                         //WalletDB
+
                         mWallet = FirebaseDatabase.getInstance().getReference("Wallet")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                .child(selfUid);
 
-                        mWallet.child("Balance").child("mainBalance").setValue("0");
-                        mWallet.child("Balance").child("bronzeBalance").setValue("0");
-                        mWallet.child("Balance").child("silverBalance").setValue("0");
-                        mWallet.child("Balance").child("goldBalance").setValue("0");
-                        mWallet.child("Balance").child("diamondBalance").setValue("0");
-                        mWallet.child("Balance").child("withdrawable").setValue("0");
+                        Balance_class balance_class = new Balance_class(
+                                "0",
+                                "0",
+                                "0",
+                                "0",
+                                "0",
+                                "0"
 
-                        mWallet.child("Status").child("status").setValue("free");
-                        mWallet.child("Status").child("uid").setValue("free");
+                        );
 
+
+                        mWallet.child("Balance").setValue(balance_class);
+
+                        mRef.child("Status").child(selfUid).child("status").setValue("free");
+                        mRef.child("Status").child(selfUid).child("usingByUID").setValue("none");
 
 
                         TransactionCount_class transactionCount_class = new TransactionCount_class(
@@ -311,7 +319,7 @@ public class Signup_Activity extends AppCompatActivity {
                                 "0",
                                 "0",
                                 "0",
-                                "0"
+                                ""
                         );
 
                         mWallet.child("Transactions").child("count").setValue(transactionCount_class);
@@ -320,12 +328,12 @@ public class Signup_Activity extends AppCompatActivity {
                         //Chain
 
 
-                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid1").child("uid").setValue("null");
-                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid1").child("username").setValue("null");
+                        mChain.child(selfUid).child("uid1").child("uid").setValue("null");
+                        mChain.child(selfUid).child("uid1").child("username").setValue("null");
 
-                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid2").child("uid").setValue("null");
-                        mChain.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("uid2").child("username").setValue("null");
-
+                        mChain.child(selfUid).child("uid2").child("uid").setValue("null");
+                        mChain.child(selfUid).child("uid2").child("username").setValue("null");
+                        mChain.child(selfUid).child("parent").child("p1").setValue("null");
 
                         /*AchievementsClass achievementsClass = new AchievementsClass(
                                 "unlocked",
@@ -367,6 +375,7 @@ public class Signup_Activity extends AppCompatActivity {
 
     private void Snackbar(String text) {
         Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_INDEFINITE)
+                .setActionTextColor(getResources().getColor(R.color.green_700))
                 .setAction("Okay", view -> {
                 });
         snackbar.show();
@@ -377,16 +386,32 @@ public class Signup_Activity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().signOut();
+        statusBarColor();
     }
 
 
+    private void statusBarColor() {
+
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
+
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Cancel Registration?")
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Cancel registration")
+                .setMessage("Are you sure you want to cancel registration?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> finish())
                 .setNegativeButton("No", null)
                 .show();
+
     }
 }

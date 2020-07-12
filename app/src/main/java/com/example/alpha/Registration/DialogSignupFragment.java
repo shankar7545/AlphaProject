@@ -157,8 +157,7 @@ public class DialogSignupFragment extends DialogFragment {
                                 "0",
                                 "false",
                                 currentdate,
-                                "0"
-                        );
+                                "0");
 
 
                         mUsers.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(user);

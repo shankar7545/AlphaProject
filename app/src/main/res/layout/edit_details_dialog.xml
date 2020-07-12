@@ -7,8 +7,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_900"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -47,11 +47,11 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimary"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_person" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -83,13 +83,13 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimary"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_email" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="false">
 
@@ -112,8 +112,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
         android:layout_weight="2"
         android:orientation="horizontal">
 
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/blue_800"
             android:text="UPDATE"
             android:textColor="@android:color/white"
             android:visibility="visible" />

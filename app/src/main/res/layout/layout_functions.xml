@@ -10,14 +10,18 @@
     android:weightSum="4">
 
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
+        android:visibility="visible"
+        android:fontFamily="@font/ubuntu"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="10dp"
         android:text="Functions"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
-        app:fontFamily="sans-serif-medium" />
+        android:textColor="@color/grey_80"
+        android:textSize="16sp" />
 
 
     <LinearLayout
@@ -30,10 +34,11 @@
 
 
         <LinearLayout
+            android:id="@+id/courseLayout"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
@@ -56,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:text="Course"
+                android:fontFamily="@font/ubuntu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/grey_60" />
 
@@ -90,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:text="Wallet"
+                android:fontFamily="@font/ubuntu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/grey_60" />
 
@@ -124,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:text="Refer"
+                android:fontFamily="@font/ubuntu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/grey_60" />
 
@@ -151,13 +159,14 @@
                 app:fabSize="normal"
                 android:clickable="false"
                 app:rippleColor="@android:color/white"
-                app:srcCompat="@drawable/ic_security" />
+                app:srcCompat="@drawable/icons8_chain" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:text="Security"
+                android:text="Chain"
+                android:fontFamily="@font/ubuntu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/grey_60" />
 

@@ -16,6 +16,8 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -43,6 +45,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 public class FigerPrintActivity extends AppCompatActivity {
@@ -190,6 +193,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         loogut.setOnClickListener(v -> new AlertDialog.Builder(FigerPrintActivity.this)
                 .setMessage(R.string.end_session)
                 .setCancelable(false)
+                .setTitle("Logout")
                 .setPositiveButton("Yes", (dialog, id) -> {
                     logout();
                     //openWebView();
@@ -254,8 +258,18 @@ public class FigerPrintActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        statusBarColor();
     }
 
+    private void statusBarColor() {
+
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.grey_5));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
 
     private void startlogin() {
 
@@ -527,7 +541,8 @@ public class FigerPrintActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new androidx.appcompat.app.AlertDialog.Builder(this)
-                .setMessage("Close app?")
+                .setTitle("Close app")
+                .setMessage("Are you sure you want to close App ? ")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
                     finish();

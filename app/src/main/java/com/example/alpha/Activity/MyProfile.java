@@ -1,18 +1,28 @@
 package com.example.alpha.Activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.Profile.ChangePassword;
+import com.example.alpha.Profile.EditDetails;
 import com.example.alpha.R;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,9 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import dmax.dialog.SpotsDialog;
 
 public class MyProfile extends AppCompatActivity {
     TextView name, email, userName, referCode;
@@ -33,12 +44,16 @@ public class MyProfile extends AppCompatActivity {
     DatabaseReference mRef;
     Toolbar myprofiletoolbar;
     Button saveprofile;
-    TextView logout;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-    LinearLayout tab1, tab4;
     private Object View;
     DatabaseReference mUser;
-    private Dialog dialog;
+    private Dialog dialogChangePassword;
+    String useremail;
+    FirebaseUser user;
+    AlertDialog progressdialog;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,41 +62,32 @@ public class MyProfile extends AppCompatActivity {
         myprofiletoolbar = findViewById(R.id.myprofiletoolbar);
         setSupportActionBar(myprofiletoolbar);
         mUser = FirebaseDatabase.getInstance().getReference("Users").child(selfUid);
-        logout = findViewById(R.id.logout);
         mRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        tab1 = findViewById(R.id.tab1);
-        tab4 = findViewById(R.id.tab4);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         userName = findViewById(R.id.userName);
         email = findViewById(R.id.email);
         name = findViewById(R.id.name);
 
-        logout.setOnClickListener(v -> new AlertDialog.Builder(MyProfile.this)
-                .setMessage(R.string.end_session)
-                .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(MyProfile.this, LoginActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("logoutState", "logout");
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
-                })
-                .setNegativeButton("No", null)
-                .show());
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        useremail = user.getEmail();
+
 
         mRef.child(selfUid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
+
+                if (dataSnapshot.child("username").exists()) {
+                    String mUserName = Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString();
+                    userName.setText(mUserName);
+
+                }
                 final String mName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
                 final String mEmail = Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString();
 
 
-                userName.setText(mUserName);
                 email.setText(mEmail);
                 name.setText(mName);
 
@@ -94,20 +100,53 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
-        tab1.setOnClickListener(v -> {
-            // Intent intent = new Intent(MyProfile.this, EditDetails.class);
-            //startActivity(intent);
-
-            editDetails();
-        });
-
-        tab4.setOnClickListener(v -> {
-            Intent intent = new Intent(MyProfile.this, ChangePassword.class);
-            startActivity(intent);
-        });
+        onCLick();
 
     }
 
+    private void onCLick() {
+
+
+        findViewById(R.id.help).setOnClickListener(v -> startActivity(new Intent(this, HelpActivity.class)));
+
+
+        findViewById(R.id.profileLayout).setOnClickListener(v -> startActivity(new Intent(this, EditDetails.class)));
+        findViewById(R.id.changePasswordLayout).setOnClickListener(v -> startActivity(new Intent(this, ChangePassword.class)));
+        findViewById(R.id.supportLayout).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
+        findViewById(R.id.referalLayout).setOnClickListener(v -> startActivity(new Intent(this, ChainActivity.class)));
+        findViewById(R.id.changePasswordLayout).setOnClickListener(v -> changePasswordDialog());
+
+        findViewById(R.id.logoutLayout).setOnClickListener(v -> new AlertDialog.Builder(MyProfile.this)
+                .setMessage(R.string.end_session)
+                .setCancelable(false)
+                .setTitle("Logout")
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    logout();
+                    //openWebView();
+
+                })
+                .setNegativeButton("No", null)
+                .show());
+
+
+
+    }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+
+        Intent i = new Intent(MyProfile.this, LoginActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("logoutState", "logout");
+        i.putExtras(bundle);
+        startActivity(i);
+        finish();
+    }
 
 
     @Override
@@ -150,49 +189,125 @@ public class MyProfile extends AppCompatActivity {
     }
 
 
-    private void editDetails() {
+    private void changePasswordDialog() {
         try {
-            dialog = new Dialog(MyProfile.this);
-            dialog.setContentView(R.layout.edit_details_dialog);
-            dialog.setCancelable(false);
+            dialogChangePassword = new Dialog(MyProfile.this);
+            dialogChangePassword.setContentView(R.layout.dialog_change_password);
+            dialogChangePassword.setCancelable(false);
+            Window window = dialogChangePassword.getWindow();
+            assert window != null;
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             final Button finish, cancel;
 
-            finish = dialog.findViewById(R.id.finish);
-            cancel = dialog.findViewById(R.id.cancelBtn);
+            finish = dialogChangePassword.findViewById(R.id.finish);
+            cancel = dialogChangePassword.findViewById(R.id.cancelBtn);
 
-            TextInputEditText emailAddress, fullName;
-            emailAddress = dialog.findViewById(R.id.emailAddress);
-            fullName = dialog.findViewById(R.id.fullName);
-            emailAddress.setEnabled(false);
-            mUser.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String mEmail = dataSnapshot.child("email").getValue().toString();
-                    String mName = dataSnapshot.child("name").getValue().toString();
+            TextInputEditText profile_old_pass, profile_new_pass;
 
-                    emailAddress.setText(mEmail);
-                    fullName.setText(mName);
-                }
+            profile_old_pass = dialogChangePassword.findViewById(R.id.profile_old_pass);
+            profile_new_pass = dialogChangePassword.findViewById(R.id.profile_new_pass);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            profile_old_pass.requestFocus();
 
-                }
-            });
-
-
-            dialog.show();
+            dialogChangePassword.show();
             finish.setOnClickListener(view -> {
 
-                cancel.setEnabled(false);
-                mUser.child("name").setValue(Objects.requireNonNull(fullName.getText()).toString());
-                finish.setText("Updated");
-                cancel.setEnabled(true);
-                dialog.dismiss();
+
+                try {
+
+                    progressdialog = new SpotsDialog.Builder()
+                            .setContext(MyProfile.this)
+                            .setMessage("Please wait...")
+                            .build();
+                    progressdialog.show();
+
+                    if (!profile_old_pass.getText().toString().isEmpty() && !profile_new_pass.getText().toString().isEmpty()) {
+                        AuthCredential authCredential = EmailAuthProvider.getCredential(useremail, profile_old_pass.getText().toString());
+                        user.reauthenticate(authCredential).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                user.updatePassword(profile_new_pass.getText().toString()).addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+
+                                        mUser = FirebaseDatabase.getInstance().getReference("Users")
+                                                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+                                        mUser.child("password").setValue(profile_new_pass.getText().toString());
+                                        progressdialog.dismiss();
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setDuration(Toast.LENGTH_SHORT);
+
+                                        //inflate view
+                                        android.view.View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+                                        ((TextView) custom_view.findViewById(R.id.message)).setText("Password Updated Successfully");
+                                        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_done_black_24dp);
+                                        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.green_500));
+
+                                        toast.setView(custom_view);
+                                        toast.show();
+                                        //Toast.makeText(MyProfile.this, "Password Updated Successfully", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        progressdialog.dismiss();
+
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setDuration(Toast.LENGTH_LONG);
+
+                                        //inflate view
+                                        android.view.View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+                                        ((TextView) custom_view.findViewById(R.id.message)).setText("Something went wrong!");
+                                        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close_black_24dp);
+                                        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                                        toast.setView(custom_view);
+                                        toast.show();
+
+                                        // Toast.makeText(MyProfile.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                });
+                            } else {
+                                progressdialog.dismiss();
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setDuration(Toast.LENGTH_SHORT);
+
+                                //inflate view
+                                View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+                                ((TextView) custom_view.findViewById(R.id.message)).setText("Old password is incorrect!");
+                                ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close_black_24dp);
+                                ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                                toast.setView(custom_view);
+                                toast.show();
+
+                                //Toast.makeText(MyProfile.this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else {
+                        progressdialog.dismiss();
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_SHORT);
+
+                        //inflate view
+                        View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+                        ((TextView) custom_view.findViewById(R.id.message)).setText("Please fill all the details");
+                        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_close_black_24dp);
+                        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.red_400));
+
+                        toast.setView(custom_view);
+                        toast.show();
+
+                        // Toast.makeText(MyProfile.this, "Please fill all the details", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
             });
 
-            cancel.setOnClickListener(v -> dialog.dismiss());
+            cancel.setOnClickListener(v -> dialogChangePassword.dismiss());
 
         } catch (Exception e) {
             e.printStackTrace();

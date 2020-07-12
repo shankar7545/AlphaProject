@@ -271,8 +271,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/silver_crown" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -376,8 +375,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="5dp"
-                android:layout_marginBottom="2dp"
-                android:src="@drawable/gold_crown" />
+                android:layout_marginBottom="2dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -479,8 +477,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/diamond" />
+                android:layout_marginEnd="5dp" />
 
             <TextView
                 android:layout_width="match_parent"

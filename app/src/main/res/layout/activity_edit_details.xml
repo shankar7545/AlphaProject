@@ -22,26 +22,27 @@
             android:layout_height="wrap_content"
             android:textColor="@color/darkPrimary"
             android:text="Personal"
-            android:textSize="18sp"
-            android:fontFamily="@font/baloo"
-            android:layout_marginBottom="5dp" />
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:fontFamily="@font/ubuntu"
+            android:layout_marginBottom="10dp" />
 
 
         <LinearLayout
             android:id="@+id/displayFNLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_person" />
 
             <RelativeLayout
@@ -62,7 +63,7 @@
                         android:singleLine="true"
                         android:maxLength="30"
                         android:textColorHint="@color/grey_40"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,9 +74,9 @@
                     android:layout_alignParentEnd="true"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/grey_80"
                     android:layout_marginEnd="10dp"
+                    android:textStyle="bold"
                     android:layout_centerVertical="true"
                     android:text="Edit"
                     android:visibility="visible"
@@ -103,17 +104,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_face" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +130,7 @@
                     android:inputType="textAutoComplete"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -138,17 +139,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_phone" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -165,7 +166,7 @@
                     android:maxLines="1"
                     android:maxLength="10"
                     android:singleLine="true"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -174,17 +175,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="20dp"
                 android:background="@color/transparent"
-                android:tint="@color/colorPrimaryDark"
+                android:tint="@color/grey_80"
                 app:srcCompat="@drawable/ic_email" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -196,11 +197,11 @@
                     android:id="@+id/profile_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Email Address"
+                    android:hint="@string/email_address"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

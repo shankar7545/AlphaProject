@@ -41,7 +41,6 @@
     <string name="login">Login</string>
     <string name="sign_in_to_continue">Sign in to continue</string>
     <string name="welcome_back">Welcome Back,</string>
-    <string name="todo">TODO</string>
     <string name="email">Email</string>
     <string name="enter_registered_email">Enter registered email</string>
     <string name="reset">RESET</string>
@@ -62,4 +61,24 @@
 
     <string name="OK">OK</string>
     <string name="CANCEL">CANCEL</string>
+
+
+    <string name="onboard_text_less_investment">"Invest
+as low as ₹50 "</string>
+
+
+    <string name="onboard_text_minimum">"Refer Two people"</string>
+
+    <string name="credit_text_work">"Enter
+Refer Code"</string>
+
+    <string name="credit_text_less_levels">"Completely Legal"</string>
+
+    <string name="credit_initial_offer_title_instant_loan">Personal Loans up to</string>
+    <string name="title_activity_bottom_default_navigation">BottomDefaultNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="todo">TODO</string>
+
 </resources>

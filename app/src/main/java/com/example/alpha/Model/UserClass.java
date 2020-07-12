@@ -1,7 +1,7 @@
 package com.example.alpha.Model;
 
 public class UserClass {
-    public String email, name, password, paymentStatus, username, level, parentStatus, date, childCount, p5, p6, p7, p8;
+    public String email, name, password, paymentStatus, username, level, parentStatus, date, childCount, p6, p7, p8;
 
     public UserClass() {
     }
@@ -75,6 +75,5 @@ public class UserClass {
     public void setChildCount(String childCount) {
         this.childCount = childCount;
     }
-
 
 }

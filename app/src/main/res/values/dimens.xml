@@ -27,5 +27,23 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="slider_image_corner">7dp</dimen>
 
+    //Truecaller
+
+    <dimen name="control_triplespace">24.0dp</dimen>
+    <dimen name="control_micro_space">2.0dip</dimen>
+    <dimen name="control_space">8.0dip</dimen>
+    <dimen name="control_extra_quadspace">40.0dip</dimen>
+    <dimen name="control_doublespace">16.0dip</dimen>
+    <dimen name="control_mini_space">4.0dip</dimen>
+    <dimen name="credit_icon_size_m_extra">40.0dip</dimen>
+    <dimen name="credit_match_constraint">0.0dip</dimen>
+    <dimen name="control_extraspace">12.0dip</dimen>
+    <dimen name="control_quadspace">32.0dip</dimen>
+    <dimen name="font_size_amount">36.0sp</dimen>
+    <dimen name="background_tcx_outline_radius">8.0dip</dimen>
+
+
+    <item name="direction_scale_factor" format="float" type="dimen">1</item>
+
 
 </resources>

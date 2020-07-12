@@ -37,6 +37,7 @@
             android:layout_gravity="center"
             android:layout_marginEnd="25dp"
             android:text="LOGOUT"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textStyle="bold">
 

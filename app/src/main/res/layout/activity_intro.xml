@@ -36,7 +36,7 @@
             android:id="@+id/text"
             android:text="@string/app_name"
             android:textColor="@color/black"
-            android:fontFamily="@font/baloo"
+            android:fontFamily="@font/ubuntu"
             android:textSize="25sp" />
 
         <ProgressBar
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Connecting Server"
             android:textColor="@color/black"
+            android:fontFamily="@font/ubuntu"
             android:textSize="11sp" />
 
 

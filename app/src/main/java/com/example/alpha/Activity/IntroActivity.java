@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -41,16 +40,12 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_intro);
-
+        //statusBarColor();
         textDisplay = findViewById(R.id.textDisplay);
 
-        new Handler().postDelayed(() -> {
-            //startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-            //finish();
-            connectFirebase();
-        }, SPLASH_TIME_OUT);
-
-
+        //startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+        //finish();
+        new Handler().postDelayed(this::connectFirebase, SPLASH_TIME_OUT);
 
     }
 
@@ -108,17 +103,21 @@ public class IntroActivity extends AppCompatActivity {
 
     }
 
+    private void statusBarColor() {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        Window window = IntroActivity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(IntroActivity.this, R.color.white));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
-
-
-        Window window = IntroActivity.this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(IntroActivity.this, R.color.colorPrimaryDark));
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 }

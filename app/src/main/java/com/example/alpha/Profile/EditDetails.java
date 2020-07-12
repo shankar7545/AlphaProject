@@ -8,14 +8,16 @@ import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,14 +43,17 @@ public class EditDetails extends AppCompatActivity {
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     private Dialog dialog;
     private Context context;
+    View parent_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_details);
+
+        parent_view = findViewById(android.R.id.content);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Edit Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -127,6 +132,9 @@ public class EditDetails extends AppCompatActivity {
             dialog.setContentView(R.layout.edit_details_dialog);
             dialog.setCancelable(false);
             final Button finish, cancel;
+            Window window = dialog.getWindow();
+            assert window != null;
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
             finish = dialog.findViewById(R.id.finish);
             cancel = dialog.findViewById(R.id.cancelBtn);
@@ -160,7 +168,7 @@ public class EditDetails extends AppCompatActivity {
 
                 cancel.setEnabled(false);
                 mUser.child(selfUid).child("name").setValue(Objects.requireNonNull(fullName.getText()).toString());
-                Toast.makeText(EditDetails.this, "Updated", Toast.LENGTH_SHORT).show();
+                Snackbar("Name updated successful");
                 finish.setText("Updated");
                 cancel.setEnabled(true);
                 dialog.dismiss();
@@ -175,6 +183,15 @@ public class EditDetails extends AppCompatActivity {
 
 
     }
+
+    private void Snackbar(String text) {
+        Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)
+                .setAction("Okay", view -> {
+                });
+        snackbar.show();
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

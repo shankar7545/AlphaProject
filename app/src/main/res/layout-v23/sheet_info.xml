@@ -6,13 +6,16 @@
     android:layout_gravity="bottom"
     android:background="@color/grey_5"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/spacing_medium"
-    android:paddingTop="@dimen/spacing_medium">
+    android:paddingBottom="@dimen/spacing_medium">
 
     <com.balysv.materialripple.MaterialRippleLayout
         style="@style/RippleStyleBlack"
+        android:id="@+id/paytm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="@dimen/spacing_middle"
         android:paddingRight="@dimen/spacing_middle">
 
@@ -27,9 +30,7 @@
             <ImageView
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                android:padding="@dimen/spacing_large"
-                android:tint="@color/grey_60"
-                app:srcCompat="@drawable/ic_person" />
+                app:srcCompat="@drawable/paytm_logo" />
 
             <TextView
                 android:id="@+id/userNameSheet"
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_middle"
                 android:layout_marginRight="@dimen/spacing_middle"
-                android:text="Preview"
+                android:text="Paytm"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/grey_90" />
 
@@ -46,10 +47,16 @@
     </com.balysv.materialripple.MaterialRippleLayout>
 
     <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/razorpay"
         style="@style/RippleStyleBlack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:paddingLeft="@dimen/spacing_middle"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
         android:paddingRight="@dimen/spacing_middle">
 
         <LinearLayout
@@ -63,9 +70,8 @@
             <ImageView
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                android:padding="@dimen/spacing_large"
-                android:tint="@color/grey_60"
-                app:srcCompat="@drawable/contest" />
+                android:padding="5dp"
+                app:srcCompat="@drawable/gpay_logo" />
 
             <TextView
                 android:id="@+id/AchievementSheet"
@@ -73,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_middle"
                 android:layout_marginRight="@dimen/spacing_middle"
-                android:text="Silver"
+                android:text="GooglePay"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/grey_90" />
 

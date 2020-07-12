@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import dmax.dialog.SpotsDialog;
@@ -72,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginActivity.this.bar = new ProgressDialog(LoginActivity.this, R.style.MyAlertDialogStyle);
         LoginActivity.this.bar.setCancelable(false);
-        LoginActivity.this.bar.setMessage("Signing in...");
+        LoginActivity.this.bar.setMessage("Signing in ...");
         LoginActivity.this.bar.setIndeterminate(true);
         LoginActivity.this.bar.setCanceledOnTouchOutside(false);
 
@@ -82,8 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             //String get value from edittext
             LoginActivity.this.bar.show();
 
-            login_email = email.getText().toString();
-            login_password = password.getText().toString();
+            login_email = Objects.requireNonNull(email.getText()).toString();
+            login_password = Objects.requireNonNull(password.getText()).toString();
 
             if (!login_email.isEmpty() && !login_password.isEmpty()) {
 
@@ -109,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.forgetpass_layout);
             dialog.setCancelable(false);
             Window window = dialog.getWindow();
+            assert window != null;
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
             final TextInputEditText reset_email = dialog.findViewById(R.id.reset_email);
@@ -129,12 +132,12 @@ public class LoginActivity extends AppCompatActivity {
                             progressdialog.dismiss();
                         } else {
                             Toast.makeText(LoginActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
+                            //dialog.dismiss();
                             progressdialog.dismiss();
                         }
                     }).addOnFailureListener(e -> {
                         Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        //dialog.dismiss();
                         progressdialog.dismiss();
                     });
                 }
@@ -158,7 +161,13 @@ public class LoginActivity extends AppCompatActivity {
             final String logoutState = bundle.getString("logoutState");
             assert logoutState != null;
             if (logoutState.equals("logout")) {
-                sign_up.setOnClickListener(v -> Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show());
+                sign_up.setOnClickListener(v ->
+                {
+                    //Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, Signup_Activity.class));
+
+                });
+
             }
 
         } else {
@@ -209,10 +218,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void statusBarColor() {
+
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
+
     @Override
     public void onBackPressed() {
         new androidx.appcompat.app.AlertDialog.Builder(this)
-                .setMessage("Close app?")
+                .setTitle("Close app")
+                .setMessage("Are you sure you want to close App ? ")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
                     finish();
@@ -227,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         logAuth.addAuthStateListener(mAuthListener);
-
+        statusBarColor();
     }
 
 }

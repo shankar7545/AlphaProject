@@ -55,7 +55,6 @@ public class ChainActivity extends AppCompatActivity {
     Node node0, node1, node2, node3, node4, node5, node6, node7, node8, node9, node10, node11, node12, node13, node14, node15, node16, node17, node18, node19, node20, node21, node22, node23, node24, node25, node26, node27, node28, node29, node30, node31, node32, node33, node34, node35, node36, node37, node38, node39, node40;
     private int nodeCount = 1;
 
-
     private BottomSheetBehavior mBehavior;
     private BottomSheetDialog mBottomSheetDialog;
     private View bottom_sheet;
@@ -73,7 +72,9 @@ public class ChainActivity extends AppCompatActivity {
         ChainActivity.this.bar.setCancelable(false);
         ChainActivity.this.bar.setMessage("Building Chain...");
         ChainActivity.this.bar.setIndeterminate(true);
-        ChainActivity.this.bar.setCanceledOnTouchOutside(false);
+        ChainActivity.this.bar.setCanceledOnTouchOutside(true);
+
+
 
 
         //BottomSheet
@@ -145,7 +146,10 @@ public class ChainActivity extends AppCompatActivity {
                         a.equals("No Child(45)") || a.equals("No Child(46)") || a.equals("No Child(47)") || a.equals("No Child(48)") ||
                         a.equals("No Child(49)") || a.equals("No Child(410)") || a.equals("No Child(411)") || a.equals("No Child(412)") ||
                         a.equals("No Child(413)") || a.equals("No Child(414)") || a.equals("No Child(415)") || a.equals("No Child(416)")) {
-                    ((SimpleViewHolder) viewHolder).chainLayoutUser.setBackgroundColor(getResources().getColor(R.color.red_800));
+                    ((SimpleViewHolder) viewHolder).chainLayoutUser.setBackgroundColor(getResources().getColor(R.color.red_400));
+                } else {
+                    ((SimpleViewHolder) viewHolder).chainLayoutUser.setBackgroundColor(getResources().getColor(R.color.indigo_700));
+
                 }
             }
         };
@@ -1294,6 +1298,8 @@ public class ChainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+
+
         return true;
     }
 

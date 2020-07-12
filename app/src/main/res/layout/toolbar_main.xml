@@ -23,8 +23,9 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:visibility="gone"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
+            android:tint="@color/white"
             app:srcCompat="@drawable/ic_menu" />
 
 
@@ -33,21 +34,24 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="15dp"
             app:civ_border="true"
-            app:civ_border_color="@color/white"
+            app:civ_border_color="@color/grey_80"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:civ_border_width="1.5dp"
             app:civ_shadow="true"
             app:civ_shadow_radius="0"
-            android:visibility="gone"
-            app:srcCompat="@drawable/refer" />
+            android:visibility="visible"
+            app:srcCompat="@drawable/female_pp" />
 
 
         <LinearLayout
             android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
             android:layout_gravity="center"
+            android:gravity="center_vertical"
             android:layout_marginStart="5dp"
             android:orientation="vertical">
 
@@ -56,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your username"
-                android:textColor="@color/grey_10"
+                android:textColor="@color/grey_5"
                 android:visibility="visible"
                 android:textSize="10sp" />
 
@@ -85,7 +89,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
+            android:tint="@color/white"
             app:srcCompat="@drawable/ic_notifications" />
 
         <ImageButton
@@ -94,7 +98,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:tint="@android:color/white"
+            android:tint="@color/white"
+            android:layout_marginEnd="5dp"
             app:srcCompat="@drawable/ic_help_white" />
 
     </LinearLayout>
