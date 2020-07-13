@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class ReferCodeAcitvity extends AppCompatActivity {
 
@@ -76,6 +79,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         mAutoReferCode = FirebaseDatabase.getInstance().getReference("AutoReferCode");
 
         initToolbar();
+        statusBarColor();
 
         /*textViewReferCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +140,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         });   */
 
         finish.setOnClickListener(view -> referCode());
+
 
     }
 
@@ -347,6 +352,15 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
     }
 
+    private void statusBarColor() {
+
+        Window window = ReferCodeAcitvity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(ReferCodeAcitvity.this, R.color.white));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
 
     private void initToolbar() {
         findViewById(R.id.backToolbar).setOnClickListener(v -> finish());

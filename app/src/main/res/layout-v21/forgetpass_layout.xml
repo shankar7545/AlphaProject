@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="?attr/actionBarSize"
         android:gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/indigo_800"
         android:orientation="vertical">
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/blue_900"
             android:text="@string/reset"
             android:textColor="@android:color/white"
             tools:ignore="ButtonStyle" />

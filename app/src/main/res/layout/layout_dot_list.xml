@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_5"
+    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
+        android:background="@color/colorPrimaryPink"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/indigo_600"
-            app:contentInsetStartWithNavigation="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Updating info"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
+        android:layout_marginTop="-10dp"
         android:scrollingCache="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -47,6 +53,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/spacing_smlarge"
                     android:gravity="center_horizontal"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <View
@@ -59,7 +66,7 @@
                         android:layout_width="@dimen/spacing_middle"
                         android:layout_height="@dimen/spacing_middle"
                         android:layout_marginTop="@dimen/spacing_large"
-                        android:tint="@color/light_green_400"
+                        android:tint="@color/light_blue_400"
                         app:srcCompat="@drawable/shape_round_solid" />
 
                 </RelativeLayout>
@@ -68,8 +75,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginRight="@dimen/spacing_middle"
+                    android:layout_marginLeft="@dimen/spacing_medium"
+                    android:layout_marginRight="@dimen/spacing_medium"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:visibility="visible"
                     app:cardCornerRadius="2dp"
@@ -89,14 +96,23 @@
                             android:src="@drawable/green_chechk"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="0"
+                            android:visibility="gone"
                             app:civ_border="false" />
+
+                        <ProgressBar
+                            android:id="@+id/progressStatus"
+                            style="?android:attr/progressBarStyleSmallInverse"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:visibility="visible"
+                            android:theme="@style/ProgressBar.colorPrimaryPink" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
                             android:layout_height="0dp" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -110,6 +126,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:text="Checking status for"
+                                    android:textSize="13sp"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                     android:textColor="@color/grey_40" />
 
@@ -118,6 +135,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:text=" Shankar "
+                                    android:textSize="13sp"
                                     android:textStyle="bold"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                     android:textColor="@color/light_blue_400" />
@@ -126,6 +144,18 @@
 
 
                         </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text=" Retry "
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorPrimaryPink" />
+
 
                     </LinearLayout>
 
@@ -142,6 +172,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/spacing_smlarge"
                     android:layout_marginStart="@dimen/spacing_smlarge"
+                    android:visibility="gone"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -164,9 +195,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginRight="@dimen/spacing_middle"
-                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginLeft="@dimen/spacing_medium"
+                    android:layout_marginRight="@dimen/spacing_medium"
                     android:visibility="visible"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="1dp">
@@ -185,7 +215,16 @@
                             android:src="@drawable/green_chechk"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="0"
+                            android:visibility="gone"
                             app:civ_border="false" />
+
+                        <ProgressBar
+                            android:id="@+id/progressUsername"
+                            style="?android:attr/progressBarStyleSmallInverse"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:visibility="visible"
+                            android:theme="@style/ProgressBar.colorPrimaryPink" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
@@ -206,6 +245,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:text="Sending Money to"
+                                    android:textSize="13sp"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                     android:textColor="@color/grey_40" />
 
@@ -213,6 +253,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
+                                    android:textSize="13sp"
                                     android:text=" Shankar "
                                     android:textStyle="bold"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -238,6 +279,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/spacing_smlarge"
                     android:layout_marginStart="@dimen/spacing_smlarge"
+                    android:visibility="gone"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -252,7 +294,7 @@
                         android:layout_height="@dimen/spacing_middle"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:tint="@color/light_blue_400"
-                        app:srcCompat="@drawable/shape_round_gold" />
+                        app:srcCompat="@drawable/shape_round_solid" />
 
                 </RelativeLayout>
 
@@ -260,9 +302,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginRight="@dimen/spacing_middle"
-                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginLeft="@dimen/spacing_medium"
+                    android:layout_marginRight="@dimen/spacing_medium"
                     android:visibility="visible"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="1dp">
@@ -275,13 +316,22 @@
                         android:padding="@dimen/spacing_large">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:layout_width="@dimen/spacing_xlarge"
-                            android:layout_height="@dimen/spacing_xlarge"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:foreground="@color/overlay_light_20"
-                            android:src="@drawable/material_bg_1"
+                            android:src="@drawable/green_chechk"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="0"
+                            android:visibility="gone"
                             app:civ_border="false" />
+
+                        <ProgressBar
+                            android:id="@+id/progressTransactions"
+                            style="?android:attr/progressBarStyleSmallInverse"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:visibility="visible"
+                            android:theme="@style/ProgressBar.colorPrimaryPink" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
@@ -301,29 +351,24 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="Nathaniel "
+                                    android:text="Upgrading level to"
+                                    android:textSize="13sp"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/light_blue_400"
-                                    android:textStyle="bold" />
+                                    android:textColor="@color/grey_40" />
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="is now following you "
+                                    android:text="  Bronze "
+                                    android:textStyle="bold"
+                                    android:textSize="13sp"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                                    android:textColor="@color/grey_40" />
+                                    android:textColor="@color/light_blue_400" />
 
                             </LinearLayout>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_small"
-                                android:gravity="center_vertical"
-                                android:text="30 minutes ago"
-                                android:textColor="@color/grey_20"
-                                android:textSize="@dimen/spacing_middle" />
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -336,4 +381,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

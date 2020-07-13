@@ -30,10 +30,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
-            android:layout_above="@+id/amountInfoLayout"
-            android:background="@color/blue_50"
-            android:paddingStart="15dp">
+            android:background="@color/white"
+            android:layout_above="@+id/amountInfoLayout">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_autoPlay="true"
+                android:layout_gravity="center_horizontal"
+                app:lottie_fileName="online_payment.json"
+                app:lottie_repeatMode="reverse"
+                app:lottie_loop="true" />
 
         </LinearLayout>
 

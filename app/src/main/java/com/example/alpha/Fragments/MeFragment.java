@@ -125,9 +125,9 @@ public class MeFragment extends Fragment {
                     no_matches_found.setVisibility(View.GONE);
 
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     transactions_linear.setVisibility(View.GONE);
                     no_matches_found.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
                 }
 
 

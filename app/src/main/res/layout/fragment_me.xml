@@ -46,57 +46,28 @@
             <LinearLayout
                 android:id="@+id/no_subjects_found"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="250dp"
+                android:layout_marginTop="70dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animation_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        app:lottie_autoPlay="true"
+                        android:layout_gravity="center_horizontal"
+                        app:lottie_fileName="computer_man.json"
+                        app:lottie_repeatMode="reverse"
+                        app:lottie_loop="true" />
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="@dimen/spacing_mlarge"
-                            android:layout_marginRight="@dimen/spacing_mlarge"
-                            android:src="@drawable/shape_circle"
-                            android:tint="@color/grey_20" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <View
-                                android:layout_width="70dp"
-                                android:layout_height="@dimen/spacing_middle"
-                                android:background="@color/grey_20" />
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/spacing_middle"
-                                android:layout_marginTop="@dimen/spacing_middle"
-                                android:background="@color/grey_20" />
-
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_height="@dimen/spacing_middle"
-                                android:layout_marginTop="@dimen/spacing_middle"
-                                android:background="@color/grey_20" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -107,9 +78,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:text="No Transactions found"
-                    android:textSize="25dp" />
+                    android:layout_marginTop="10dp"
+                    android:text="No Transactions Found"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/ubuntu"
+                    android:textSize="20sp" />
 
 
             </LinearLayout>

@@ -112,7 +112,20 @@ public class MyProfile extends AppCompatActivity {
 
         findViewById(R.id.profileLayout).setOnClickListener(v -> startActivity(new Intent(this, EditDetails.class)));
         findViewById(R.id.changePasswordLayout).setOnClickListener(v -> startActivity(new Intent(this, ChangePassword.class)));
-        findViewById(R.id.supportLayout).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
+        findViewById(R.id.supportLayout).setOnClickListener(v -> {
+
+
+            final Dialog dialog = new Dialog(MyProfile.this);
+            dialog.setContentView(R.layout.layout_dot_list);
+            dialog.setCancelable(true);
+            Window window = dialog.getWindow();
+            assert window != null;
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+
+            dialog.show();
+        });
         findViewById(R.id.referalLayout).setOnClickListener(v -> startActivity(new Intent(this, ChainActivity.class)));
         findViewById(R.id.changePasswordLayout).setOnClickListener(v -> changePasswordDialog());
 
