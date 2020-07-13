@@ -47,7 +47,7 @@ public class PaytmPayment extends AppCompatActivity {
         setContentView(R.layout.activity_paytm_payment);
 
         initComponent();
-        initToolbar();
+        //initToolbar();
 
         statusBarColor();
 
@@ -139,7 +139,7 @@ public class PaytmPayment extends AppCompatActivity {
         super.onStart();
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-        mRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
@@ -147,6 +147,7 @@ public class PaytmPayment extends AppCompatActivity {
                 if (paymentStatus.equals("true")) {
 
                     startActivity(new Intent(PaytmPayment.this, ReferCodeAcitvity.class));
+                    finish();
 
                     //Toast.makeText(PaytmPayment.this, "Payment "+paymentStatus, Toast.LENGTH_SHORT).show();
 
@@ -168,8 +169,8 @@ public class PaytmPayment extends AppCompatActivity {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
     }
 
