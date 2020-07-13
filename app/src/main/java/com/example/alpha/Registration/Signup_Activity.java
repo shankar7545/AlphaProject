@@ -1,8 +1,11 @@
 package com.example.alpha.Registration;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -21,6 +24,12 @@ import com.example.alpha.Model.Balance_class;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
 import com.example.alpha.R;
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.CredentialPickerConfig;
+import com.google.android.gms.auth.api.credentials.Credentials;
+import com.google.android.gms.auth.api.credentials.CredentialsClient;
+import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.auth.api.credentials.IdentityProviders;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,6 +63,11 @@ public class Signup_Activity extends AppCompatActivity {
     private Dialog dialog;
     ProgressDialog progressDialog;
 
+    CredentialsClient mCredentialsClient;
+
+
+    private static final int RC_HINT = 100;
+
     private View parent_view;
 
     @Override
@@ -62,6 +76,7 @@ public class Signup_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         parent_view = findViewById(android.R.id.content);
 
+        mCredentialsClient = Credentials.getClient(this);
 
         login = findViewById(R.id.login);
         editTextName = findViewById(R.id.name);
@@ -91,6 +106,8 @@ public class Signup_Activity extends AppCompatActivity {
         findViewById(R.id.bt_close).setOnClickListener(v -> onBackPressed());
 
 
+        editTextEmail.setOnClickListener(v -> showHintRequest());
+
         next.setOnClickListener(view -> {
             //progressBar.setVisibility(View.VISIBLE);
             //next.setVisibility(View.GONE);
@@ -110,13 +127,6 @@ public class Signup_Activity extends AppCompatActivity {
             }
 
 
-            if (mName.isEmpty()) {
-                //editTextName.setError("Enter Name");
-                Snackbar("Name is empty !");
-                editTextName.requestFocus();
-                next.setVisibility(View.VISIBLE);
-                return;
-            }
             if (mEmail.isEmpty()) {
                 //editTextEmail.setError("Enter Email");
                 Snackbar("Email address is empty !");
@@ -125,6 +135,14 @@ public class Signup_Activity extends AppCompatActivity {
 
                 return;
 
+            }
+
+            if (mName.isEmpty()) {
+                //editTextName.setError("Enter Name");
+                Snackbar("Name is empty !");
+                editTextName.requestFocus();
+                next.setVisibility(View.VISIBLE);
+                return;
             }
 
             if (mPassword.isEmpty()) {
@@ -374,7 +392,7 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
     private void Snackbar(String text) {
-        Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)
                 .setActionTextColor(getResources().getColor(R.color.green_700))
                 .setAction("Okay", view -> {
                 });
@@ -382,6 +400,46 @@ public class Signup_Activity extends AppCompatActivity {
 
     }
 
+
+    private void showHintRequest() {
+
+        HintRequest hintRequest = new HintRequest.Builder()
+                .setHintPickerConfig(new CredentialPickerConfig.Builder()
+                        .setShowCancelButton(true)
+                        .build())
+                .setEmailAddressIdentifierSupported(true)
+                .setAccountTypes(IdentityProviders.GOOGLE)
+                .build();
+
+        PendingIntent intent = mCredentialsClient.getHintPickerIntent(hintRequest);
+        try {
+            startIntentSenderForResult(intent.getIntentSender(), RC_HINT, null, 0, 0, 0);
+        } catch (IntentSender.SendIntentException e) {
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_HINT) {
+            if (resultCode == RESULT_OK) {
+                Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+
+                assert credential != null;
+                editTextEmail.setText(credential.getId());
+                editTextName.requestFocus();
+                editTextName.setSelection(Objects.requireNonNull(editTextName.getText()).length());
+
+
+            } else {
+                editTextEmail.clearFocus();
+            }
+        }
+
+
+    }
     @Override
     public void onStart() {
         super.onStart();

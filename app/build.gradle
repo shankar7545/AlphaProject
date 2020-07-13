@@ -66,6 +66,7 @@ dependencies {
     implementation 'com.tuyenmonkey:mkloader:1.4.0'  //Custom Loaders
 
     implementation 'androidx.browser:browser:1.2.0' //Chrome CustomLinks
+    implementation 'com.google.android.gms:play-services-auth:18.0.0' //HintPicker
 
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'

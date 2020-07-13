@@ -28,13 +28,13 @@
     </style>
 
     <style name="ProgressBar.colorPrimaryDark" parent="@style/AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
 
     <style name="ProgressBar.colorPrimaryPink" parent="@style/AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryPink</item>
         <item name="colorAccent">@color/colorPrimaryPink</item>
     </style>
 
@@ -50,7 +50,7 @@
 
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/indigo_800</item>
     </style>
 
     <style name="EditText.Grey" parent="@style/AppTheme">

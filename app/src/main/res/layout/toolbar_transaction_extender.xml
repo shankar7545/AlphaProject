@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transaction Successful"
+                android:fontFamily="@font/ubuntu"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="17sp" />
@@ -39,7 +40,7 @@
                 android:id="@+id/dateToolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:text="20-08-2020  07:32:23"
                 android:textColor="@color/grey_10"
                 android:visibility="visible"

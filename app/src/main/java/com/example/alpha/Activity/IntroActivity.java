@@ -7,14 +7,16 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.alpha.Common.Common;
 import com.example.alpha.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +33,7 @@ public class IntroActivity extends AppCompatActivity {
     DatabaseReference mData, updatenotice, maintaindb, mRef;
     FirebaseAuth.AuthStateListener mAuthListener;
     TextView textDisplay;
+    ProgressBar progress_indeterminate;
 
     Uri uriNotification;
     private Context mContext;
@@ -42,14 +45,20 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         //statusBarColor();
         textDisplay = findViewById(R.id.textDisplay);
+        progress_indeterminate = findViewById(R.id.progress_indeterminate);
 
         //startActivity(new Intent(IntroActivity.this, LoginActivity.class));
         //finish();
-        new Handler().postDelayed(this::connectFirebase, SPLASH_TIME_OUT);
+
+        checkInternet();
+        //new Handler().postDelayed(() -> connectFirebase(), SPLASH_TIME_OUT);
 
     }
 
     private void connectFirebase() {
+        progress_indeterminate.setIndeterminate(true);
+        textDisplay.setText("Connecting Server");
+
         mData = FirebaseDatabase.getInstance().getReference("Data");
 
         mData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,6 +81,29 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkInternet() {
+
+        View parent_view = findViewById(android.R.id.content);
+
+        if (Common.isConnectedToINternet(IntroActivity.this)) {
+            //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+            connectFirebase();
+
+        } else {
+
+            textDisplay.setText("No internet");
+            progress_indeterminate.setIndeterminate(false);
+
+            Snackbar snackbar = Snackbar.make(parent_view, "Turn on your Internet", Snackbar.LENGTH_INDEFINITE)
+
+                    .setActionTextColor(getResources().getColor(R.color.green_700))
+                    .setAction("Retry", view -> checkInternet());
+            snackbar.show();
+
+
+        }
     }
 
     private void sharedPreference() {

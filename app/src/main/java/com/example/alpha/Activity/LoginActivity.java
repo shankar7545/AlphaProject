@@ -2,12 +2,16 @@ package com.example.alpha.Activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,7 +21,12 @@ import android.widget.Toast;
 import com.example.alpha.R;
 import com.example.alpha.Registration.DialogSignupFragment;
 import com.example.alpha.Registration.Signup_Activity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.CredentialPickerConfig;
+import com.google.android.gms.auth.api.credentials.Credentials;
+import com.google.android.gms.auth.api.credentials.CredentialsClient;
+import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.auth.api.credentials.IdentityProviders;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     public FirebaseAuth logAuth;
     public DatabaseReference loginDatabse;
     public TextInputEditText email, password;
-    public FloatingActionButton signin;
+    public Button signin;
     public String login_email, login_password;
     public RelativeLayout login_Relative;
     public TextView forgetPasswrod;
@@ -50,7 +59,14 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference mRef, mReferDB, mFirebase, mTransactions, mWallet, mLevel, dbPaytm, mLogin;
 
+    CredentialsClient mCredentialsClient;
+    public InputMethodManager imm;
+
+
+
     public static final int DIALOG_QUEST_CODE = 300;
+
+    private static final int RC_HINT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +80,20 @@ public class LoginActivity extends AppCompatActivity {
 
         forgetPasswrod = findViewById(R.id.forgot_password1);
 
+
+        imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,0);
+        assert imm != null;
+
         /*---------------------------------------------------------*/
 
+        mCredentialsClient = Credentials.getClient(this);
 
         login_Relative = findViewById(R.id.login_Relative);
 
         signin = findViewById(R.id.fab);
+
 
 
         LoginActivity.this.bar = new ProgressDialog(LoginActivity.this, R.style.MyAlertDialogStyle);
@@ -79,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity.this.bar.setCanceledOnTouchOutside(false);
 
 
+        email.setOnClickListener(v -> showHintRequest());
 
         signin.setOnClickListener(v -> {
             //String get value from edittext
@@ -86,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
 
             login_email = Objects.requireNonNull(email.getText()).toString();
             login_password = Objects.requireNonNull(password.getText()).toString();
+
 
             if (!login_email.isEmpty() && !login_password.isEmpty()) {
 
@@ -191,6 +217,50 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void showHintRequest() {
+
+        HintRequest hintRequest = new HintRequest.Builder()
+                .setHintPickerConfig(new CredentialPickerConfig.Builder()
+                        .setShowCancelButton(true)
+                        .build())
+                .setEmailAddressIdentifierSupported(true)
+                .setAccountTypes(IdentityProviders.GOOGLE)
+                .build();
+
+        PendingIntent intent = mCredentialsClient.getHintPickerIntent(hintRequest);
+        try {
+            startIntentSenderForResult(intent.getIntentSender(), RC_HINT, null, 0, 0, 0);
+        } catch (IntentSender.SendIntentException e) {
+            Exception exception;
+
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_HINT) {
+            if (resultCode == RESULT_OK) {
+                Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+
+                assert credential != null;
+                email.setText(credential.getId());
+                password.requestFocus();
+
+
+            } else {
+                //Toast.makeText(this, "Hint Read Failed", Toast.LENGTH_SHORT).show();
+                email.clearFocus();
+            }
+
+
+        }
+
+
+    }
+
     private void showSignupDialog() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -249,5 +319,6 @@ public class LoginActivity extends AppCompatActivity {
         logAuth.addAuthStateListener(mAuthListener);
         statusBarColor();
     }
+
 
 }

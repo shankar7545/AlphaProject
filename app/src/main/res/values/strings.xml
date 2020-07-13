@@ -37,10 +37,10 @@
     <string name="enter_email_and_password">Enter email and password.</string>
     <string name="password">Password</string>
     <string name="new_user">New user?</string>
-    <string name="forgot_password">Forgot / Reset Password!</string>
+    <string name="forgot_password">Forgot Password !</string>
     <string name="login">Login</string>
     <string name="sign_in_to_continue">Sign in to continue</string>
-    <string name="welcome_back">Welcome Back,</string>
+    <string name="welcome_back">Welcome</string>
     <string name="email">Email</string>
     <string name="enter_registered_email">Enter registered email</string>
     <string name="reset">RESET</string>
@@ -80,5 +80,6 @@ Refer Code"</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="todo">TODO</string>
+    <string name="connecting_server">Connecting Server</string>
 
 </resources>

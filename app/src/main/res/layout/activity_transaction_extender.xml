@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Transacton ID :"
+            android:text="Transaction ID :"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:paddingStart="15dp"
@@ -41,10 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="PW543568"
+                android:fontFamily="@font/ubuntu"
                 android:textSize="16sp"
-                android:layout_marginStart="2dp"
                 android:textColor="@color/black"
-                android:paddingStart="15dp"
+                android:layout_marginStart="17dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
 
@@ -63,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="COPY"
+                    android:fontFamily="@font/ubuntu"
                     android:textSize="12sp"
                     android:clickable="false"
                     android:textStyle="bold"
@@ -79,7 +80,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:orientation="vertical"
         android:background="@color/white">
@@ -88,7 +89,7 @@
             android:id="@+id/success_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paid to"
+            android:text="Paid to :"
             android:textColor="@color/black"
             android:paddingStart="15dp"
             android:paddingTop="10dp"
@@ -96,7 +97,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -107,6 +110,7 @@
                 android:layout_weight="1"
                 android:text="SHANKAR"
                 android:textSize="16sp"
+                android:fontFamily="@font/ubuntu"
                 android:gravity="center|start"
                 android:layout_marginStart="2dp"
                 android:textColor="@color/black"
@@ -155,21 +159,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Transaction Type : "
+            android:text="Level : "
             android:textColor="@color/black"
-            android:paddingStart="15dp"
+            android:layout_marginStart="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upi Transaction"
-            android:layout_marginStart="2dp"
+            android:text="Beginner"
+            android:fontFamily="@font/ubuntu"
+            android:layout_marginStart="17dp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15sp"
-            android:paddingStart="15dp" />
+            android:layout_marginBottom="15sp" />
 
 
     </LinearLayout>
@@ -181,19 +186,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-
+        android:visibility="gone"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/grey_80"
             android:text="Transaction Completed by" />
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/paytm_png" />
+            android:layout_height="wrap_content"
+            android:text="Paytm"
+            android:textColor="@color/indigo_800"
+            android:textSize="30sp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/ubuntu"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

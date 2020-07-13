@@ -28,7 +28,8 @@
             android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/refer"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,10 +52,11 @@
             android:id="@+id/textDisplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connecting Server"
+            android:text="@string/connecting_server"
             android:textColor="@color/black"
             android:fontFamily="@font/ubuntu"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            tools:ignore="SmallSp" />
 
 
     </LinearLayout>

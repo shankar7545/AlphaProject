@@ -126,7 +126,6 @@ public class PaytmPayment extends AppCompatActivity {
 
     }
 
-
     private void initToolbar() {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,20 +139,19 @@ public class PaytmPayment extends AppCompatActivity {
         super.onStart();
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-        mRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
 
                 if (paymentStatus.equals("true")) {
 
+                    startActivity(new Intent(PaytmPayment.this, ReferCodeAcitvity.class));
+
                     //Toast.makeText(PaytmPayment.this, "Payment "+paymentStatus, Toast.LENGTH_SHORT).show();
 
 
-                } else {
-                    //Toast.makeText(PaytmPayment.this, "Payment "+paymentStatus, Toast.LENGTH_SHORT).show();
                 }
-
 
             }
 

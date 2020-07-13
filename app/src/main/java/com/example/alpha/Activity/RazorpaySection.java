@@ -41,11 +41,7 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
     String id = UUID.randomUUID().toString();
     String childid = "RZPY" + id.substring(0, 8).toUpperCase();
     String extraid = id.substring(0, 4).toUpperCase();
-    private Calendar c = Calendar.getInstance();
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-    private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-    private String timeformat = time.format(c.getTime());
-    private String datetime = dateformat.format(c.getTime());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +79,12 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
     public void onPaymentSuccess(String s) {
 
         try {
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+            String datetime = dateformat.format(c.getTime());
+            SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+            String timeformat = time.format(c.getTime());
+
             mFirebase = FirebaseDatabase.getInstance().getReference();
             mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -236,6 +236,12 @@ public class ChainActivity extends AppCompatActivity {
                                 graph.addEdge(node0, node2);
 
                                 loadGraphOneOne(uid1);
+
+                                new Handler().postDelayed(() -> ChainActivity.this.bar.dismiss(), 1000);
+
+
+
+
                             }
 
                             if (uid1UN.equals("null") && !uid2UN.equals("null")) {
@@ -248,6 +254,7 @@ public class ChainActivity extends AppCompatActivity {
                                 graph.addEdge(node0, node2);
 
                                 loadGraphOneTwo(uid2);
+
                             }
 
                            /* else {

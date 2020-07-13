@@ -51,11 +51,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     String id = UUID.randomUUID().toString();
     String childid = "PYTM" + id.substring(0, 8).toUpperCase();
     String extraid = id.substring(0, 4).toUpperCase();
-    private Calendar c = Calendar.getInstance();
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-    private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-    private String timeformat = time.format(c.getTime());
-    private String datetime = dateformat.format(c.getTime());
+
 
 
     @Override
@@ -108,6 +104,13 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                         String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
                                 .child("username").getValue()).toString();
+
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+                        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+                        String timeformat = time.format(c.getTime());
+                        String datetime = dateformat.format(c.getTime());
+
 
                         if (dataSnapshot.child("Transactions").child(childid).exists()) {
 
@@ -280,7 +283,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
             this.dialog.show();
         }
 
-        protected String doInBackground(ArrayList<String>... alldata) {
+        @SafeVarargs
+        protected final String doInBackground(ArrayList<String>... alldata) {
 
             try {
                 JSONParser jsonParser = new JSONParser(ConfirmAmount.this);

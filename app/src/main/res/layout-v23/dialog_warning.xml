@@ -65,7 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Retry"
-            android:textAllCaps="false" />
+            android:textColor="@color/white"
+            android:background="@drawable/btn_rounded_blue_gray"
+            android:textAllCaps="true" />
 
     </LinearLayout>
 

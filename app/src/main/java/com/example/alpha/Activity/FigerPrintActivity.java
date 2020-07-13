@@ -468,6 +468,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         dialog = new Dialog(FigerPrintActivity.this);
         dialog.setContentView(R.layout.dialog_warning);
         dialog.setCancelable(false);
+
         final Button wifienable = dialog.findViewById(R.id.enablewifi);
         if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();

@@ -53,7 +53,8 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
 
         editTextReferCode = findViewById(R.id.referCode);
-        mRef = FirebaseDatabase.getInstance().getReference("Users");
+        mRef = FirebaseDatabase.getInstance().getReference();
+        mUsers = FirebaseDatabase.getInstance().getReference("Users");
         mChain = FirebaseDatabase.getInstance().getReference("Chain");
 
         mFirebase = FirebaseDatabase.getInstance().getReference();
@@ -134,12 +135,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
             }
         });   */
 
-        finish.setOnClickListener(view -> {
-
-
-            referCode();
-
-        });
+        finish.setOnClickListener(view -> referCode());
 
     }
 
@@ -172,7 +168,6 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                     } else if (checkdataSnapshot.hasChild(mReferCode)) {
 
                         Child(mReferCode);
-
 
                         //Toast.makeText(ReferCodeAcitvity.this, "Refercode Found  "+mReferCode, Toast.LENGTH_SHORT).show();
 
@@ -222,6 +217,8 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                                 .child("parent").child("p1").getValue()).toString();
 
                         if ((enabledStatus.equals("true")) && !p1.equals("null")) {
+
+
                             if (childCount.equals("0")) {
                                 referDetails(mReferCode);
 
@@ -245,7 +242,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                                 editTextReferCode.setEnabled(true);
                             }
                         } else {
-                            Snackbar(mReferCode + " have no parent");
+                            Snackbar(mReferCode + " is not Enabled/Activated");
                             progressBar.setVisibility(View.GONE);
                             finish.setVisibility(View.VISIBLE);
                             editTextReferCode.setEnabled(true);
@@ -342,7 +339,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
     }
 
     private void Snackbar(String text) {
-        Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_INDEFINITE)
+        Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)
                 .setActionTextColor(getResources().getColor(R.color.green_700))
                 .setAction("Okay", view -> {
                 });
@@ -363,7 +360,6 @@ public class ReferCodeAcitvity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {
