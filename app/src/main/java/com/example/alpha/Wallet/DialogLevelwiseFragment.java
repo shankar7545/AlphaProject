@@ -34,8 +34,9 @@ import static android.app.Activity.RESULT_OK;
 public class DialogLevelwiseFragment extends DialogFragment {
 
 
-    DatabaseReference myWalletAmount, mFirebase, mWallet;
-    String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    private DatabaseReference mFirebase;
+    private DatabaseReference mWallet;
+    private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     private Calendar c = Calendar.getInstance();
     private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
     private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
@@ -43,28 +44,24 @@ public class DialogLevelwiseFragment extends DialogFragment {
     private String datetime = dateformat.format(c.getTime());
 
 
-    public CallbackResult callbackResult;
-    final int GOOGLEPAY_PAYMENT = 2;
+    private final int GOOGLEPAY_PAYMENT = 2;
 
     public void setOnCallbackResult(final CallbackResult callbackResult) {
-        this.callbackResult = callbackResult;
     }
 
-    private int request_code = 0;
-    private View root_view;
-    public static final String UPI_ID = "8464980838@ybl";
+    private static final String UPI_ID = "8464980838@ybl";
     private String GOOGLE_PAY_PACKAGE_NAME = "com.phonepe.app";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        myWalletAmount = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid);
+        DatabaseReference myWalletAmount = FirebaseDatabase.getInstance().getReference("Wallet").child(selfUid);
 
         mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
 
 
-        root_view = inflater.inflate(R.layout.dialog_levlewise, container, false);
+        View root_view = inflater.inflate(R.layout.dialog_levlewise, container, false);
         root_view.findViewById(R.id.bt_close).setOnClickListener(v -> dismiss());
         (root_view.findViewById(R.id.addedBalanceLayout)).setOnClickListener(v ->
         {
@@ -78,7 +75,7 @@ public class DialogLevelwiseFragment extends DialogFragment {
     }
 
 
-    void payUsingGooglePay(String amount, String upiId, String name, String note) {
+    private void payUsingGooglePay(String amount, String upiId, String name, String note) {
         Uri uri = Uri.parse("upi://pay").buildUpon()
                 .appendQueryParameter("pa", upiId)
                 .appendQueryParameter("pn", name)
@@ -152,8 +149,8 @@ public class DialogLevelwiseFragment extends DialogFragment {
         String paymentCancel = "";
         String approvalRefNo = "";
         String[] response = str.split("&");
-        for (int i = 0; i < response.length; i++) {
-            String[] equalStr = response[i].split("=");
+        for (String s : response) {
+            String[] equalStr = s.split("=");
             if (equalStr.length >= 2) {
                 if (equalStr[0].toLowerCase().equals("Status".toLowerCase())) {
                     status = equalStr[1].toLowerCase();
@@ -247,8 +244,7 @@ public class DialogLevelwiseFragment extends DialogFragment {
         return dialog;
     }
 
-    public void setRequestCode(int request_code) {
-        this.request_code = request_code;
+    void setRequestCode(int request_code) {
     }
 
     public interface CallbackResult {

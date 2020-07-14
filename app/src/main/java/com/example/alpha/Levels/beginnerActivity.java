@@ -500,7 +500,7 @@ public class beginnerActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     upgradeProgressBar.setVisibility(View.GONE);
                     upgradeTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(beginnerActivity.this, "Invlaid level or balance", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beginnerActivity.this, "Invalid level or balance", Toast.LENGTH_SHORT).show();
                 }
 
 

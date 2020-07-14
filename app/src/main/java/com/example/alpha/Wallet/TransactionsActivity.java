@@ -40,7 +40,7 @@ public class TransactionsActivity extends AppCompatActivity {
     public RecyclerView transactionsRecycler;
     public LinearLayoutManager transactionsLinearLayout;
     Toolbar solotoolbar;
-    DatabaseReference mRef, mTransactions, mStaff;
+    DatabaseReference mRef, mTransactions, mWallet;
     FirebaseRecyclerAdapter<Transaction_Class, TransactionView> TransactionsAdapter;
     LinearLayout transactions_linear, progressBarLayout, no_matches_found;
     TextView transactionDate, transactionTime, transferredFrom, transactionAmount, transactionType, transactionStatus, transactionId;
@@ -55,6 +55,7 @@ public class TransactionsActivity extends AppCompatActivity {
         no_matches_found = findViewById(R.id.no_subjects_found);
 
 
+        mWallet = FirebaseDatabase.getInstance().getReference("Wallet");
         getSupportActionBar().setTitle("Transactions");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -107,7 +108,6 @@ public class TransactionsActivity extends AppCompatActivity {
 
 
     }
-
 
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");

@@ -56,8 +56,9 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private void connectFirebase() {
-        progress_indeterminate.setIndeterminate(true);
+
         textDisplay.setText("Connecting Server");
+        progress_indeterminate.setIndeterminate(true);
 
         mData = FirebaseDatabase.getInstance().getReference("Data");
 

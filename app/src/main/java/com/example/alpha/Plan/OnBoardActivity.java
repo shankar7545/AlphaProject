@@ -88,6 +88,8 @@ public class OnBoardActivity extends AppCompatActivity {
 
                     } else {
                         upgradeTextView.setText(" Refercode " + parentStatus);
+                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeAcitvity.class)));
+
                     }
                 }
 

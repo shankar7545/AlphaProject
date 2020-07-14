@@ -2,6 +2,7 @@ package com.example.alpha.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
+import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -196,6 +198,7 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setView(custom_view);
             toast.show();
+            startActivity(new Intent(this, ReferCodeAcitvity.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,6 +41,7 @@ public class PaytmPayment extends AppCompatActivity {
     private BottomSheetBehavior mBehavior;
     private BottomSheetDialog mBottomSheetDialog;
     private View bottom_sheet;
+    private long mLastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class PaytmPayment extends AppCompatActivity {
         PaytmPayment.this.bar = new ProgressDialog(PaytmPayment.this, R.style.MyAlertDialogStyle);
         PaytmPayment.this.bar.setCancelable(false);
         PaytmPayment.this.bar.setIndeterminate(true);
-        PaytmPayment.this.bar.setCanceledOnTouchOutside(true);
+        PaytmPayment.this.bar.setCanceledOnTouchOutside(false);
 
 
         //BottomSheet
@@ -139,10 +141,11 @@ public class PaytmPayment extends AppCompatActivity {
         super.onStart();
 
         mRef = FirebaseDatabase.getInstance().getReference("Users");
-        mRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).addValueEventListener(new ValueEventListener() {
+        mRef.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                .child("paymentStatus").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String paymentStatus = dataSnapshot.child("paymentStatus").getValue().toString();
+                String paymentStatus = Objects.requireNonNull(dataSnapshot.getValue()).toString();
 
                 if (paymentStatus.equals("true")) {
 
@@ -150,7 +153,6 @@ public class PaytmPayment extends AppCompatActivity {
                     finish();
 
                     //Toast.makeText(PaytmPayment.this, "Payment "+paymentStatus, Toast.LENGTH_SHORT).show();
-
 
                 }
 
@@ -183,8 +185,16 @@ public class PaytmPayment extends AppCompatActivity {
         final View view = getLayoutInflater().inflate(R.layout.sheet_info, null);
 
 
+
         view.findViewById(R.id.paytm).setOnClickListener(v -> {
-            mBottomSheetDialog.dismiss();
+            //mBottomSheetDialog.dismiss();
+
+            //to disable doubleclick
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+
             PaytmPayment.this.bar.setMessage("Loading Paytm ...");
             PaytmPayment.this.bar.show();
             new Handler().postDelayed(() -> PaytmPayment.this.bar.dismiss(), 2000);
@@ -220,7 +230,10 @@ public class PaytmPayment extends AppCompatActivity {
 
 
         view.findViewById(R.id.razorpay).setOnClickListener(v -> {
-            mBottomSheetDialog.dismiss();
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
 
             PaytmPayment.this.bar.setMessage("Loading Razorpay ...");
             PaytmPayment.this.bar.show();
@@ -237,7 +250,7 @@ public class PaytmPayment extends AppCompatActivity {
 
         mBottomSheetDialog = new BottomSheetDialog(this);
         mBottomSheetDialog.setContentView(view);
-        mBottomSheetDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        Objects.requireNonNull(mBottomSheetDialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         mBottomSheetDialog.show();
         mBottomSheetDialog.setOnDismissListener(dialog -> mBottomSheetDialog = null);
@@ -247,9 +260,9 @@ public class PaytmPayment extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
+                .setTitle("Cancel payment ")
                 .setMessage("Are you sure you want to close payment ? ")
                 .setCancelable(false)
-                .setTitle("Cancel payment ")
                 .setPositiveButton("Yes", (dialog, id) -> finish())
                 .setNegativeButton("No", null)
                 .show();

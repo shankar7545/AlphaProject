@@ -8,9 +8,25 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/spacing_medium">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:fontFamily="@font/ubuntu"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:text="Choose one"
+        android:background="@color/white"
+        android:textColor="@color/grey_80"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
     <com.balysv.materialripple.MaterialRippleLayout
         style="@style/RippleStyleBlack"
-        android:id="@+id/paytm"
+        android:id="@+id/upiPayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -30,10 +46,50 @@
             <ImageView
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                app:srcCompat="@drawable/paytm_logo" />
+                app:srcCompat="@drawable/upi"
+                android:padding="5dp" />
 
             <TextView
                 android:id="@+id/userNameSheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_middle"
+                android:layout_marginRight="@dimen/spacing_middle"
+                android:text="UPI"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/grey_90" />
+
+        </LinearLayout>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/paytm"
+        style="@style/RippleStyleBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/spacing_middle"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="2dp"
+        android:paddingRight="@dimen/spacing_middle">
+
+        <LinearLayout
+            android:id="@+id/lyt_share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                app:srcCompat="@drawable/paytm_logo" />
+
+            <TextView
+                android:id="@+id/AchievementSheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_middle"
@@ -55,12 +111,11 @@
         android:paddingLeft="@dimen/spacing_middle"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="10dp"
         android:paddingRight="@dimen/spacing_middle">
 
         <LinearLayout
-            android:id="@+id/lyt_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -70,16 +125,14 @@
             <ImageView
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                android:padding="5dp"
-                app:srcCompat="@drawable/gpay_logo" />
+                app:srcCompat="@drawable/razorpay_logo" />
 
             <TextView
-                android:id="@+id/AchievementSheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_middle"
                 android:layout_marginRight="@dimen/spacing_middle"
-                android:text="GooglePay"
+                android:text="Razorpay"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/grey_90" />
 

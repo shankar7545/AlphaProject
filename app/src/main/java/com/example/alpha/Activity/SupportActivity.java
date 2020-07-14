@@ -15,7 +15,7 @@ public class SupportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_dot_list);
+        setContentView(R.layout.activity_support);
 
         initToolbar();
     }
