@@ -1,6 +1,6 @@
 package com.example.alpha.Activity;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -48,7 +50,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-public class FigerPrintActivity extends AppCompatActivity {
+public class FingerPrintActivity extends AppCompatActivity {
     private static long back_pressed;
 
     public View parent_view;
@@ -183,14 +185,26 @@ public class FigerPrintActivity extends AppCompatActivity {
         loogut = findViewById(R.id.logout);
 
 
-        bar = new ProgressDialog(FigerPrintActivity.this, R.style.MyAlertDialogStyle);
+        bar = new ProgressDialog(FingerPrintActivity.this, R.style.MyAlertDialogStyle);
         bar.setCancelable(false);
         bar.setMessage("Loading ..");
         bar.setIndeterminate(true);
         bar.setCanceledOnTouchOutside(false);
 
 
-        loogut.setOnClickListener(v -> new AlertDialog.Builder(FigerPrintActivity.this)
+        loogut.setOnClickListener(v ->
+                {
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+                    String timeformat = time.format(c.getTime());
+                    String datetime = dateformat.format(c.getTime());
+
+                    Toast.makeText(this, "Date : " + timeformat + ", Time : " + datetime, Toast.LENGTH_LONG).show();
+                }
+
+
+                /*new AlertDialog.Builder(FingerPrintActivity.this)
                 .setMessage(R.string.end_session)
                 .setCancelable(false)
                 .setTitle("Logout")
@@ -201,11 +215,11 @@ public class FigerPrintActivity extends AppCompatActivity {
 
                 })
                 .setNegativeButton("No", null)
-                .show());
+                .show()*/);
 
 
         //ProgressBar
-        progressDialog = new ProgressDialog(FigerPrintActivity.this);
+        progressDialog = new ProgressDialog(FingerPrintActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -216,7 +230,7 @@ public class FigerPrintActivity extends AppCompatActivity {
 
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
+            if (Common.isConnectedToINternet(FingerPrintActivity.this)) {
                 checkPIN();
 
             } else {
@@ -245,7 +259,7 @@ public class FigerPrintActivity extends AppCompatActivity {
         editor.apply();
 
 
-        Intent i = new Intent(FigerPrintActivity.this, LoginActivity.class);
+        Intent i = new Intent(FingerPrintActivity.this, LoginActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("logoutState", "logout");
         i.putExtras(bundle);
@@ -273,7 +287,7 @@ public class FigerPrintActivity extends AppCompatActivity {
 
     private void startlogin() {
 
-        startActivity(new Intent(FigerPrintActivity.this, HomeActivity.class));
+        startActivity(new Intent(FingerPrintActivity.this, HomeActivity.class));
         //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
 
@@ -322,7 +336,7 @@ public class FigerPrintActivity extends AppCompatActivity {
     private void checkPIN() {
 
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(FigerPrintActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(FingerPrintActivity.this);
         SharedPreferences.Editor editor = preferences.edit();
         String value = preferences.getString("PIN", null);
         if (value == null) {
@@ -465,12 +479,12 @@ public class FigerPrintActivity extends AppCompatActivity {
 
     private void checkInternet() {
         progressDialog.dismiss();
-        dialog = new Dialog(FigerPrintActivity.this);
+        dialog = new Dialog(FingerPrintActivity.this);
         dialog.setContentView(R.layout.dialog_warning);
         dialog.setCancelable(false);
 
         final Button wifienable = dialog.findViewById(R.id.enablewifi);
-        if (Common.isConnectedToINternet(FigerPrintActivity.this)) {
+        if (Common.isConnectedToINternet(FingerPrintActivity.this)) {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             initComponent();

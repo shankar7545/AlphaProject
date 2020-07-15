@@ -49,7 +49,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-public class Signup_Activity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
     public ProgressBar progressBar;
     TextInputEditText editTextName, editTextEmail, editTextPassword, editTextReferCode;
@@ -173,7 +173,7 @@ public class Signup_Activity extends AppCompatActivity {
 
     private void referDialog() {
         try {
-            dialog = new Dialog(Signup_Activity.this);
+            dialog = new Dialog(RegistrationActivity.this);
             dialog.setContentView(R.layout.referdialog);
             dialog.setCancelable(true);
             Window window = dialog.getWindow();

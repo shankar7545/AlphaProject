@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 
@@ -31,15 +32,16 @@ import androidx.fragment.app.Fragment;
 public class HomeFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
 
-    private String selfUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     private View mView;
 
     //Functions
 
-    private LinearLayout walletLayout, SecurityLayout, ReferLayout, courseLayout;
+    private LinearLayout ReferLayout;
+    private LinearLayout courseLayout;
 
 
-    private LinearLayout layoutOne, tutorialsLayout;
+    private LinearLayout layoutOne;
     private SliderLayout mDemoSlider;
 
     public HomeFragment() {
@@ -69,7 +71,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private void initComponent() {
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Users");
-        tutorialsLayout = mView.findViewById(R.id.tutorialsLayout);
+        LinearLayout tutorialsLayout = mView.findViewById(R.id.tutorialsLayout);
         tutorialsLayout.setOnClickListener(v -> startActivity(new Intent(getContext(), TutorialActivity.class)));
 
 
@@ -78,13 +80,13 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     }
 
     private void FunctionOnclick() {
-        walletLayout = mView.findViewById(R.id.walletLayout);
+        LinearLayout walletLayout = mView.findViewById(R.id.walletLayout);
         walletLayout.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), walletActivity.class);
             startActivity(intent);
         });
-        SecurityLayout = mView.findViewById(R.id.securityLayout);
-        SecurityLayout.setOnClickListener(v -> {
+        LinearLayout securityLayout = mView.findViewById(R.id.securityLayout);
+        securityLayout.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), ChainActivity.class));
         });
 
@@ -124,7 +126,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         //listName.add("");
 
         //image3
-        listUrl.add("https://www.khelaghorbd.in/imagesTesting/crowdfunding_three.jpg");
+        listUrl.add("https://www.khelaghorbd.in/imagesTesting/2799050.jpg");
         //listName.add("");
 
         //image1
@@ -146,6 +148,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
                     .setRequestOption(requestOptions)
                     .setProgressBarVisible(true)
                     .setOnSliderClickListener(this);
+
 
             //add your extra information
             sliderView.bundle(new Bundle());

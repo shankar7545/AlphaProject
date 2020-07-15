@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.alpha.R;
 import com.example.alpha.Registration.DialogSignupFragment;
-import com.example.alpha.Registration.Signup_Activity;
+import com.example.alpha.Registration.RegistrationActivity;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.CredentialPickerConfig;
 import com.google.android.gms.auth.api.credentials.Credentials;
@@ -190,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
                 sign_up.setOnClickListener(v ->
                 {
                     //Toast.makeText(LoginActivity.this, "Restart app to Signup", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, Signup_Activity.class));
+                    startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
 
                 });
 
@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             sign_up.setOnClickListener(v -> {
 
-                startActivity(new Intent(LoginActivity.this, Signup_Activity.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
                 //startActivity(registration);
 
                 // showSignupDialog();
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuthListener = firebaseAuth -> {
             if (firebaseAuth.getCurrentUser() != null) {
 
-                startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
+                startActivity(new Intent(LoginActivity.this, FingerPrintActivity.class));
             }
         };
 
@@ -277,7 +277,7 @@ public class LoginActivity extends AppCompatActivity {
         logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(authResult -> {
             LoginActivity.this.bar.show();
             signin.setAlpha(0f);
-            startActivity(new Intent(LoginActivity.this, FigerPrintActivity.class));
+            startActivity(new Intent(LoginActivity.this, FingerPrintActivity.class));
             finish();
 
 

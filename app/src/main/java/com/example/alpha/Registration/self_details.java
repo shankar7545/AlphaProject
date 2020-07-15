@@ -72,7 +72,7 @@ public class self_details extends AppCompatActivity {
                             editTextuserName.requestFocus();
                         } else {
 
-                            Intent i = new Intent(getApplicationContext(), Signup_Activity.class);
+                            Intent i = new Intent(getApplicationContext(), RegistrationActivity.class);
 
                             Bundle bundle = new Bundle();
                             bundle.putString("stuff", mUserName);

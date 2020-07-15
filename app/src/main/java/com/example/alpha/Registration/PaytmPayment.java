@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 import com.example.alpha.Activity.RazorpaySection;
+import com.example.alpha.Plan.ReferCodeActivity;
 import com.example.alpha.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -149,7 +150,7 @@ public class PaytmPayment extends AppCompatActivity {
 
                 if (paymentStatus.equals("true")) {
 
-                    startActivity(new Intent(PaytmPayment.this, ReferCodeAcitvity.class));
+                    startActivity(new Intent(PaytmPayment.this, ReferCodeActivity.class));
                     finish();
 
                     //Toast.makeText(PaytmPayment.this, "Payment "+paymentStatus, Toast.LENGTH_SHORT).show();

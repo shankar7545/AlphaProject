@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
 
-                    startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
+                    startActivity(new Intent(MainActivity.this, FingerPrintActivity.class));
                 }
             }
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 progressBar.setVisibility(View.VISIBLE);
                 signin.setAlpha(0f);
-                startActivity(new Intent(MainActivity.this, FigerPrintActivity.class));
+                startActivity(new Intent(MainActivity.this, FingerPrintActivity.class));
 
 
             }

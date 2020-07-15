@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Objects;
 
@@ -47,12 +49,10 @@ public class MyProfile extends AppCompatActivity {
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     private Object View;
     DatabaseReference mUser;
-    private Dialog dialogChangePassword;
+    private Dialog dialogChangePassword, dialogShowAvatar;
     String useremail;
     FirebaseUser user;
     AlertDialog progressdialog;
-
-
 
 
     @Override
@@ -101,6 +101,7 @@ public class MyProfile extends AppCompatActivity {
         });
 
         onCLick();
+        loadAvatar();
 
     }
 
@@ -129,7 +130,99 @@ public class MyProfile extends AppCompatActivity {
                 .show());
 
 
+        findViewById(R.id.avatar).setOnClickListener(v -> showAvatarDialog());
 
+    }
+
+    private void showAvatarDialog() {
+        dialogShowAvatar = new Dialog(MyProfile.this);
+        dialogShowAvatar.setContentView(R.layout.layout_profile_images);
+        dialogShowAvatar.setCancelable(true);
+        Window window = dialogShowAvatar.getWindow();
+        assert window != null;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialogShowAvatar.show();
+
+
+        LinearLayout imageLayoutOne, imageLayoutTwo, imageLayoutThree, imageLayoutFour, imageLayoutFive, imageLayoutSix, imageLayoutSeven, imageLayoutEight;
+
+        dialogShowAvatar.findViewById(R.id.imageLayoutOne).setOnClickListener(v -> updateAvatar("1"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutTwo).setOnClickListener(v -> updateAvatar("2"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutThree).setOnClickListener(v -> updateAvatar("3"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutFour).setOnClickListener(v -> updateAvatar("4"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutFive).setOnClickListener(v -> updateAvatar("5"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutSix).setOnClickListener(v -> updateAvatar("6"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutSeven).setOnClickListener(v -> updateAvatar("7"));
+        dialogShowAvatar.findViewById(R.id.imageLayoutEight).setOnClickListener(v -> updateAvatar("8"));
+
+
+    }
+
+    private void updateAvatar(String value) {
+        mUser.child("avatar").setValue(value);
+        dialogShowAvatar.dismiss();
+        loadAvatar();
+    }
+
+    private void loadAvatar() {
+
+        mUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                CircularImageView avatar;
+                avatar = findViewById(R.id.avatar);
+                if (snapshot.child("avatar").exists()) {
+                    String value = Objects.requireNonNull(snapshot.child("avatar").getValue()).toString();
+
+                    switch (value) {
+                        case "1":
+                            avatar.setImageResource(R.drawable.avatar_one);
+                            break;
+                        case "2":
+                            avatar.setImageResource(R.drawable.avatar_two);
+
+                            break;
+                        case "3":
+                            avatar.setImageResource(R.drawable.avatar_three);
+
+                            break;
+                        case "4":
+                            avatar.setImageResource(R.drawable.avatar_four);
+
+                            break;
+                        case "5":
+                            avatar.setImageResource(R.drawable.avatar_five);
+
+                            break;
+                        case "6":
+                            avatar.setImageResource(R.drawable.avatar_six);
+
+                            break;
+                        case "7":
+                            avatar.setImageResource(R.drawable.avatar_seven);
+
+
+                            break;
+                        case "8":
+                            avatar.setImageResource(R.drawable.avatar_eight);
+
+                            break;
+                    }
+
+                } else {
+                    avatar.setImageResource(R.drawable.avatar_one);
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void logout() {

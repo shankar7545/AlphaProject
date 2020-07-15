@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.alpha.R;
@@ -22,8 +21,7 @@ public class TransactionView extends RecyclerView.ViewHolder implements View.OnC
     public RadioButton filterRadio;
     public ItemClickListener itemClickListener;
     public LinearLayout transactionLayout, filterLayout;
-    public ImageView transactionImage, walletImage;
-    public RelativeLayout walletAddImage;
+    public ImageView transactionImage;
 
     public TransactionView(@NonNull View itemView) {
         super(itemView);
@@ -41,9 +39,6 @@ public class TransactionView extends RecyclerView.ViewHolder implements View.OnC
         transactionAmount = itemView.findViewById(R.id.transactionAmount);
         transactionImage = itemView.findViewById(R.id.transactionImage);
         transactionLayout = itemView.findViewById(R.id.transactionLayout);
-        walletAddImage = itemView.findViewById(R.id.walletAddImage);
-        walletImage = itemView.findViewById(R.id.walletImage);
-
 
 
         itemView.setOnClickListener(this);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_5"
-    tools:context=".Activity.FigerPrintActivity">
+    tools:context=".Activity.FingerPrintActivity">
 
 
     <androidx.appcompat.widget.Toolbar

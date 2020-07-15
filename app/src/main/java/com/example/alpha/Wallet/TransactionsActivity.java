@@ -131,24 +131,20 @@ public class TransactionsActivity extends AppCompatActivity {
                 {
                     switch (transType) {
                         case "credited":
-                            holder.walletAddImage.setVisibility(View.GONE);
                             holder.transactionType.setText("Received From");
-                            holder.transactionImage.setVisibility(View.VISIBLE);
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_down_black);
                             holder.transactionStatus.setText("Credited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.blue));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.indigo_700));
                             holder.transactionName.setText(model.getTransferredFrom());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
 
                             break;
                         case "debited":
-                            holder.walletAddImage.setVisibility(View.GONE);
                             holder.transactionType.setText("Paid To");
-                            holder.transactionImage.setVisibility(View.VISIBLE);
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
                             holder.transactionStatus.setText("Debited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red_700));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red_600));
                             holder.transactionName.setText(model.getTransferredTo());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
@@ -157,11 +153,7 @@ public class TransactionsActivity extends AppCompatActivity {
                             break;
                         case "added":
                             holder.transactionType.setText("Added To");
-                            //holder.transactionImage.setImageResource(R.drawable.ic_wallet);
-                            //holder.transactionImage.setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_900));
-                            holder.transactionImage.setVisibility(View.GONE);
-                            holder.walletAddImage.setVisibility(View.VISIBLE);
-                            holder.walletImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                            holder.transactionImage.setImageResource(R.drawable.ic_wallet_transaction);
                             holder.transactionStatus.setText("Added");
                             holder.transactionName.setText("Wallet");
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));

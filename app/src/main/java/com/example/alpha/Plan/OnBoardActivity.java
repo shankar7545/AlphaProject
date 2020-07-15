@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.R;
 import com.example.alpha.Registration.PaytmPayment;
-import com.example.alpha.Registration.ReferCodeAcitvity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -84,11 +83,11 @@ public class OnBoardActivity extends AppCompatActivity {
                     if (parentStatus.equals("false")) {
                         //startActivity(new Intent(OnBoardActivity.this, ReferCodeAcitvity.class));
                         upgradeTextView.setText("Enter Refercode");
-                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeAcitvity.class)));
+                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeActivity.class)));
 
                     } else {
                         upgradeTextView.setText(" Refercode " + parentStatus);
-                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeAcitvity.class)));
+                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeActivity.class)));
 
                     }
                 }

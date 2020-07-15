@@ -44,7 +44,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class HomeActivity extends AppCompatActivity {
     private static long back_pressed;
-    DatabaseReference mRef, mReferDB;
+    DatabaseReference mRef, mReferDB, mUser;
     TextView userName, nameM, userNameM;
     private Dialog dialog;
 
@@ -106,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //initNavigationMenu();
         initComponent();
+        loadAvatar();
         //menuOnclick();
 
     }
@@ -285,6 +286,66 @@ public class HomeActivity extends AppCompatActivity {
         i.putExtras(bundle);
         startActivity(i);
         finish();
+    }
+
+    private void loadAvatar() {
+        mUser = FirebaseDatabase.getInstance().getReference("Users").child(selfUid);
+
+        mUser.child("avatar").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                if (snapshot.exists()) {
+                    String value = Objects.requireNonNull(snapshot.getValue()).toString();
+
+                    switch (value) {
+                        case "1":
+                            profilePic.setImageResource(R.drawable.avatar_one);
+                            break;
+                        case "2":
+                            profilePic.setImageResource(R.drawable.avatar_two);
+
+                            break;
+                        case "3":
+                            profilePic.setImageResource(R.drawable.avatar_three);
+
+                            break;
+                        case "4":
+                            profilePic.setImageResource(R.drawable.avatar_four);
+
+                            break;
+                        case "5":
+                            profilePic.setImageResource(R.drawable.avatar_five);
+
+                            break;
+                        case "6":
+                            profilePic.setImageResource(R.drawable.avatar_six);
+
+                            break;
+                        case "7":
+                            profilePic.setImageResource(R.drawable.avatar_seven);
+
+                            break;
+                        case "8":
+                            profilePic.setImageResource(R.drawable.avatar_eight);
+
+                            break;
+                    }
+
+                } else {
+                    profilePic.setImageResource(R.drawable.avatar_one);
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 

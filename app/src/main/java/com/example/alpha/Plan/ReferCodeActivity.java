@@ -1,4 +1,4 @@
-package com.example.alpha.Registration;
+package com.example.alpha.Plan;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -37,7 +37,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-public class ReferCodeAcitvity extends AppCompatActivity {
+public class ReferCodeActivity extends AppCompatActivity {
 
     public InputMethodManager imm;
 
@@ -151,7 +151,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
         finish.setOnClickListener(view -> referCode());
 
-        bar = new ProgressDialog(ReferCodeAcitvity.this, R.style.MyAlertDialogStyle);
+        bar = new ProgressDialog(ReferCodeActivity.this, R.style.MyAlertDialogStyle);
         bar.setCancelable(false);
         bar.setIndeterminate(true);
         bar.setCanceledOnTouchOutside(true);
@@ -275,7 +275,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                                 Snackbar("Reset success");
                                 referCode();
                             } else {
-                                Toast.makeText(ReferCodeAcitvity.this, "Retry in 30 seconds", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ReferCodeActivity.this, "Retry in 30 seconds", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                                 finish.setVisibility(View.VISIBLE);
                                 editTextReferCode.setEnabled(true);
@@ -409,7 +409,7 @@ public class ReferCodeAcitvity extends AppCompatActivity {
                     mWallet.child(selfUid).child("Balance").child("mainBalance").setValue(user_updated_bal);
 
                 } else {
-                    Toast.makeText(ReferCodeAcitvity.this, "Reduction Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReferCodeActivity.this, "Reduction Failed", Toast.LENGTH_SHORT).show();
                 }
 
                 //ParentOneBalance
@@ -539,10 +539,10 @@ public class ReferCodeAcitvity extends AppCompatActivity {
 
     private void statusBarColor() {
 
-        Window window = ReferCodeAcitvity.this.getWindow();
+        Window window = ReferCodeActivity.this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(ReferCodeAcitvity.this, R.color.white));
+        window.setStatusBarColor(ContextCompat.getColor(ReferCodeActivity.this, R.color.white));
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
     }
