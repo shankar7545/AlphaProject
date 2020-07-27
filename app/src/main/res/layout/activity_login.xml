@@ -87,7 +87,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu"
             android:text="@string/password"
-
             android:textAlignment="center"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:textColor="@color/blue_grey_800"

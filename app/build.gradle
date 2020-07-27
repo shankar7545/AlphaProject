@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.alpha"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "4.5"
@@ -37,17 +37,21 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:3.2.0'  // circle image view
 
     //GLide  (Image slider)
-    implementation "com.github.bumptech.glide:glide:4.10.0"
+    implementation "com.github.bumptech.glide:glide:4.11.0"
     annotationProcessor "com.github.bumptech.glide:compiler:4.10.0"
     implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
 
 
     //Firebase
     implementation 'com.firebaseui:firebase-ui-database:4.0.1'
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-database:19.3.1'
-    implementation 'com.google.firebase:firebase-messaging:20.2.1'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+
+    def retrofit_version = "2.6.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
 
     implementation 'com.razorpay:checkout:1.4.9'   //Razorpay
@@ -60,13 +64,14 @@ dependencies {
     implementation 'com.github.jakebonk:NotifyMe:1.0.1' //Notifications
     implementation 'com.hootsuite.android:nachos:1.1.1' // material chips
     implementation 'com.google.android:flexbox:0.3.2'   // google flexible box
-    implementation 'com.facebook.shimmer:shimmer:0.4.0'  //shimmer layout
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'  //shimmer layout
     implementation 'com.github.tiagohm:CodeView:0.4.0' //Codeview
 
     implementation 'com.tuyenmonkey:mkloader:1.4.0'  //Custom Loaders
 
     implementation 'androidx.browser:browser:1.2.0' //Chrome CustomLinks
     implementation 'com.google.android.gms:play-services-auth:18.0.0' //HintPicker
+    implementation 'com.squareup.picasso:picasso:2.71828'  //Picasso Image Loader URL
 
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'

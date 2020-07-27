@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.R;
@@ -22,6 +24,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -45,17 +48,12 @@ public class LevelActivity extends AppCompatActivity {
 
         mUser = FirebaseDatabase.getInstance().getReference("Users");
         initToolbar();
+        //statusBarColor();
         initComponent();
 
     }
 
-    private void initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Dashboard");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+
 
     private void initComponent() {
         viewPager = findViewById(R.id.view_pager);
@@ -69,26 +67,30 @@ public class LevelActivity extends AppCompatActivity {
         mUser.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String mAchievement = dataSnapshot.getValue().toString();
 
-                switch (mAchievement) {
-                    case "Bronze":
-                        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
+                if (dataSnapshot.exists()) {
+                    String mAchievement = Objects.requireNonNull(dataSnapshot.getValue()).toString();
 
-                        break;
-                    case "Silver":
-                        Objects.requireNonNull(tabLayout.getTabAt(1)).select();
+                    switch (mAchievement) {
+                        case "Bronze":
+                            Objects.requireNonNull(tabLayout.getTabAt(0)).select();
 
-                        break;
-                    case "Gold":
-                        Objects.requireNonNull(tabLayout.getTabAt(2)).select();
+                            break;
+                        case "Silver":
+                            Objects.requireNonNull(tabLayout.getTabAt(1)).select();
 
-                        break;
-                    case "Diamond":
-                        Objects.requireNonNull(tabLayout.getTabAt(3)).select();
-                        break;
+                            break;
+                        case "Gold":
+                            Objects.requireNonNull(tabLayout.getTabAt(2)).select();
 
+                            break;
+                        case "Diamond":
+                            Objects.requireNonNull(tabLayout.getTabAt(3)).select();
+                            break;
+
+                    }
                 }
+
 
             }
 
@@ -102,10 +104,10 @@ public class LevelActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(BronzeFragment.newInstance(), "BRONZE");
-        adapter.addFragment(SilverFragment.newInstance(), "SILVER");
-        adapter.addFragment(GoldFragment.newInstance(), "GOLD");
-        adapter.addFragment(DiamondFragment.newInstance(), "DIAMOND");
+        adapter.addFragment(BronzeFragment.newInstance(), "PLAN");
+        adapter.addFragment(SilverFragment.newInstance(), "CHAIN");
+        adapter.addFragment(GoldFragment.newInstance(), "WALLET");
+        //adapter.addFragment(DiamondFragment.newInstance(), "Transactions");
 
         viewPager.setAdapter(adapter);
     }
@@ -141,6 +143,14 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+    private void initToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.indigo_800));
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Beginner Plan");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,6 +169,15 @@ public class LevelActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void statusBarColor() {
+
+        Window window = LevelActivity.this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(LevelActivity.this, R.color.indigo_800));
+
     }
 
     @Override

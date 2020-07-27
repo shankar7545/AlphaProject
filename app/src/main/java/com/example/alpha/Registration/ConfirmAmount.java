@@ -107,9 +107,9 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-                        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-                        String timeformat = time.format(c.getTime());
-                        String datetime = dateformat.format(c.getTime());
+                        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss aa");
+                        String time = timeformat.format(c.getTime());
+                        String date = dateformat.format(c.getTime());
 
 
                         if (dataSnapshot.child("Transactions").child(childid).exists()) {
@@ -117,8 +117,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                             Transaction_Class send_transaction_class = new Transaction_Class(
                                     "added",
-                                    datetime,
-                                    timeformat,
+                                    date,
+                                    time,
                                     user_userName,
                                     "Wallet",
                                     childid,
@@ -133,8 +133,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                             Transaction_Class send_transaction_class = new Transaction_Class(
                                     "added",
-                                    datetime,
-                                    timeformat,
+                                    date,
+                                    time,
                                     user_userName,
                                     "Wallet",
                                     childid,
@@ -162,8 +162,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                             Transaction_Class send_transaction_class = new Transaction_Class(
                                     "added",
-                                    datetime,
-                                    timeformat,
+                                    date,
+                                    time,
                                     user_userName,
                                     "Wallet",
                                     childid,
@@ -178,8 +178,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                             Transaction_Class send_transaction_class = new Transaction_Class(
                                     "added",
-                                    datetime,
-                                    timeformat,
+                                    date,
+                                    time,
                                     user_userName,
                                     "Wallet",
                                     childid,

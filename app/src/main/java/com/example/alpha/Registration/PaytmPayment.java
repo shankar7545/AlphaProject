@@ -41,7 +41,6 @@ public class PaytmPayment extends AppCompatActivity {
 
     private BottomSheetBehavior mBehavior;
     private BottomSheetDialog mBottomSheetDialog;
-    private View bottom_sheet;
     private long mLastClickTime = 0;
 
     @Override
@@ -61,7 +60,7 @@ public class PaytmPayment extends AppCompatActivity {
 
 
         //BottomSheet
-        bottom_sheet = findViewById(R.id.bottom_sheet);
+        View bottom_sheet = findViewById(R.id.bottom_sheet);
         mBehavior = BottomSheetBehavior.from(bottom_sheet);
 
     }
@@ -190,7 +189,7 @@ public class PaytmPayment extends AppCompatActivity {
         view.findViewById(R.id.paytm).setOnClickListener(v -> {
             //mBottomSheetDialog.dismiss();
 
-            //to disable doubleclick
+            //to disable double_click
             if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
                 return;
             }

@@ -236,7 +236,7 @@ public class MeFragment extends Fragment {
                             holder.transactionType.setText("Received From");
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_down_black);
                             holder.transactionStatus.setText("Credited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_800));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredFrom());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
@@ -246,7 +246,7 @@ public class MeFragment extends Fragment {
                             holder.transactionType.setText("Paid To");
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
                             holder.transactionStatus.setText("Debited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_800));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredTo());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));

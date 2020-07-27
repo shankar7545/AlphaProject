@@ -6,338 +6,346 @@
     android:id="@+id/container"
     android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        android:background="@color/white"
-        android:layout_alignParentTop="true"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:elevation="0dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/backToolbar"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@android:color/black"
-                app:srcCompat="@drawable/ic_close" />
-
-            <ImageButton
-                android:id="@+id/helpToolbar"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:tint="@android:color/black"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/ic_help_white" />
-
-        </RelativeLayout>
-
-
-    </androidx.appcompat.widget.Toolbar>
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:visibility="visible"
         android:layout_above="@+id/applynowLayout">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
 
+            >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageTcLogo"
-                android:text="Beginner  Plan"
-                android:textColor="@color/blue_900"
-                android:fontFamily="@font/baloo"
-                android:textSize="35sp"
-                android:scaleType="center"
-                android:layout_marginTop="15dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <LinearLayout
-                android:id="@+id/imInitialBanner"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="visible"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageTcLogo">
+                android:layout_height="60dp"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                android:background="@color/white"
+                android:layout_alignParentTop="true"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:elevation="0dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/animation_view"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_gravity="center_vertical"
-                    app:lottie_autoPlay="false"
-                    app:lottie_fileName="money.json"
-                    app:lottie_repeatMode="reverse"
-                    app:lottie_loop="true" />
+                    android:layout_height="match_parent">
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/backToolbar"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:tint="@android:color/black"
+                        app:srcCompat="@drawable/ic_close" />
+
+                    <ImageButton
+                        android:id="@+id/helpToolbar"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackground"
+                        android:tint="@android:color/black"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_help_white" />
+
+                </RelativeLayout>
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOfferInfoHeader"
-                android:layout_width="wrap_content"
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container1"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:text="Earn Upto"
+                android:background="@color/white"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imInitialBanner" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/viewOffer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvOfferInfoHeader">
 
-                <ProgressBar
-                    android:id="@+id/pbInitialOffer"
-                    style="?android:progressBarStyle"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_gravity="center" />
+                    android:id="@+id/imageTcLogo"
+                    android:text="Beginner  Plan"
+                    android:textColor="@color/blue_900"
+                    android:fontFamily="@font/baloo"
+                    android:textSize="35sp"
+                    android:scaleType="center"
+                    android:layout_marginTop="15dp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="31dp"
+
+                <LinearLayout
+                    android:id="@+id/imInitialBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:tint="@color/blue_800"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginStart="-15dp"
-                    android:src="@drawable/rupee" />
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageTcLogo">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animation_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center_vertical"
+                        app:lottie_autoPlay="false"
+                        app:lottie_fileName="money.json"
+                        app:lottie_repeatMode="reverse"
+                        app:lottie_loop="true" />
+
+                </LinearLayout>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvOfferAmount"
+                    android:id="@+id/tvOfferInfoHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:gravity="center_horizontal"
-                    android:text="50,000"
-                    android:textColor="@color/blue_800"
                     android:padding="2dp"
-                    android:textSize="36sp" />
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <LinearLayout
-                android:id="@id/container1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_tcx_rectangle_outline"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewOffer">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|top"
-                    app:srcCompat="@drawable/ic_cash" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/control_doublespace"
-                    android:drawablePadding="12dp"
-                    android:gravity="center"
-                    android:lines="2"
-                    android:padding="4dp"
-                    android:text="@string/onboard_text_less_investment"
+                    android:text="Earn Upto"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/viewOffer" />
-            </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/imInitialBanner" />
 
-            <LinearLayout
-                android:id="@+id/container2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/background_tcx_rectangle_outline"
-                android:orientation="vertical"
-                android:padding="@dimen/control_doublespace"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/viewOffer">
+                <LinearLayout
+                    android:id="@+id/viewOffer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvOfferInfoHeader">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|top"
-                    app:srcCompat="@drawable/icons8_refer" />
+                    <ProgressBar
+                        android:id="@+id/pbInitialOffer"
+                        style="?android:progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_gravity="center" />
 
-                <TextView
-                    android:id="@+id/tvOfferInfoCollateralFree"
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="31dp"
+                        android:layout_gravity="center"
+                        android:tint="@color/blue_800"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginStart="-15dp"
+                        android:src="@drawable/rupee" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOfferAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="50,000"
+                        android:textColor="@color/blue_800"
+                        android:padding="2dp"
+                        android:textSize="36sp" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <LinearLayout
+                    android:id="@id/container1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/background_tcx_rectangle_outline"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewOffer">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|top"
+                        app:srcCompat="@drawable/ic_cash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/control_doublespace"
+                        android:drawablePadding="12dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="4dp"
+                        android:text="@string/onboard_text_less_investment"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewOffer" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/background_tcx_rectangle_outline"
+                    android:orientation="vertical"
+                    android:padding="@dimen/control_doublespace"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/viewOffer">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|top"
+                        app:srcCompat="@drawable/icons8_refer" />
+
+                    <TextView
+                        android:id="@+id/tvOfferInfoCollateralFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="12dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="4dp"
+                        android:text="@string/credit_text_work"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewOffer" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:drawablePadding="12dp"
-                    android:gravity="center"
-                    android:lines="2"
-                    android:padding="4dp"
-                    android:text="@string/credit_text_work"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/background_tcx_rectangle_outline"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/viewOffer" />
-            </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/container1">
 
-            <LinearLayout
-                android:id="@+id/container3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_tcx_rectangle_outline"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container1">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|top"
+                        app:srcCompat="@drawable/icons8_chain" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|top"
-                    app:srcCompat="@drawable/icons8_chain" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:drawablePadding="12sp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="4dp"
+                        android:text="@string/onboard_text_minimum"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewOffer" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/container4"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="12sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/background_tcx_rectangle_outline"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/container2">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center|top"
+                        app:srcCompat="@drawable/icons8_relax" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:drawablePadding="12sp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:padding="4dp"
+                        android:text="@string/credit_text_less_levels" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/termsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:gravity="center"
-                    android:lines="2"
-                    android:padding="4dp"
-                    android:text="@string/onboard_text_minimum"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/viewOffer" />
-            </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/container4"
 
-            <LinearLayout
-                android:id="@+id/container4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/background_tcx_rectangle_outline"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toBottomOf="@id/container2">
+                    >
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|top"
-                    app:srcCompat="@drawable/icons8_relax" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="12sp"
-                    android:gravity="center"
-                    android:lines="2"
-                    android:padding="4dp"
-                    android:text="@string/credit_text_less_levels" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/termsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container4"
-
-                >
-
-                <TextView
-                    android:id="@+id/agree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="By continuing, I accept the following"
-                    android:textColor="@color/black"
-                    android:gravity="center" />
+                    <TextView
+                        android:id="@+id/agree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="By continuing, I accept the following"
+                        android:textColor="@color/black"
+                        android:gravity="center" />
 
 
-                <TextView
-                    android:id="@+id/txtAgreeTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="Terms &amp; conditions"
-                    android:textColor="@color/blue"
-                    android:textStyle="bold"
-                    android:gravity="center" />
+                    <TextView
+                        android:id="@+id/txtAgreeTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="Terms &amp; conditions"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold"
+                        android:gravity="center" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
@@ -353,8 +361,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             app:cardCornerRadius="6dp">
@@ -364,7 +372,7 @@
                 android:id="@+id/joinNowLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blue_800"
+                android:background="@color/indigo_600"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:orientation="horizontal">

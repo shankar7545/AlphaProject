@@ -276,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startLogin(String login_email, String login_password) {
         logAuth.signInWithEmailAndPassword(login_email, login_password).addOnSuccessListener(authResult -> {
             LoginActivity.this.bar.show();
-            signin.setAlpha(0f);
+            //signin.setAlpha(0f);
             startActivity(new Intent(LoginActivity.this, FingerPrintActivity.class));
             finish();
 

@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.alpha.Activity.HelpActivity;
+import com.example.alpha.Levels.LevelActivity;
 import com.example.alpha.R;
 import com.example.alpha.Registration.PaytmPayment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,6 +70,11 @@ public class OnBoardActivity extends AppCompatActivity {
 
                 String paymentStatus = Objects.requireNonNull(snapshot.child("paymentStatus").getValue()).toString();
                 String parentStatus = Objects.requireNonNull(snapshot.child("parentStatus").getValue()).toString();
+                if (snapshot.child("Achievement").exists()) {
+                    String Achievement = Objects.requireNonNull(snapshot.child("Achievement").getValue()).toString();
+
+
+                }
 
 
                 if (paymentStatus.equals("false")) {
@@ -86,8 +92,8 @@ public class OnBoardActivity extends AppCompatActivity {
                         findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeActivity.class)));
 
                     } else {
-                        upgradeTextView.setText(" Refercode " + parentStatus);
-                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, ReferCodeActivity.class)));
+                        upgradeTextView.setText(" Open Levels Activity");
+                        findViewById(R.id.joinNowLayout).setOnClickListener(v -> startActivity(new Intent(OnBoardActivity.this, LevelActivity.class)));
 
                     }
                 }

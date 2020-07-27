@@ -1,8 +1,10 @@
 package com.example.alpha.Plan;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.Activity.HomeActivity;
+import com.example.alpha.Levels.LevelActivity;
 import com.example.alpha.Model.ParentClass;
 import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
@@ -29,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -149,12 +154,15 @@ public class ReferCodeActivity extends AppCompatActivity {
             }
         });   */
 
-        finish.setOnClickListener(view -> referCode());
+        finish.setOnClickListener(view -> {
+            referCode();
+            //showSuccessDialog();
+        });
 
         bar = new ProgressDialog(ReferCodeActivity.this, R.style.MyAlertDialogStyle);
         bar.setCancelable(false);
         bar.setIndeterminate(true);
-        bar.setCanceledOnTouchOutside(true);
+        bar.setCanceledOnTouchOutside(false);
     }
 
     //ReferCode
@@ -424,14 +432,21 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 bar.setMessage("Updating Transactions...");
 
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+                SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss aa");
+                String date = dateformat.format(c.getTime());
+                String time = timeformat.format(c.getTime());
+
+
                 String id = UUID.randomUUID().toString();
                 String idOne = "PV" + id.substring(0, 6).toUpperCase();
                 String idTwo = "EX" + id.substring(0, 6).toUpperCase();
                 //MainTransactions
                 Transaction_Class main_transaction_class = new Transaction_Class(
                         "debited",
-                        "date",
-                        "time",
+                        date,
+                        time,
                         userName,
                         mReferCode,
                         idOne + idTwo,
@@ -452,8 +467,8 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 Transaction_Class send_transaction_class = new Transaction_Class(
                         "debited",
-                        "date",
-                        "time",
+                        date,
+                        time,
                         userName,
                         mReferCode,
                         idOne + idTwo,
@@ -473,8 +488,8 @@ public class ReferCodeActivity extends AppCompatActivity {
                 long sizeP = countP + 1;
                 Transaction_Class received_transaction_class = new Transaction_Class(
                         "credited",
-                        "date",
-                        "time",
+                        date,
+                        time,
                         userName,
                         mReferCode,
                         idOne + idTwo,
@@ -495,12 +510,18 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 //Upgrading level
                 mUsers.child(selfUid).child("Achievement").setValue("Bronze");
+                mFirebase.child("ReferDB").child(userName).child("enabled").setValue("true");
+
 
 
                 mFirebase.child("Status").child(referUid).child("status").setValue("free");
                 mFirebase.child("Status").child(referUid).child("usingByUID").setValue("null");
 
-                new Handler().postDelayed(bar::dismiss, 2000);
+                new Handler().postDelayed(() ->
+                {
+                    showSuccessDialog();
+                    bar.dismiss();
+                }, 2000);
 
 
             }
@@ -525,6 +546,21 @@ public class ReferCodeActivity extends AppCompatActivity {
         //String endCount = Integer.toString(i + 1);
 
 
+    }
+
+    private void showSuccessDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_achievement_congrat);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+        dialog.findViewById(R.id.bt_action).setOnClickListener(v ->
+        {
+            startActivity(new Intent(this, LevelActivity.class));
+            finish();
+        });
+        dialog.show();
     }
 
 

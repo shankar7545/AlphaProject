@@ -151,6 +151,7 @@ public class IntroActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //statusBarColor();
 
     }
 }

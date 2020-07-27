@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -393,7 +394,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void Snackbar(String text) {
         Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)
-                .setActionTextColor(getResources().getColor(R.color.green_700))
+                .setActionTextColor(getResources().getColor(R.color.blue_700))
                 .setAction("Okay", view -> {
                 });
         snackbar.show();
@@ -414,7 +415,7 @@ public class RegistrationActivity extends AppCompatActivity {
         PendingIntent intent = mCredentialsClient.getHintPickerIntent(hintRequest);
         try {
             startIntentSenderForResult(intent.getIntentSender(), RC_HINT, null, 0, 0, 0);
-        } catch (IntentSender.SendIntentException e) {
+        } catch (IntentSender.SendIntentException ignored) {
         }
     }
 
@@ -454,7 +455,11 @@ public class RegistrationActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
     }
 
