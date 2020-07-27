@@ -452,7 +452,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         idOne + idTwo,
                         "50",
                         1,
-                        "bronze",
+                        "Bronze",
                         ""
                 );
                 mFirebase.child("Transactions").child(idOne + idTwo).setValue(main_transaction_class);
@@ -474,7 +474,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         idOne + idTwo,
                         "50",
                         sizeR,
-                        "bronze",
+                        "For Upgrading to bronze",
                         ""
                 );
                 mWallet.child(selfUid).child("Transactions").child("history").child(idOne + idTwo).setValue(send_transaction_class);
@@ -495,7 +495,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         idOne + idTwo,
                         "50",
                         sizeP,
-                        "bronze",
+                        "Bronze",
                         ""
 
 
