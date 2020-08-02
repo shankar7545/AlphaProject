@@ -1,7 +1,7 @@
 package com.example.alpha.Model;
 
 public class ParentClass {
-    public String p1, p2, p3, p4, p5, p6, p7, p8;
+    private String p1, p2, p3, p4, p5, p6, p7, p8;
 
     public ParentClass() {
     }

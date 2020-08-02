@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alpha.Activity.FingerPrintActivity;
 import com.example.alpha.Model.Balance_class;
 import com.example.alpha.Model.TransactionCount_class;
 import com.example.alpha.Model.UserClass;
@@ -334,11 +335,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 "0",
                                 "0",
                                 "0",
-                                "0",
-                                "0",
-                                "0",
-                                "0",
-                                ""
+                                "0"
                         );
 
                         mWallet.child("Transactions").child("count").setValue(transactionCount_class);
@@ -376,6 +373,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                         progressDialog.dismiss();
+                        startActivity(new Intent(this, FingerPrintActivity.class));
 
                     } else {
                         //Toast.makeText(this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();

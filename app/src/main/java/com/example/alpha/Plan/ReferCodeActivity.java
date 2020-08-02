@@ -509,7 +509,7 @@ public class ReferCodeActivity extends AppCompatActivity {
 
 
                 //Upgrading level
-                mUsers.child(selfUid).child("Achievement").setValue("Bronze");
+                mUsers.child(selfUid).child("Achievement").child("currentLevel").setValue("Bronze");
                 mFirebase.child("ReferDB").child(userName).child("enabled").setValue("true");
 
 

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.alpha.Profile.ChangePassword;
 import com.example.alpha.Profile.EditDetails;
 import com.example.alpha.R;
+import com.example.alpha.Tutorials.TutorialActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -113,7 +114,7 @@ public class MyProfile extends AppCompatActivity {
 
         findViewById(R.id.profileLayout).setOnClickListener(v -> startActivity(new Intent(this, EditDetails.class)));
         findViewById(R.id.changePasswordLayout).setOnClickListener(v -> startActivity(new Intent(this, ChangePassword.class)));
-        findViewById(R.id.supportLayout).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
+        findViewById(R.id.supportLayout).setOnClickListener(v -> startActivity(new Intent(this, TutorialActivity.class)));
         findViewById(R.id.referalLayout).setOnClickListener(v -> startActivity(new Intent(this, ChainActivity.class)));
         findViewById(R.id.changePasswordLayout).setOnClickListener(v -> changePasswordDialog());
 

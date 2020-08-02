@@ -1,60 +1,52 @@
 package com.example.alpha.Model;
 
 public class Balance_class {
-    private String bronze, silver, gold, diamond, mainBalance, withdrawable;
+    private String bronzeBalance, silverBalance, goldBalance, diamondBalance, mainBalance, withdrawable;
 
     public Balance_class() {
     }
 
-    public Balance_class(String bronze, String silver, String gold, String diamond, String mainBalance, String withdrawable) {
-        this.bronze = bronze;
-        this.silver = silver;
-        this.gold = gold;
-        this.diamond = diamond;
+    public Balance_class(String bronzeBalance, String silverBalance, String goldBalance, String diamondBalance, String mainBalance, String withdrawable) {
+        this.bronzeBalance = bronzeBalance;
+        this.silverBalance = silverBalance;
+        this.goldBalance = goldBalance;
+        this.diamondBalance = diamondBalance;
         this.mainBalance = mainBalance;
         this.withdrawable = withdrawable;
 
     }
 
-    public String getBronze() {
-        return bronze;
+
+    public String getBronzeBalance() {
+        return bronzeBalance;
     }
 
-    public String getSilver() {
-        return silver;
+    public void setBronzeBalance(String bronzeBalance) {
+        this.bronzeBalance = bronzeBalance;
     }
 
-    public String getGold() {
-        return gold;
+    public String getSilverBalance() {
+        return silverBalance;
     }
 
-    public String getDiamond() {
-        return diamond;
+    public void setSilverBalance(String silverBalance) {
+        this.silverBalance = silverBalance;
     }
 
-    public void setBronze(String bronze) {
-        this.bronze = bronze;
+    public String getGoldBalance() {
+        return goldBalance;
     }
 
-    public void setSilver(String silver) {
-        this.silver = silver;
+    public void setGoldBalance(String goldBalance) {
+        this.goldBalance = goldBalance;
     }
 
-    public void setGold(String gold) {
-        this.gold = gold;
+    public String getDiamondBalance() {
+        return diamondBalance;
     }
 
-    public void setDiamond(String diamond) {
-        this.diamond = diamond;
-    }
-
-
-    public String getWithdrawable() {
-        return withdrawable;
-    }
-
-    public void setWithdrawable(String withdrawable) {
-        this.withdrawable = withdrawable;
+    public void setDiamondBalance(String diamondBalance) {
+        this.diamondBalance = diamondBalance;
     }
 
     public String getMainBalance() {
@@ -63,5 +55,13 @@ public class Balance_class {
 
     public void setMainBalance(String mainBalance) {
         this.mainBalance = mainBalance;
+    }
+
+    public String getWithdrawable() {
+        return withdrawable;
+    }
+
+    public void setWithdrawable(String withdrawable) {
+        this.withdrawable = withdrawable;
     }
 }

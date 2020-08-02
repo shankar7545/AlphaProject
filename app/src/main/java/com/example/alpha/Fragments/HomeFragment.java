@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.alpha.Activity.ChainActivity;
 import com.example.alpha.Course.CourseActivity;
+import com.example.alpha.Levels.LevelActivity;
 import com.example.alpha.Plan.OnBoardActivity;
 import com.example.alpha.R;
 import com.example.alpha.Tutorials.TutorialActivity;
@@ -20,12 +21,16 @@ import com.glide.slider.library.slidertypes.BaseSliderView;
 import com.glide.slider.library.slidertypes.TextSliderView;
 import com.glide.slider.library.tricks.ViewPagerEx;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
@@ -35,6 +40,7 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     private View mView;
 
+    DatabaseReference mUsers;
     //Functions
 
     private LinearLayout ReferLayout;
@@ -53,11 +59,14 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         mView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+        mUsers = FirebaseDatabase.getInstance().getReference("Users");
+
         //CheckingLevelUpgrades();
         //loadTransactions();
         initComponent();
         FunctionOnclick();
         levelOnCLick();
+        checkStatus();
         Slider();
         return mView;
 
@@ -166,6 +175,35 @@ public class HomeFragment extends Fragment implements BaseSliderView.OnSliderCli
         mDemoSlider.stopCyclingWhenTouch(false);
     }
 
+
+    private void checkStatus() {
+
+        mUsers.child(selfUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String paymentStatus = Objects.requireNonNull(snapshot.child("paymentStatus").getValue()).toString();
+                String parentStatus = Objects.requireNonNull(snapshot.child("parentStatus").getValue()).toString();
+
+
+                if (paymentStatus.equals("false") || parentStatus.equals("false")) {
+                    //startActivity(new Intent(OnBoardActivity.this, PaytmPayment.class));
+                    mView.findViewById(R.id.beginnerPlanLayout).setOnClickListener(v -> startActivity(new Intent(getContext(), OnBoardActivity.class)));
+
+
+                } else {
+
+                    mView.findViewById(R.id.beginnerPlanLayout).setOnClickListener(v -> startActivity(new Intent(getContext(), LevelActivity.class)));
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     public void onStop() {

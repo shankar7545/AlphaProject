@@ -1,14 +1,18 @@
 package com.example.alpha.Levels;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hootsuite.nachos.NachoTextView;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,9 +52,14 @@ public class BronzeFragment extends Fragment {
     private View mView;
     ProgressDialog bar;
 
-    private TextView referCount, transactionCount, upgradeTextView, statusText, shareNowText;
-    private ImageView referImageView, transactionImageView;
+
+    ImageView imageRefer;
+
+    private ImageView referImageView, bronzeTransactionImageView, silverTransactionImageView, goldTransactionImageView, diamondTransactionImageView;
+    private LinearLayout bronzeUpgradeLayout, bronzeUpgradeButton, silverUpgradeLayout, silverUpgradeButton, goldUpgradeLayout, goldUpgradeButton, diamondUpgradeLayout, diamondUpgradeButton;
     private LinearLayout upgradeLayoutBronze, transactionButton, referButton, usernameDisplay, shareNowLayout;
+    private TextView bronzeTransactionCount, silverTransactionCount, goldTransactionCount, diamondTransactionCount;
+    private TextView referCount, upgradeTextView, statusText, shareNowText;
 
     private Calendar c = Calendar.getInstance();
     private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
@@ -66,7 +76,7 @@ public class BronzeFragment extends Fragment {
     private View parent_view;
 
     private static final String IMAGE_URl =
-            "https://www.khelaghorbd.in/imagesTesting/2784130.jpg";
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQPnSOIbs5JJGREsZN55BuTzOjaMF4Mw-8fhw&usqp=CAU";
 
     public BronzeFragment() {
         // Required empty public constructor
@@ -87,6 +97,11 @@ public class BronzeFragment extends Fragment {
 
         parent_view = mView.findViewById(android.R.id.content);
 
+        imageRefer = mView.findViewById(R.id.imageRefer);
+
+        Picasso.get().load(IMAGE_URl).placeholder(R.drawable.placeholder_image).into(imageRefer);
+
+
 
         upgradeLayoutBronze = mView.findViewById(R.id.upgradeLayoutBronze);
         usernameDisplay = mView.findViewById(R.id.usernameDisplay);
@@ -98,13 +113,31 @@ public class BronzeFragment extends Fragment {
         shareNowLayout = mView.findViewById(R.id.shareNowLayout);
 
         transactionButton = mView.findViewById(R.id.transactionButton);
-        transactionCount = mView.findViewById(R.id.transactionCount);
-        transactionImageView = mView.findViewById(R.id.transactionImageView);
-
 
 
         upgradeTextView = mView.findViewById(R.id.upgradeTextView);
         upgradeProgressBar = mView.findViewById(R.id.upgradeProgressBar);
+
+
+        bronzeUpgradeLayout = mView.findViewById(R.id.bronzeUpgradeLayout);
+        bronzeUpgradeButton = mView.findViewById(R.id.bronzeUpgradeButton);
+        silverUpgradeLayout = mView.findViewById(R.id.silverUpgradeLayout);
+        silverUpgradeButton = mView.findViewById(R.id.silverUpgradeButton);
+        goldUpgradeLayout = mView.findViewById(R.id.goldUpgradeLayout);
+        goldUpgradeButton = mView.findViewById(R.id.goldUpgradeButton);
+        diamondUpgradeLayout = mView.findViewById(R.id.diamondUpgradeLayout);
+        diamondUpgradeButton = mView.findViewById(R.id.diamondUpgradeButton);
+
+
+        bronzeTransactionCount = mView.findViewById(R.id.bronzeTransactionCount);
+        silverTransactionCount = mView.findViewById(R.id.silverTransactionCount);
+        goldTransactionCount = mView.findViewById(R.id.goldTransactionCount);
+        diamondTransactionCount = mView.findViewById(R.id.diamondTransactionCount);
+
+        bronzeTransactionImageView = mView.findViewById(R.id.bronzeTransactionImageView);
+        silverTransactionImageView = mView.findViewById(R.id.silverTransactionImageView);
+        goldTransactionImageView = mView.findViewById(R.id.goldTransactionImageView);
+        diamondTransactionImageView = mView.findViewById(R.id.diamondTransactionImageView);
 
         mFirebase = FirebaseDatabase.getInstance().getReference();
         mUsers = FirebaseDatabase.getInstance().getReference("Users");
@@ -122,10 +155,12 @@ public class BronzeFragment extends Fragment {
         bar.setCanceledOnTouchOutside(false);
 
         ReferralFunction();
-        TransactionFunction();
+        bronzeTransactionFunction();
+        silverTransactionFunction();
+        goldTransactionFunction();
+        diamondTransactionFunction();
 
-        mView.findViewById(R.id.bronzeUpgrdaeLayout).setOnClickListener(v -> checkUpgrade());
-
+        checkLevel();
 
         return mView;
     }
@@ -137,7 +172,6 @@ public class BronzeFragment extends Fragment {
 
             bar.show();
 
-            //Picasso.get().load(IMAGE_URl).fit().centerCrop().into(imageRefer);
 
             mUsers.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -296,7 +330,7 @@ public class BronzeFragment extends Fragment {
 
     }
 
-    private void TransactionFunction() {
+    private void bronzeTransactionFunction() {
         try {
 
             mTransactions.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -313,8 +347,8 @@ public class BronzeFragment extends Fragment {
                         img1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
 
-                        transactionImageView.setImageResource(R.drawable.green_chechk);
-                        transactionCount.setText("2/2");
+                        bronzeTransactionImageView.setImageResource(R.drawable.green_chechk);
+                        bronzeTransactionCount.setText("2/2");
                         transactionButton.setVisibility(View.VISIBLE);
 
 
@@ -336,10 +370,12 @@ public class BronzeFragment extends Fragment {
 
 
                         // checkUpgrade();
+                        bronzeUpgradeButton.setBackgroundColor(getResources().getColor(R.color.amber_800));
+                        bronzeUpgradeButton.setOnClickListener(v -> runForUpgrade("Silver", "100", "p2"));
 
                     } else if (countLevelOne.equals("1")) {
                         //transactionImageView.setImageResource(R.drawable.red_check);
-                        transactionCount.setText("1/2");
+                        bronzeTransactionCount.setText("1/2");
                         transactionButton.setVisibility(View.VISIBLE);
 
                         transactionButton.setOnClickListener(v -> {
@@ -354,10 +390,10 @@ public class BronzeFragment extends Fragment {
 
                     } else {
                         //transactionImageView.setImageResource(R.drawable.red_check);
-                        transactionCount.setText("0/2");
+                        bronzeTransactionCount.setText("0/2");
                         transactionButton.setVisibility(View.GONE);
                         transactionButton.setOnClickListener(v -> {
-                            TransactionFunction();
+                            bronzeTransactionFunction();
                             Toast.makeText(getContext(), "Refresh Success", Toast.LENGTH_SHORT).show();
                         });
 
@@ -378,23 +414,323 @@ public class BronzeFragment extends Fragment {
         }
     }
 
-    private void checkUpgrade() {
+    private void silverTransactionFunction() {
+        try {
 
-        bar.setMessage("Checking Achievement ...");
+            mTransactions.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String countLevelTwo = dataSnapshot.child("level2").getValue().toString();
+
+                    int count = Integer.parseInt(countLevelTwo);
+                    if (count == 4) {
+
+                        ImageButton img1 = new ImageButton(getContext());
+                        img1.setImageResource(R.drawable.ic_done);
+                        img1.setBackgroundColor(Color.TRANSPARENT);
+                        img1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        silverTransactionImageView.setImageResource(R.drawable.green_chechk);
+                        silverTransactionCount.setText("4/4");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Silver");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                        ImageButton img2 = new ImageButton(getContext());
+                        img2.setImageResource(R.drawable.ic_done);
+                        img2.setBackgroundColor(Color.TRANSPARENT);
+                        img2.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        // checkUpgrade();
+                        silverUpgradeButton.setBackgroundColor(getResources().getColor(R.color.green_500));
+                        silverUpgradeButton.setOnClickListener(v -> runForUpgrade("Gold", "400", "p3"));
+
+                    } else if (count > 0 && count < 4) {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        silverTransactionCount.setText(count + "/4");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Silver");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                    } else {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        silverTransactionCount.setText("0/4");
+                        transactionButton.setVisibility(View.GONE);
+                        transactionButton.setOnClickListener(v -> {
+                            bronzeTransactionFunction();
+                            Toast.makeText(getContext(), "Refresh Success", Toast.LENGTH_SHORT).show();
+                        });
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void goldTransactionFunction() {
+        try {
+
+            mTransactions.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String countLevelThree = dataSnapshot.child("level3").getValue().toString();
+                    int count = Integer.parseInt(countLevelThree);
+
+                    if (count == 8) {
+
+                        ImageButton img1 = new ImageButton(getContext());
+                        img1.setImageResource(R.drawable.ic_done);
+                        img1.setBackgroundColor(Color.TRANSPARENT);
+                        img1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        goldTransactionImageView.setImageResource(R.drawable.green_chechk);
+                        goldTransactionCount.setText("8/8");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Gold");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                        ImageButton img2 = new ImageButton(getContext());
+                        img2.setImageResource(R.drawable.ic_done);
+                        img2.setBackgroundColor(Color.TRANSPARENT);
+                        img2.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        // checkUpgrade();
+                        goldUpgradeButton.setBackgroundColor(getResources().getColor(R.color.red_300));
+                        goldUpgradeButton.setOnClickListener(v -> runForUpgrade("Diamond", "1000", "p4"));
+
+                    } else if (count > 0 && count < 8) {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        goldTransactionCount.setText(count + "/8");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Gold");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                    } else {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        goldTransactionCount.setText("0/8");
+                        transactionButton.setVisibility(View.GONE);
+                        transactionButton.setOnClickListener(v -> {
+                            bronzeTransactionFunction();
+                            Toast.makeText(getContext(), "Refresh Success", Toast.LENGTH_SHORT).show();
+                        });
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void diamondTransactionFunction() {
+        try {
+
+            mTransactions.child("count").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String countLevelFour = dataSnapshot.child("level4").getValue().toString();
+                    int count = Integer.parseInt(countLevelFour);
+
+                    if (count == 16) {
+
+                        ImageButton img1 = new ImageButton(getContext());
+                        img1.setImageResource(R.drawable.ic_done);
+                        img1.setBackgroundColor(Color.TRANSPARENT);
+                        img1.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        diamondTransactionImageView.setImageResource(R.drawable.green_chechk);
+                        diamondTransactionCount.setText("16/16");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Diamond");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                        ImageButton img2 = new ImageButton(getContext());
+                        img2.setImageResource(R.drawable.ic_done);
+                        img2.setBackgroundColor(Color.TRANSPARENT);
+                        img2.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+
+                        // checkUpgrade();
+                        diamondUpgradeButton.setBackgroundColor(getResources().getColor(R.color.indigo_500));
+                        diamondUpgradeButton.setOnClickListener(v -> runForUpgrade("Diamond", "40000", "p5"));
+
+
+                    } else if (count > 0 && count < 16) {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        diamondTransactionCount.setText(count + "/16");
+                        transactionButton.setVisibility(View.VISIBLE);
+
+                        transactionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("filterWord", "Diamond");
+                            bundle.putString("filterType", "transactionLevel");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        });
+
+
+                    } else {
+                        //transactionImageView.setImageResource(R.drawable.red_check);
+                        diamondTransactionCount.setText(count + "/16");
+                        transactionButton.setVisibility(View.GONE);
+                        transactionButton.setOnClickListener(v -> {
+                            bronzeTransactionFunction();
+                            Toast.makeText(getContext(), "Refresh Success", Toast.LENGTH_SHORT).show();
+                        });
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void checkLevel() {
+
         bar.show();
         mUsers.child(selfUid).child("Achievement").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String mAchievement = Objects.requireNonNull(dataSnapshot.getValue()).toString();
-                    if (!mAchievement.equals("Bronze")) {
+                    String currentLevel = Objects.requireNonNull(dataSnapshot.child("currentLevel").getValue()).toString();
 
-                        runForBronze();
+                    switch (currentLevel) {
+                        case "Bronze":
+                            bronzeUpgradeLayout.setVisibility(View.VISIBLE);
+                            bronzeUpgradeButton.setBackgroundColor(getResources().getColor(R.color.grey_40));
+                            //bronzeUpgradeButton.setOnClickListener(v -> runForUpgrade("Silver","100","p2"));
+                            break;
+                        case "Silver":
+                            silverUpgradeLayout.setVisibility(View.VISIBLE);
+                            silverUpgradeButton.setBackgroundColor(getResources().getColor(R.color.grey_40));
+                            //silverUpgradeButton.setOnClickListener(v -> runForUpgrade("Gold","400","p3"));
+                            break;
+                        case "Gold":
+                            goldUpgradeLayout.setVisibility(View.VISIBLE);
+                            goldUpgradeButton.setBackgroundColor(getResources().getColor(R.color.grey_40));
+                            //goldUpgradeButton.setOnClickListener(v -> runForUpgrade("Diamond","1000","p4"));
 
-                    } else {
-                        Toast.makeText(getContext(), "Achievement " + mAchievement, Toast.LENGTH_SHORT).show();
-                        bar.dismiss();
+                            break;
+                        case "Diamond":
+                            diamondUpgradeLayout.setVisibility(View.VISIBLE);
+                            diamondUpgradeButton.setBackgroundColor(getResources().getColor(R.color.grey_40));
+                            //diamondUpgradeButton.setOnClickListener(v -> runForUpgrade("Diamond","40000","p5"));
+                            break;
+
+
                     }
+
+
+                    String Bronze = Objects.requireNonNull(dataSnapshot.child("Bronze").getValue()).toString();
+                    String Silver = Objects.requireNonNull(dataSnapshot.child("Silver").getValue()).toString();
+                    String Gold = Objects.requireNonNull(dataSnapshot.child("Gold").getValue()).toString();
+                    String Diamond = Objects.requireNonNull(dataSnapshot.child("Diamond").getValue()).toString();
+
+                    if (Bronze.equals("true")) {
+                        bronzeUpgradeLayout.setVisibility(View.GONE);
+                        mView.findViewById(R.id.bronzeUpgradedText).setVisibility(View.VISIBLE);
+
+                    }
+
+                    if (Silver.equals("true")) {
+                        silverUpgradeLayout.setVisibility(View.GONE);
+                        mView.findViewById(R.id.silverUpgradedText).setVisibility(View.VISIBLE);
+
+                    }
+                    if (Gold.equals("true")) {
+                        goldUpgradeLayout.setVisibility(View.GONE);
+                        mView.findViewById(R.id.goldUpgradedText).setVisibility(View.VISIBLE);
+
+                    }
+                    if (Diamond.equals("true")) {
+                        diamondUpgradeLayout.setVisibility(View.GONE);
+                        mView.findViewById(R.id.diamondUpgradedText).setVisibility(View.VISIBLE);
+
+                    }
+
                 } else {
                     Toast.makeText(getContext(), "Achievement not exists", Toast.LENGTH_SHORT).show();
                     bar.dismiss();
@@ -429,14 +765,14 @@ public class BronzeFragment extends Fragment {
         }.start();
     }
 
-    private void runForBronze() {
+    private void runForUpgrade(String Level, String Amount, String parentNum) {
 
 
         mChain.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot chainSnapshot) {
 
-                String parentUID = Objects.requireNonNull(chainSnapshot.child("parent").child("p2").getValue()).toString();
+                String parentUID = Objects.requireNonNull(chainSnapshot.child("parent").child(parentNum).getValue()).toString();
 
                 mUsers.child(parentUID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -488,9 +824,11 @@ public class BronzeFragment extends Fragment {
                                                             public void onDataChange(@NonNull DataSnapshot selfUserSnapshot) {
 
                                                                 String mUsername = Objects.requireNonNull(selfUserSnapshot.child("username").getValue()).toString();
-                                                                Toast.makeText(getContext(), "Success till upgradeMethod", Toast.LENGTH_SHORT).show();
-                                                                //upgradeMethod(mUsername, parentUID, parentUsername, "100", "Silver"  );
-                                                                bar.dismiss();
+                                                                String currentLevel = Objects.requireNonNull(selfUserSnapshot.child("Achievement").child("currentLevel").getValue()).toString();
+
+                                                                //Toast.makeText(getContext(), "Success till upgradeMethod", Toast.LENGTH_SHORT).show();
+                                                                upgradeMethod(mUsername, parentUID, parentUsername, Amount, Level, currentLevel);
+                                                                //bar.dismiss();
 
                                                             }
 
@@ -524,7 +862,7 @@ public class BronzeFragment extends Fragment {
                                     mStatus.child(parentUID).child("status").setValue("free");
                                     mStatus.child(parentUID).child("usingByUID").setValue("null");
                                     Toast.makeText(getContext(), "Reset success", Toast.LENGTH_SHORT).show();
-                                    runForBronze();
+                                    runForUpgrade(Level, Amount, parentNum);
                                 } else {
                                     bar.show();
 
@@ -549,7 +887,7 @@ public class BronzeFragment extends Fragment {
                                         public void onFinish() {
                                             bar.setMessage("Rechecking ..");
 
-                                            runForBronze();
+                                            runForUpgrade(Level, Amount, parentNum);
 
                                         }
                                     }.start();
@@ -584,22 +922,25 @@ public class BronzeFragment extends Fragment {
 
     }
 
-    private void upgradeMethod(String mUsername, String parentUID, String parentUsername, String upgradeAmount, String transactionLevel) {
+    private void upgradeMethod(String mUsername, String parentUID, String parentUsername, String upgradeAmount, String transactionLevel, String currentLevel) {
 
 
         mWallet.child(selfUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot userWalletSnapshot) {
 
+                bar.setMessage("Starting Upgrade to " + transactionLevel);
+                bar.show();
                 //UserBalance
-                String userBalance = Objects.requireNonNull(userWalletSnapshot.child("Balance").child("bronze").getValue()).toString();
+                String userBalance = Objects.requireNonNull(userWalletSnapshot.child("Balance").child(currentLevel).getValue()).toString();
                 int user_bal_Int = Integer.parseInt(userBalance);
 
                 int upgradeAmountInt = Integer.parseInt(upgradeAmount);
 
+
                 if (user_bal_Int >= 100) {
                     String user_updated_bal = Integer.toString(user_bal_Int - upgradeAmountInt);
-                    mWallet.child(selfUid).child("Balance").child("bronze").setValue(user_updated_bal);
+                    mWallet.child(selfUid).child("Balance").child(currentLevel).setValue(user_updated_bal);
 
                 } else {
                     Toast.makeText(getContext(), "Reduction Failed", Toast.LENGTH_SHORT).show();
@@ -611,13 +952,15 @@ public class BronzeFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot parentWalletSnapshot) {
 
 
+                        bar.setMessage("Transferring money to " + parentUsername);
+
                         //ParentBalance
                         String parentBalance = Objects.requireNonNull(parentWalletSnapshot.child("Balance").child("silver").getValue()).toString();
                         int parent_bal_Int = Integer.parseInt(parentBalance);
 
                         String parent_updated_bal = Integer.toString(parent_bal_Int + upgradeAmountInt);
 
-                        mWallet.child(parentUID).child("Balance").child("silver").setValue(parent_updated_bal);
+                        mWallet.child(parentUID).child("Balance").child(transactionLevel).setValue(parent_updated_bal);
 
 
                         Calendar c = Calendar.getInstance();
@@ -631,6 +974,8 @@ public class BronzeFragment extends Fragment {
                         String idOne = "PV" + id.substring(0, 6).toUpperCase();
                         String idTwo = "EX" + id.substring(0, 6).toUpperCase();
 
+
+                        bar.setMessage("Processing transactions .. ");
 
                         //MainTransactions
                         Transaction_Class main_transaction_class = new Transaction_Class(
@@ -692,17 +1037,31 @@ public class BronzeFragment extends Fragment {
                         );
                         mWallet.child(parentUID).child("Transactions").child("history").child(idOne + idTwo).setValue(received_transaction_class);
 
+                        //Logs
+
+                        mUsers.child(selfUid).child("Logs").child(transactionLevel + "Upgrade").child("date").setValue(date);
+                        mUsers.child(selfUid).child("Logs").child(transactionLevel + "Upgrade").child("time").setValue(time);
+
                         //Parent Transaction Count
-                        String p1_tran_count = parentWalletSnapshot.child("Transactions").child("count").child("level1").getValue().toString();
+                        String p1_tran_count = parentWalletSnapshot.child("Transactions").child("count").child(transactionLevel).getValue().toString();
                         int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
                         String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
-                        mWallet.child(parentUID).child("Transactions").child("count").child("level2").setValue(updated_p1_tran_count);
+                        mWallet.child(parentUID).child("Transactions").child("count").child(transactionLevel).setValue(updated_p1_tran_count);
 
 
                         //Upgrading level
-                        mUsers.child(selfUid).child("Achievement").setValue("Silver");
 
+                        mUsers.child(selfUid).child("Achievement").child("currentLevel").setValue(transactionLevel);
+                        mUsers.child(selfUid).child("Achievement").child(currentLevel).setValue("true");
+                        bar.setMessage("Finishing .. ");
+                        mStatus.child(parentUID).child("status").setValue("free");
+                        mStatus.child(parentUID).child("usingByUID").setValue("null");
 
+                        new Handler().postDelayed(() ->
+                        {
+                            showSuccessDialog(transactionLevel);
+                            bar.dismiss();
+                        }, 2000);
                     }
 
                     @Override
@@ -720,6 +1079,18 @@ public class BronzeFragment extends Fragment {
 
     }
 
+    private void showSuccessDialog(String transactionLevel) {
+
+        final Dialog dialog = new Dialog(Objects.requireNonNull(getContext()));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_achievement_congrat);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setCancelable(false);
+        TextView upgradeText = dialog.findViewById(R.id.upgradeText);
+        upgradeText.setText("You just got Upgraded to " + transactionLevel);
+        dialog.findViewById(R.id.bt_action).setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
 
     private void Snackbar(String text) {
         Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)

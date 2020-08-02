@@ -1,7 +1,7 @@
 package com.example.alpha.Model;
 
 public class UserClass {
-    public String email, name, password, paymentStatus, username, level, parentStatus, date, childCount, p6, p7, p8;
+    public String email, name, password, paymentStatus, username, level, parentStatus, date, childCount, pin, p7, p8;
 
     public UserClass() {
     }
@@ -15,6 +15,14 @@ public class UserClass {
         this.email = email;
     }
 
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
     public UserClass(String email, String name, String password, String paymentStatus, String level, String parentStatus
             , String date, String childCount) {
         this.email = email;
@@ -25,6 +33,7 @@ public class UserClass {
         this.parentStatus = parentStatus;
         this.date = date;
         this.childCount = childCount;
+        this.pin = pin;
     }
 
     public String getLevel() {

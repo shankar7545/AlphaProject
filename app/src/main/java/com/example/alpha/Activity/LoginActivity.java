@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -215,14 +216,17 @@ public class LoginActivity extends AppCompatActivity {
         };
 
 
+
     }
 
     private void showHintRequest() {
+
 
         HintRequest hintRequest = new HintRequest.Builder()
                 .setHintPickerConfig(new CredentialPickerConfig.Builder()
                         .setShowCancelButton(true)
                         .build())
+                .setPhoneNumberIdentifierSupported(false)
                 .setEmailAddressIdentifierSupported(true)
                 .setAccountTypes(IdentityProviders.GOOGLE)
                 .build();
@@ -286,6 +290,8 @@ public class LoginActivity extends AppCompatActivity {
             LoginActivity.this.bar.dismiss();
 
         });
+
+
     }
 
     private void statusBarColor() {
@@ -294,7 +300,9 @@ public class LoginActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
     }
 

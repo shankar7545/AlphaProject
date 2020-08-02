@@ -185,10 +185,6 @@ public class DialogSignupFragment extends DialogFragment {
                                 "0",
                                 "0",
                                 "0",
-                                "0",
-                                "0",
-                                "0",
-                                "0",
                                 "0"
                         );
 

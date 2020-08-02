@@ -10,7 +10,7 @@ import com.example.alpha.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class verificaton_phone extends AppCompatActivity {
+public class verification_phone extends AppCompatActivity {
 
     Button continueBtn;
     EditText PhoneNum;
@@ -22,7 +22,7 @@ public class verificaton_phone extends AppCompatActivity {
 
         PhoneNum = findViewById(R.id.phone_number);
 
-        continueBtn = (Button) findViewById(R.id.continueBtn);
+        continueBtn = findViewById(R.id.continueBtn);
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class verificaton_phone extends AppCompatActivity {
 
                 String mobile = "+" + "91" + number;
 
-                Intent intent = new Intent(verificaton_phone.this, verification_code.class);
+                Intent intent = new Intent(verification_phone.this, verification_code.class);
                 intent.putExtra("mobile", mobile);
                 intent.putExtra("name", mName);
                 intent.putExtra("email", mEmail);

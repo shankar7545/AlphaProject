@@ -6,7 +6,7 @@
     android:background="@color/grey_5"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <me.didik.component.StickyNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,142 +16,146 @@
             android:orientation="vertical">
 
 
+            <ImageView
+                android:id="@+id/imageRefer"
+                android:layout_width="120dp"
+                android:visibility="gone"
+                android:layout_height="160dp">
+
+            </ImageView>
+
+            <include
+                layout="@layout/layout_wallet_design"
+                android:id="@+id/wallet" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:orientation="horizontal">
+                android:background="@color/indigo_50"
+                android:tag="sticky"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="47dp"
+                    android:gravity="center"
+                    android:text="Upgrades"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="5dp">
+
+                </TextView>
+
+            </LinearLayout>
 
 
-                <androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:cardCornerRadius="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize"
                     android:visibility="visible"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="1dp">
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="?attr/actionBarSize"
-                        android:visibility="visible"
-                        android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="12dp">
+
+                        <RelativeLayout
+                            android:id="@+id/transactionRelative"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="3dp"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:tint="@color/orange_800"
+                                android:src="@drawable/ic_connect" />
+
+                        </RelativeLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="12dp">
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-                            <RelativeLayout
-                                android:id="@+id/transactionRelative"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginStart="8dp"
-                                android:layout_marginEnd="3dp"
-                                android:background="@drawable/ic_beginner"
-                                android:gravity="center">
 
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@drawable/ic_beginner" />
+                            <ProgressBar
+                                android:id="@+id/PaymentProgress"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:theme="@style/ProgressBar.Green"
+                                android:visibility="gone" />
 
-                            </RelativeLayout>
 
                             <TextView
-                                android:id="@+id/tv_label_title"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/spacing_xlarge"
-                                android:gravity="center_vertical"
-                                android:fontFamily="@font/ubuntu"
+                                android:id="@+id/ReferText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:text="No of Referrals"
                                 android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:text="  Try to share with atleast 2 people"
-                                android:textColor="@color/grey_80" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/lyt_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/spacing_large"
-                            android:layout_marginStart="33dp"
-                            android:orientation="vertical">
+                                android:textColor="@color/grey_80"
+                                android:visibility="visible"
+                                android:textSize="16sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="5dp"
                                 android:orientation="horizontal">
-
-
-                                <ProgressBar
-                                    android:id="@+id/PaymentProgress"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:theme="@style/ProgressBar.Green"
-                                    android:visibility="gone" />
-
-
-                                <TextView
-                                    android:id="@+id/ReferText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="18dp"
-                                    android:layout_gravity="center"
-                                    android:text=" No of Referrals"
-                                    android:textColor="@color/grey_90"
-                                    android:visibility="visible"
-                                    android:textSize="16sp" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:gravity="end"
+                                    android:layout_marginStart="30dp"
+                                    android:layout_marginEnd="15dp"
                                     android:orientation="horizontal">
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
+                                    <ImageView
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="1dp"
+                                        android:visibility="gone"
+                                        android:src="@drawable/rupee" />
+
+                                    <TextView
+                                        android:id="@+id/referCount"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:layout_marginStart="30dp"
-                                        android:layout_marginEnd="15dp"
-                                        android:orientation="horizontal">
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="25dp"
+                                        android:text="0/2"
+                                        android:fontFamily="@font/ubuntu"
+                                        android:textColor="@color/grey_80"
+                                        android:textSize="16sp" />
 
-                                        <ImageView
-                                            android:layout_width="15dp"
-                                            android:layout_height="15dp"
-                                            android:layout_gravity="center"
-                                            android:layout_marginTop="1dp"
-                                            android:visibility="gone"
-                                            android:src="@drawable/rupee" />
-
-                                        <TextView
-                                            android:id="@+id/referCount"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="center"
-                                            android:layout_marginStart="25dp"
-                                            android:text="0/2"
-                                            android:fontFamily="@font/ubuntu"
-                                            android:textColor="@color/grey_80"
-                                            android:textSize="16sp" />
-
-                                        <ImageView
-                                            android:id="@+id/referImageView"
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:layout_marginStart="10dp"
-                                            android:visibility="visible" />
-
-                                    </LinearLayout>
-
+                                    <ImageView
+                                        android:id="@+id/referImageView"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:layout_marginStart="10dp"
+                                        android:visibility="visible" />
 
                                 </LinearLayout>
 
@@ -159,73 +163,83 @@
                             </LinearLayout>
 
 
-                            <LinearLayout
-                                android:id="@+id/usernameDisplay"
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/lyt_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="33dp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/usernameDisplay"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="12dp"
+                            android:orientation="horizontal">
+
+                            <com.hootsuite.nachos.NachoTextView
+                                android:id="@+id/et_tag"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginStart="12dp"
-                                android:orientation="horizontal">
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
+                                android:enabled="false"
+                                android:background="@android:color/transparent">
 
-                                <com.hootsuite.nachos.NachoTextView
-                                    android:id="@+id/et_tag"
+                                <requestFocus />
+
+                            </com.hootsuite.nachos.NachoTextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/referButton"
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:cardCornerRadius="6dp">
+
+                                <LinearLayout
+                                    android:id="@+id/shareNowLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginStart="5dp"
-                                    android:enabled="false"
-                                    android:background="@android:color/transparent">
+                                    android:layout_gravity="center"
+                                    android:background="@color/blue_600"
+                                    android:gravity="center"
+                                    android:foreground="?attr/selectableItemBackground"
+                                    android:orientation="horizontal"
+                                    android:padding="6dp">
 
-                                    <requestFocus />
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginRight="6dp"
+                                        android:src="@drawable/ic_share"
+                                        android:tint="@color/white" />
 
-                                </com.hootsuite.nachos.NachoTextView>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/referButton"
-                                android:layout_width="150dp"
-                                android:layout_height="35dp"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginTop="10dp"
-                                android:visibility="visible"
-                                android:foreground="?attr/selectableItemBackground"
-                                android:orientation="vertical">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:cardCornerRadius="6dp">
-
-                                    <LinearLayout
-                                        android:id="@+id/shareNowLayout"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:background="@color/blue_600"
-                                        android:gravity="center"
-                                        android:foreground="?attr/selectableItemBackground"
-                                        android:orientation="horizontal"
-                                        android:padding="6dp">
-
-                                        <ImageView
-                                            android:layout_width="20dp"
-                                            android:layout_height="20dp"
-                                            android:layout_marginRight="6dp"
-                                            android:src="@drawable/ic_share"
-                                            android:tint="@color/white" />
-
-                                        <TextView
-                                            android:id="@+id/shareNowText"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/lato_black"
-                                            android:text="Share Now"
-                                            android:textColor="@color/white"
-                                            android:textSize="14sp" />
-                                    </LinearLayout>
-                                </androidx.cardview.widget.CardView>
-
-
-                            </LinearLayout>
+                                    <TextView
+                                        android:id="@+id/shareNowText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/lato_black"
+                                        android:text="Share Now"
+                                        android:textColor="@color/white"
+                                        android:textSize="14sp" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
 
 
                         </LinearLayout>
@@ -233,28 +247,19 @@
 
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="7dp"
+                android:visibility="visible"
                 android:background="@color/grey_40" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_middle"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:fontFamily="@font/ubuntu"
-                android:text="Transactions"
-                android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/grey_80" />
 
 
             <androidx.cardview.widget.CardView
@@ -288,7 +293,7 @@
                             android:layout_height="28dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="3dp"
-                            android:background="@drawable/shape_round_bronze"
+                            android:background="@drawable/shape_round_solid_blue"
                             android:gravity="center">
 
                             <TextView
@@ -322,7 +327,7 @@
 
 
                             <TextView
-                                android:id="@+id/transactionCount"
+                                android:id="@+id/bronzeTransactionCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -333,7 +338,7 @@
                                 android:fontFamily="sans-serif" />
 
                             <ImageView
-                                android:id="@+id/transactionImageView"
+                                android:id="@+id/bronzeTransactionImageView"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="10dp"
@@ -346,94 +351,12 @@
 
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="26dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="160dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/blue_500"
-                                    android:gravity="center"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Show transactions"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="130dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/red_300"
-                                    android:gravity="center"
-                                    android:visibility="gone"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Upgrade"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
+                        android:id="@+id/bronzeUpgradeLayout"
                         android:layout_width="150dp"
                         android:layout_height="35dp"
                         android:layout_marginStart="50dp"
                         android:layout_marginTop="5dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:layout_gravity="start"
                         android:foreground="?attr/selectableItemBackground"
                         android:orientation="vertical">
@@ -444,7 +367,7 @@
                             app:cardCornerRadius="6dp">
 
                             <LinearLayout
-                                android:id="@+id/bronzeUpgrdaeLayout"
+                                android:id="@+id/bronzeUpgradeButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -474,6 +397,15 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/bronzeUpgradedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:visibility="gone"
+                        android:layout_marginStart="50dp"
+                        android:text=" Upgrade completed on 23-07-2020" />
+
 
                 </LinearLayout>
 
@@ -501,6 +433,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
+                    android:layout_marginBottom="15dp"
                     android:orientation="vertical">
 
 
@@ -508,7 +441,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -518,7 +450,7 @@
                             android:layout_height="28dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="3dp"
-                            android:background="@drawable/shape_round_solid_green"
+                            android:background="@drawable/shape_round_solid_blue"
                             android:gravity="center">
 
                             <TextView
@@ -552,6 +484,7 @@
 
 
                             <TextView
+                                android:id="@+id/silverTransactionCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -562,6 +495,7 @@
                                 android:fontFamily="sans-serif" />
 
                             <ImageView
+                                android:id="@+id/silverTransactionImageView"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="10dp"
@@ -617,54 +551,19 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/bronzeUpgradeButton"
-                            android:layout_width="130dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/red_300"
-                                    android:gravity="center"
-                                    android:visibility="gone"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Upgrade"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
 
                     </LinearLayout>
 
 
                     <LinearLayout
+                        android:id="@+id/silverUpgradeLayout"
+
                         android:layout_width="150dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="5dp"
                         android:visibility="gone"
-                        android:layout_gravity="end"
+                        android:layout_gravity="start"
                         android:foreground="?attr/selectableItemBackground"
                         android:orientation="vertical">
 
@@ -674,10 +573,11 @@
                             app:cardCornerRadius="6dp">
 
                             <LinearLayout
+                                android:id="@+id/silverUpgradeButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:background="@color/green_700"
+                                android:background="@color/grey_40"
                                 android:gravity="center"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:orientation="horizontal"
@@ -694,7 +594,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_black"
-                                    android:text="UPGRADE"
+                                    android:text="Upgrade"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -703,6 +603,14 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/silverUpgradedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:visibility="gone"
+                        android:layout_marginStart="50dp"
+                        android:text=" Upgrade completed on 23-07-2020" />
 
                 </LinearLayout>
 
@@ -728,6 +636,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
+                    android:layout_marginBottom="15dp"
                     android:orientation="vertical">
 
 
@@ -735,7 +644,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -745,7 +653,7 @@
                             android:layout_height="28dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="3dp"
-                            android:background="@drawable/shape_round_diamond"
+                            android:background="@drawable/shape_round_solid_blue"
                             android:gravity="center">
 
                             <TextView
@@ -779,6 +687,7 @@
 
 
                             <TextView
+                                android:id="@+id/goldTransactionCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -789,6 +698,7 @@
                                 android:fontFamily="sans-serif" />
 
                             <ImageView
+                                android:id="@+id/goldTransactionImageView"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="10dp"
@@ -801,95 +711,13 @@
 
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="26dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="160dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/blue_500"
-                                    android:gravity="center"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Show transactions"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="130dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/red_300"
-                                    android:gravity="center"
-                                    android:visibility="gone"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Upgrade"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
+                        android:id="@+id/goldUpgradeLayout"
                         android:layout_width="150dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="5dp"
                         android:visibility="gone"
-                        android:layout_gravity="end"
+                        android:layout_gravity="start"
                         android:foreground="?attr/selectableItemBackground"
                         android:orientation="vertical">
 
@@ -899,11 +727,13 @@
                             app:cardCornerRadius="6dp">
 
                             <LinearLayout
+                                android:id="@+id/goldUpgradeButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:background="@color/green_700"
+                                android:background="@color/red_300"
                                 android:gravity="center"
+                                android:visibility="visible"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:orientation="horizontal"
                                 android:padding="6dp">
@@ -919,7 +749,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_black"
-                                    android:text="UPGRADE"
+                                    android:text="Upgrade"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -928,6 +758,14 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/goldUpgradedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:visibility="gone"
+                        android:layout_marginStart="50dp"
+                        android:text=" Upgrade completed on 23-07-2020" />
 
                 </LinearLayout>
 
@@ -953,6 +791,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
+                    android:layout_marginBottom="15dp"
                     android:orientation="vertical">
 
 
@@ -960,7 +799,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -1004,6 +842,8 @@
 
 
                             <TextView
+                                android:id="@+id/diamondTransactionCount"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -1014,6 +854,7 @@
                                 android:fontFamily="sans-serif" />
 
                             <ImageView
+                                android:id="@+id/diamondTransactionImageView"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginStart="10dp"
@@ -1026,95 +867,13 @@
 
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="26dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="160dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/blue_500"
-                                    android:gravity="center"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Show transactions"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="130dp"
-                            android:layout_height="35dp"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginTop="5dp"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:orientation="vertical">
-
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                app:cardCornerRadius="6dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:background="@color/red_300"
-                                    android:gravity="center"
-                                    android:visibility="gone"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    android:orientation="horizontal"
-                                    android:padding="6dp">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/lato_black"
-                                        android:text="Upgrade"
-                                        android:textColor="@color/white"
-                                        android:textSize="15sp" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
+                        android:id="@+id/diamondUpgradeLayout"
                         android:layout_width="150dp"
                         android:layout_height="35dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="50dp"
                         android:layout_marginTop="5dp"
                         android:visibility="gone"
-                        android:layout_gravity="end"
+                        android:layout_gravity="start"
                         android:foreground="?attr/selectableItemBackground"
                         android:orientation="vertical">
 
@@ -1124,10 +883,11 @@
                             app:cardCornerRadius="6dp">
 
                             <LinearLayout
+                                android:id="@+id/diamondUpgradeButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                android:background="@color/green_700"
+                                android:background="@color/indigo_500"
                                 android:gravity="center"
                                 android:foreground="?attr/selectableItemBackground"
                                 android:orientation="horizontal"
@@ -1144,7 +904,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/lato_black"
-                                    android:text="UPGRADE"
+                                    android:text="Upgrade"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -1153,6 +913,14 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/diamondUpgradedText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:visibility="gone"
+                        android:layout_marginStart="50dp"
+                        android:text=" Upgrade completed on 23-07-2020" />
 
                 </LinearLayout>
 
@@ -1163,12 +931,13 @@
                 android:layout_height="0.5dp"
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="7dp"
+                android:layout_marginBottom="150dp"
                 android:background="@color/grey_40" />
 
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+    </me.didik.component.StickyNestedScrollView>
 
 
     <LinearLayout

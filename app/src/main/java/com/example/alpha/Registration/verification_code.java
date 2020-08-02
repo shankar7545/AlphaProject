@@ -2,27 +2,24 @@ package com.example.alpha.Registration;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alpha.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class verification_code extends AppCompatActivity {
@@ -56,13 +53,14 @@ public class verification_code extends AppCompatActivity {
         }
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
 
             //storing the verification id that is sent to the user
             mVerificationId = s;
         }
     };
+
 
     //the method is sending verification code
     //the country id is concatenated
@@ -115,6 +113,19 @@ public class verification_code extends AppCompatActivity {
                 mCallbacks);
     }
 
+    private void resendVerificationCode(PhoneAuthProvider.ForceResendingToken token) {
+        String mobile = getIntent().getStringExtra("mobile");
+
+        assert mobile != null;
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                mobile,          // Phone number to verify
+                60,                  // Timeout duration
+                TimeUnit.SECONDS,       // Unit of timeout
+                this,            // Activity (for callback binding)
+                mCallbacks,  // OnVerificationStateChangedCallbacks
+                token);                 // ForceResendingToken from callbacks
+    }
+
     private void verifyVerificationCode(String code) {
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
@@ -125,33 +136,27 @@ public class verification_code extends AppCompatActivity {
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(verification_code.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                .addOnCompleteListener(verification_code.this, task -> {
+                    if (task.isSuccessful()) {
 
-                            Intent intent = new Intent(verification_code.this, self_details.class);
-                            startActivity(intent);
+                        Intent intent = new Intent(verification_code.this, self_details.class);
+                        startActivity(intent);
 
-                        } else {
+                    } else {
 
-                            //verification unsuccessful.. display an error message
+                        //verification unsuccessful.. display an error message
 
-                            String message = "Somthing is wrong, we will fix it soon...";
+                        String message = "Somthing is wrong, we will fix it soon...";
 
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
-                            }
-
-                            Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
-                            snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                            snackbar.show();
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            message = "Invalid code entered...";
                         }
+
+                        Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
+                        snackbar.setAction("Dismiss", v -> {
+
+                        });
+                        snackbar.show();
                     }
                 });
 

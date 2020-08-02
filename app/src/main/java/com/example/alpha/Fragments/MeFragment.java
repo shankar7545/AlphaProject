@@ -21,6 +21,7 @@ import com.example.alpha.R;
 import com.example.alpha.ViewHolder.TransactionView;
 import com.example.alpha.Wallet.TransactionExtender;
 import com.example.alpha.Wallet.TransactionFilterActivity;
+import com.example.alpha.Wallet.TransactionsActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +33,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -76,7 +76,18 @@ public class MeFragment extends Fragment {
     public String[] str = new String[2];
 
 
+    public MeFragment() {
+        // Required empty public constructor
+    }
 
+
+    public static Fragment newInstance() {
+        Bundle args = new Bundle();
+
+        MeFragment fragment = new MeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,17 +160,16 @@ public class MeFragment extends Fragment {
 
 
 
+
         loadTransactions();
 
         return mView;
 
     }
-
-
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
 
-        Query withdrawList = mTransactions.orderByChild("position");
+        Query withdrawList = mTransactions.orderByChild("position").limitToLast(10);
         FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
                 .setQuery(withdrawList, Transaction_Class.class)
                 .build();
@@ -174,60 +184,8 @@ public class MeFragment extends Fragment {
                 holder.transactionTime.setText(model.getTransactionTime());
 
 
-                dateFilterButton.setOnClickListener(v -> {
-
-                    filterDialog();
-
-                });
-
-
-                levelFilterButton.setOnClickListener(v -> {
-
-                    List<String> level = new ArrayList<String>();
-                    level.add(model.getTransactionLevel());
-                    String[] levelArr = level.toArray(new String[level.size()]);
-
-
-                    single_choice_selected = TRANSACTION_LEVEL[0];
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Choose Type");
-                    builder.setSingleChoiceItems(TRANSACTION_LEVEL, 0, (dialogInterface, i) -> single_choice_selected = TRANSACTION_LEVEL[i]);
-                    builder.setPositiveButton(R.string.OK, (dialogInterface, i) -> {
-
-                        Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("filterWord", single_choice_selected);
-                        bundle.putString("filterType", "transactionLevel");
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    });
-                    builder.setNegativeButton(R.string.CANCEL, null);
-                    builder.show();
-
-                });
-
-
-                typeFilterButton.setOnClickListener(v -> {
-
-
-                    single_choice_selected = TRANSACTION_TYPE[0];
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Choose Type");
-                    builder.setSingleChoiceItems(TRANSACTION_TYPE, 0, (dialogInterface, i) -> single_choice_selected = TRANSACTION_TYPE[i]);
-                    builder.setPositiveButton(R.string.OK, (dialogInterface, i) -> {
-
-                        Intent intent = new Intent(getContext(), TransactionFilterActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("filterWord", single_choice_selected);
-                        bundle.putString("filterType", "transactionType");
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    });
-                    builder.setNegativeButton(R.string.CANCEL, null);
-                    builder.show();
-
-                });
-
+                mView.findViewById(R.id.loadMoreButton).setVisibility(View.VISIBLE);
+                mView.findViewById(R.id.loadMoreButton).setOnClickListener(v -> startActivity(new Intent(getContext(), TransactionsActivity.class)));
 
                 String transType = model.getTransactionType();
                 {

@@ -142,7 +142,7 @@ public class IntroActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(IntroActivity.this, R.color.white));
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
     }
 
@@ -150,8 +150,9 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //statusBarColor();
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        statusBarColor();
 
     }
 }

@@ -8,20 +8,21 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.alpha.Activity.HelpActivity;
+import com.example.alpha.Fragments.MeFragment;
 import com.example.alpha.R;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -36,6 +37,9 @@ public class LevelActivity extends AppCompatActivity {
     public ViewPager viewPager;
     public TabLayout tabLayout;
 
+    private BottomSheetBehavior mBehavior;
+    private BottomSheetDialog mBottomSheetDialog;
+    private long mLastClickTime = 0;
 
     DatabaseReference mUser;
     private final String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -47,8 +51,12 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
 
         mUser = FirebaseDatabase.getInstance().getReference("Users");
+//        //BottomSheet
+//        View bottom_sheet = findViewById(R.id.bottom_sheet);
+//        mBehavior = BottomSheetBehavior.from(bottom_sheet);
+
         initToolbar();
-        //statusBarColor();
+        // statusBarColor();
         initComponent();
 
     }
@@ -64,7 +72,7 @@ public class LevelActivity extends AppCompatActivity {
 
         // viewPager.setOnTouchListener((arg0, arg1) -> true);  //to stop scrolling
 
-        mUser.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
+        /*mUser.child(selfUid).child("Achievement").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -98,15 +106,15 @@ public class LevelActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(BronzeFragment.newInstance(), "PLAN");
-        adapter.addFragment(SilverFragment.newInstance(), "CHAIN");
-        adapter.addFragment(GoldFragment.newInstance(), "WALLET");
+        adapter.addFragment(BronzeFragment.newInstance(), "Plan");
+        adapter.addFragment(MeFragment.newInstance(), "Wallet");
+        //adapter.addFragment(SilverFragment.newInstance(), "CHAIN");
         //adapter.addFragment(DiamondFragment.newInstance(), "Transactions");
 
         viewPager.setAdapter(adapter);
@@ -122,6 +130,7 @@ public class LevelActivity extends AppCompatActivity {
             super(manager);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
@@ -143,18 +152,60 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+//    private void showBottomSheetDialog() {
+//        if (mBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//            mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        }
+//
+//        final View view = getLayoutInflater().inflate(R.layout.sheet_info, null);
+//
+//
+//
+//        view.findViewById(R.id.paytm).setOnClickListener(v -> {
+//            //mBottomSheetDialog.dismiss();
+//
+//            //to disable double_click
+//            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+//                return;
+//            }
+//            mLastClickTime = SystemClock.elapsedRealtime();
+//
+//        });
+//
+//
+//        view.findViewById(R.id.razorpay).setOnClickListener(v -> {
+//            if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+//                return;
+//            }
+//            mLastClickTime = SystemClock.elapsedRealtime();
+//
+//
+//
+//
+//        });
+//
+//        mBottomSheetDialog = new BottomSheetDialog(this);
+//        mBottomSheetDialog.setContentView(view);
+//        Objects.requireNonNull(mBottomSheetDialog.getWindow()).addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//
+//        mBottomSheetDialog.show();
+//        mBottomSheetDialog.setOnDismissListener(dialog -> mBottomSheetDialog = null);
+//    }
+
+
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.indigo_800));
         setSupportActionBar(toolbar);
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.white));
         Objects.requireNonNull(getSupportActionBar()).setTitle("Beginner Plan");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+
         return true;
     }
 
@@ -173,11 +224,13 @@ public class LevelActivity extends AppCompatActivity {
 
     private void statusBarColor() {
 
-        Window window = LevelActivity.this.getWindow();
+        Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(LevelActivity.this, R.color.indigo_800));
-
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        }
     }
 
     @Override

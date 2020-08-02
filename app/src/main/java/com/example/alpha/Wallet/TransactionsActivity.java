@@ -112,7 +112,7 @@ public class TransactionsActivity extends AppCompatActivity {
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
 
-        Query withdrawList = mTransactions.orderByChild("position").limitToLast(10);
+        Query withdrawList = mTransactions.orderByChild("position");
         FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
                 .setQuery(withdrawList, Transaction_Class.class)
                 .build();

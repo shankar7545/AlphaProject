@@ -1,16 +1,16 @@
 package com.example.alpha.Model;
 
 public class Transaction_Class {
-    public String transactionType;
-    public String transactionDate;
-    public String transactionTime;
-    public String transferredFrom;
-    public String transferredTo;
-    public String transactionId;
-    public String transactionAmount;
-    public String transactionLevel;
-    public String paymentMode;
-    public long position;
+    private String transactionType;
+    private String transactionDate;
+    private String transactionTime;
+    private String transferredFrom;
+    private String transferredTo;
+    private String transactionId;
+    private String transactionAmount;
+    private String transactionLevel;
+    private String paymentMode;
+    private long position;
 
 
     public Transaction_Class(String transactionType, String transactionDate, String transactionTime, String transferredFrom,

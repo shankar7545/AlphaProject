@@ -11,30 +11,58 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <androidx.core.widget.NestedScrollView
+    <me.didik.component.StickyNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include
+                layout="@layout/layout_wallet_design"
+                android:id="@+id/wallet" />
             <include layout="@layout/layout_transactions_filter" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/indigo_50"
+                android:tag="sticky"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="47dp"
+                    android:gravity="center"
+                    android:text="Payment History"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="5dp">
+
+                </TextView>
+
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/transactions_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:background="@color/white"
+                android:layout_marginBottom="-2dp"
+                android:visibility="visible">
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/transactionsRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="0dp"
                     android:visibility="visible">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -42,6 +70,19 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/loadMoreButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:text="Load More"
+                android:visibility="gone"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/blue_50"
+                android:textAllCaps="false">
+
+            </Button>
 
             <LinearLayout
                 android:id="@+id/no_subjects_found"
@@ -80,6 +121,7 @@
                     android:gravity="center"
                     android:layout_marginTop="10dp"
                     android:text="No Transactions Found"
+                    android:layout_marginBottom="80dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/ubuntu"
                     android:textSize="20sp" />
@@ -91,7 +133,7 @@
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+    </me.didik.component.StickyNestedScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"

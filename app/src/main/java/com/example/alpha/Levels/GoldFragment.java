@@ -32,7 +32,7 @@ public class GoldFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.activity_wallet, container, false);
+        mView = inflater.inflate(R.layout.layout_wallet_design, container, false);
 
 
         return mView;
