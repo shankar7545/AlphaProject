@@ -40,9 +40,10 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
     String amount = "";
     int payamount;
     DatabaseReference myWalletAmount, mFirebase, mWallet;
+
     String id = UUID.randomUUID().toString();
-    String childid = "RZPY" + id.substring(0, 8).toUpperCase();
-    String extraid = id.substring(0, 4).toUpperCase();
+    String idOne = "PV" + id.substring(0, 6).toUpperCase();
+    String idTwo = "EX" + id.substring(0, 6).toUpperCase();
 
 
     @Override
@@ -66,7 +67,7 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
 
         try {
             JSONObject options = new JSONObject();
-            options.put("description", childid);
+            options.put("description", idOne + idTwo);
             options.put("currency", "INR");
             options.put("amount", payamount * 100);
             checkout.open(activity, options);
@@ -87,6 +88,9 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
             SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
             String timeformat = time.format(c.getTime());
 
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+            String strDate = sdf.format(c.getTime());
+
             mFirebase = FirebaseDatabase.getInstance().getReference();
             mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -97,86 +101,37 @@ public class RazorpaySection extends AppCompatActivity implements PaymentResultL
                     String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
                             .child("username").getValue()).toString();
 
-                    if (dataSnapshot.child("Transactions").child(childid).exists()) {
+
+                    Transaction_Class transaction_class = new Transaction_Class(
+                            "added",
+                            datetime,
+                            timeformat,
+                            user_userName,
+                            "Wallet",
+                            idOne + idTwo,
+                            "50",
+                            strDate,
+                            "beginner",
+                            "Razorpay"
+                    );
+                    mFirebase.child("Transactions").child(idOne + idTwo).setValue(transaction_class);
+
+                    //addTransaction in user
 
 
-                        Transaction_Class send_transaction_class = new Transaction_Class(
-                                "added",
-                                datetime,
-                                timeformat,
-                                user_userName,
-                                "Wallet",
-                                childid,
-                                "50",
-                                1,
-                                "beginner",
-                                "Razorpay"
-                        );
-                        mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
-
-                    } else {
-
-                        Transaction_Class send_transaction_class = new Transaction_Class(
-                                "added",
-                                datetime,
-                                timeformat,
-                                user_userName,
-                                "Wallet",
-                                childid,
-                                "50",
-                                1,
-                                "beginner",
-                                "Razorpay"
-
-                        );
-                        mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
-
-
-                    }
-
-                    //sendTransaction in user
-
-
-                    if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                            .child("history").exists()) {
-                        long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                                .child("history").getChildrenCount();
-
-                        long sizeR = countR + 1;
-
-
-                        Transaction_Class send_transaction_class = new Transaction_Class(
-                                "added",
-                                datetime,
-                                timeformat,
-                                user_userName,
-                                "Wallet",
-                                childid,
-                                "50",
-                                sizeR,
-                                "beginner",
-                                "Razorpay"
-                        );
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
-
-                    } else {
-
-                        Transaction_Class send_transaction_class = new Transaction_Class(
-                                "added",
-                                datetime,
-                                timeformat,
-                                user_userName,
-                                "Wallet",
-                                childid,
-                                "50",
-                                1,
-                                "beginner",
-                                "Razorpay"
-                        );
-                        mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
-
-
-                    }
+                    Transaction_Class send_transaction_class = new Transaction_Class(
+                            "added",
+                            datetime,
+                            timeformat,
+                            user_userName,
+                            "Wallet",
+                            idOne + idTwo,
+                            "50",
+                            strDate,
+                            "beginner",
+                            "Razorpay"
+                    );
+                    mWallet.child(selfUid).child("Transactions").child("history").child(idOne + idTwo).setValue(send_transaction_class);
 
 
                 }

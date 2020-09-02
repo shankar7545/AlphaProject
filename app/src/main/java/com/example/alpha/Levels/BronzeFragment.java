@@ -337,7 +337,7 @@ public class BronzeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String countLevelOne = dataSnapshot.child("level1").getValue().toString();
+                    String countLevelOne = dataSnapshot.child("bronzeCount").getValue().toString();
 
                     if (countLevelOne.equals("2")) {
 
@@ -421,7 +421,7 @@ public class BronzeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String countLevelTwo = dataSnapshot.child("level2").getValue().toString();
+                    String countLevelTwo = dataSnapshot.child("silverCount").getValue().toString();
 
                     int count = Integer.parseInt(countLevelTwo);
                     if (count == 4) {
@@ -505,7 +505,7 @@ public class BronzeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String countLevelThree = dataSnapshot.child("level3").getValue().toString();
+                    String countLevelThree = dataSnapshot.child("goldCount").getValue().toString();
                     int count = Integer.parseInt(countLevelThree);
 
                     if (count == 8) {
@@ -589,7 +589,7 @@ public class BronzeFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String countLevelFour = dataSnapshot.child("level4").getValue().toString();
+                    String countLevelFour = dataSnapshot.child("diamondCount").getValue().toString();
                     int count = Integer.parseInt(countLevelFour);
 
                     if (count == 16) {
@@ -704,28 +704,28 @@ public class BronzeFragment extends Fragment {
                     }
 
 
-                    String Bronze = Objects.requireNonNull(dataSnapshot.child("Bronze").getValue()).toString();
-                    String Silver = Objects.requireNonNull(dataSnapshot.child("Silver").getValue()).toString();
-                    String Gold = Objects.requireNonNull(dataSnapshot.child("Gold").getValue()).toString();
-                    String Diamond = Objects.requireNonNull(dataSnapshot.child("Diamond").getValue()).toString();
+                    String BronzeA = Objects.requireNonNull(dataSnapshot.child("BronzeA").getValue()).toString();
+                    String SilverA = Objects.requireNonNull(dataSnapshot.child("SilverA").getValue()).toString();
+                    String GoldA = Objects.requireNonNull(dataSnapshot.child("GoldA").getValue()).toString();
+                    String DiamondA = Objects.requireNonNull(dataSnapshot.child("DiamondA").getValue()).toString();
 
-                    if (Bronze.equals("true")) {
+                    if (BronzeA.equals("true")) {
                         bronzeUpgradeLayout.setVisibility(View.GONE);
                         mView.findViewById(R.id.bronzeUpgradedText).setVisibility(View.VISIBLE);
 
                     }
 
-                    if (Silver.equals("true")) {
+                    if (SilverA.equals("true")) {
                         silverUpgradeLayout.setVisibility(View.GONE);
                         mView.findViewById(R.id.silverUpgradedText).setVisibility(View.VISIBLE);
 
                     }
-                    if (Gold.equals("true")) {
+                    if (GoldA.equals("true")) {
                         goldUpgradeLayout.setVisibility(View.GONE);
                         mView.findViewById(R.id.goldUpgradedText).setVisibility(View.VISIBLE);
 
                     }
-                    if (Diamond.equals("true")) {
+                    if (DiamondA.equals("true")) {
                         diamondUpgradeLayout.setVisibility(View.GONE);
                         mView.findViewById(R.id.diamondUpgradedText).setVisibility(View.VISIBLE);
 
@@ -974,6 +974,8 @@ public class BronzeFragment extends Fragment {
                         String idOne = "PV" + id.substring(0, 6).toUpperCase();
                         String idTwo = "EX" + id.substring(0, 6).toUpperCase();
 
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        String strDate = sdf.format(c.getTime());
 
                         bar.setMessage("Processing transactions .. ");
 
@@ -986,7 +988,7 @@ public class BronzeFragment extends Fragment {
                                 parentUsername,
                                 idOne + idTwo,
                                 upgradeAmount,
-                                1,
+                                strDate,
                                 transactionLevel,
                                 ""
                         );
@@ -994,10 +996,6 @@ public class BronzeFragment extends Fragment {
 
 
                         //sendTransaction in user
-                        long countR = userWalletSnapshot.child("Transactions")
-                                .child("history").getChildrenCount();
-
-                        long sizeR = countR + 1;
 
 
                         Transaction_Class send_transaction_class = new Transaction_Class(
@@ -1008,7 +1006,7 @@ public class BronzeFragment extends Fragment {
                                 parentUsername,
                                 idOne + idTwo,
                                 upgradeAmount,
-                                sizeR,
+                                strDate,
                                 "For Upgrading to " + transactionLevel,
                                 ""
                         );
@@ -1017,10 +1015,6 @@ public class BronzeFragment extends Fragment {
 
                         //receivedTransaction in parent
 
-                        long countP = parentWalletSnapshot.child("Transactions")
-                                .child("history").getChildrenCount();
-
-                        long sizeP = countP + 1;
                         Transaction_Class received_transaction_class = new Transaction_Class(
                                 "credited",
                                 date,
@@ -1029,7 +1023,7 @@ public class BronzeFragment extends Fragment {
                                 parentUsername,
                                 idOne + idTwo,
                                 upgradeAmount,
-                                sizeP,
+                                strDate,
                                 transactionLevel,
                                 ""
 

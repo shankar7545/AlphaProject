@@ -246,6 +246,14 @@ public class HomeActivity extends AppCompatActivity {
 
                             mReferDB.child(mUserName).setValue(referClass);
 
+                            mUser = FirebaseDatabase.getInstance().getReference("Users").child(selfUid);
+
+                            mUser.child("Achievement").child("currentLevel").setValue("Beginner");
+                            mUser.child("Achievement").child("BronzeA").setValue("false");
+                            mUser.child("Achievement").child("SilverA").setValue("false");
+                            mUser.child("Achievement").child("GoldA").setValue("false");
+                            mUser.child("Achievement").child("DiamondA").setValue("false");
+
 
                             dialog.dismiss();
 

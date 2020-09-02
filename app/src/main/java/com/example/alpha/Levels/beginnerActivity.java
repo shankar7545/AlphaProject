@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.Model.ParentClass;
-import com.example.alpha.Model.Transaction_Class;
 import com.example.alpha.R;
 import com.example.alpha.Registration.PaytmPayment;
 import com.example.alpha.Utils.ViewAnimation;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -212,7 +210,7 @@ public class beginnerActivity extends AppCompatActivity {
                     upgrade.setEnabled(true);
                     upgrade.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     upgrade.setOnClickListener(v -> {
-                        upgradeMethod();
+//                        upgradeMethod();
                         upgradeProgressBar.setVisibility(View.VISIBLE);
                         upgradeTextView.setVisibility(View.GONE);
                     });
@@ -236,284 +234,284 @@ public class beginnerActivity extends AppCompatActivity {
 
     }
 
-    private void upgradeMethod() {
-
-
-        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String p1 = dataSnapshot.child("Users").child(selfUid).child("Chain").child("parent").child("p1").getValue().toString();
-                String mAchievement = dataSnapshot.child("Users").child(selfUid).child("Achievement").getValue().toString();
-                String user_bal = dataSnapshot.child("Wallet").child(selfUid).child("balance").getValue().toString();
-                String p1Status = dataSnapshot.child("Wallet").child(p1).child("Status").child("status").getValue().toString();
-                String userStatusUid = dataSnapshot.child("Wallet").child(p1).child("Status").child("uid").getValue().toString();
-
-                //ProgressBar
-                progressDialog = new ProgressDialog(beginnerActivity.this);
-                progressDialog.setCancelable(false);
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-                progressDialog.setContentView(R.layout.progress_dialog_new);
-                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-                TextView Ptext;
-                Ptext = progressDialog.findViewById(R.id.Ptext);
-                Ptext.setVisibility(View.VISIBLE);
-
-                if ((mAchievement.equals("Beginner")) && (user_bal.equals("50"))) {
-                    progressDialog.show();
-
-                    if (p1Status.equals("free")) {
-
-                        mWallet.child(p1).child("Status").child("status").setValue("busy");
-                        mWallet.child(p1).child("Status").child("uid").setValue(selfUid);
-
-                        //reducing money in user wallet
-                        int user_bal_Int = Integer.parseInt(user_bal);
-
-                        String user_updated_bal = Integer.toString(user_bal_Int - 50);
-
-                        mWallet.child(selfUid).child("balance").setValue(user_updated_bal);
-
-                        //adding money to parent1
-                        String p1_bal = Objects.requireNonNull(dataSnapshot.child("Wallet").child(p1).child("balance").getValue()).toString();
-                        int p1_bal_Int = Integer.parseInt(p1_bal);
-
-                        String p1_updated_bal = Integer.toString(p1_bal_Int + 50);
-
-                        mWallet.child(p1).child("balance").setValue(p1_updated_bal);
-
-
-                        //AutoLoginCode
-                        //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
-                        //String p1_password = dataSnapshot.child("Users").child(p1).child("password").getValue().toString();
-                        //String mEnd = dataSnapshot.child("Login").child("end").getValue().toString();
-                        //int i = Integer.parseInt(mEnd);
-
-                        //mLogin.child("user" + i).child("uid").setValue(p1);
-                        //mLogin.child("user" + i).child("email").setValue(p1_email);
-                        //mLogin.child("user" + i).child("password").setValue(p1_password);
-
-                        //String endCount = Integer.toString(i + 1);
-                        //mLogin.child("end").setValue(endCount);
-
-                        //MainTransactions
-                        String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid).child("username").getValue()).toString();
-                        String p1_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(p1).child("username").getValue()).toString();
-                        String id = UUID.randomUUID().toString();
-                        String childid = "PW" + id.substring(0, 5).toUpperCase();
-                        String extraid = id.substring(0, 4).toUpperCase();
-
-
-                        //Main Transactions
-                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
-
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "debited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    1,
-                                    "bronze",
-                                    ""
-                            );
-                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
-
-                        } else {
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "debited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    1,
-                                    "bronze",
-                                    ""
-
-                            );
-                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
-
-
-                        }
-
-
-                        //sendTransaction in user
-                        if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                                .child("history").exists()) {
-                            long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                                    .child("history").getChildrenCount();
-
-                            long sizeR = countR + 1;
-
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "debited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    sizeR,
-                                    "bronze",
-                                    ""
-                            );
-                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
-
-                        } else {
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "debited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    1,
-                                    "bronze",
-                                    ""
-                            );
-                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
-
-
-                        }
-
-
-                        //receivedTransaction in parent1
-                        if (dataSnapshot.child("Wallet").child(p1).child("Transactions")
-                                .child("history").exists()) {
-                            long countP = dataSnapshot.child("Wallet").child(p1).child("Transactions")
-                                    .child("history").getChildrenCount();
-
-                            long sizeP = countP + 1;
-                            Transaction_Class received_transaction_class = new Transaction_Class(
-                                    "credited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    sizeP,
-                                    "bronze",
-                                    ""
-
-
-                            );
-                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
-
-                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
-                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
-                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
-
-                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
-
-
-                        } else {
-                            Transaction_Class received_transaction_class = new Transaction_Class(
-                                    "credited",
-                                    datetime,
-                                    timeformat,
-                                    user_userName,
-                                    p1_userName,
-                                    childid,
-                                    "50",
-                                    1,
-                                    "bronze",
-                                    ""
-
-                            );
-                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
-
-                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
-                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
-                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
-
-                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
-                        }
-
-
-                        //Upgrading level
-                        mUsers.child(selfUid).child("level").setValue("1");
-
-
-                        mUsers.child(selfUid).child("Achievement").setValue("Bronze");
-
-
-                        mWallet.child(p1).child("Status").child("status").setValue("free");
-                        mWallet.child(p1).child("Status").child("uid").setValue("null");
-
-                        //Adding ReferCode
-
-                        mReferCodeDB.child(user_userName).child("uid").setValue(selfUid);
-                        mReferCodeDB.child(user_userName).child("username").setValue(user_userName);
-
-
-                        new Handler().postDelayed(() -> {
-                            progressDialog.dismiss();
-                            upgradeProgressBar.setVisibility(View.GONE);
-                            upgradeTextView.setVisibility(View.VISIBLE);
-                            upgradeTextView.setText("U P G R A D E D");
-                            startActivity(new Intent(beginnerActivity.this, LevelActivity.class));
-                            finish();
-                        }, 1000);
-
-
-
-                    } else {
-                        Toast.makeText(beginnerActivity.this, " Parent wallet is busy , try again in 15 seconds", Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
-                        upgradeProgressBar.setVisibility(View.GONE);
-                        upgradeTextView.setVisibility(View.VISIBLE);
-
-
-                        /*new CountDownTimer(15000, 1000) {
-
-                            public void onTick(long millisUntilFinished) {
-                                //progress_bar_text.setText("Refreshing in: " + millisUntilFinished / 1000);
-                                //here you can have your logic to set text to edittext
-                            }
-
-                            public void onFinish() {
-                                //progress_bar_text.setText("done!");
-                            }
-
-                        }.start();
-
-                        new Handler().postDelayed(() -> {
-
-
-                        }, 0); */
-
-                    }
-
-
-                } else {
-                    progressDialog.dismiss();
-                    upgradeProgressBar.setVisibility(View.GONE);
-                    upgradeTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(beginnerActivity.this, "Invalid level or balance", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
+//    private void upgradeMethod() {
+//
+//
+//        mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                String p1 = dataSnapshot.child("Users").child(selfUid).child("Chain").child("parent").child("p1").getValue().toString();
+//                String mAchievement = dataSnapshot.child("Users").child(selfUid).child("Achievement").getValue().toString();
+//                String user_bal = dataSnapshot.child("Wallet").child(selfUid).child("balance").getValue().toString();
+//                String p1Status = dataSnapshot.child("Wallet").child(p1).child("Status").child("status").getValue().toString();
+//                String userStatusUid = dataSnapshot.child("Wallet").child(p1).child("Status").child("uid").getValue().toString();
+//
+//                //ProgressBar
+//                progressDialog = new ProgressDialog(beginnerActivity.this);
+//                progressDialog.setCancelable(false);
+//                progressDialog.setCanceledOnTouchOutside(false);
+//                progressDialog.show();
+//                progressDialog.setContentView(R.layout.progress_dialog_new);
+//                Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+//                TextView Ptext;
+//                Ptext = progressDialog.findViewById(R.id.Ptext);
+//                Ptext.setVisibility(View.VISIBLE);
+//
+//                if ((mAchievement.equals("Beginner")) && (user_bal.equals("50"))) {
+//                    progressDialog.show();
+//
+//                    if (p1Status.equals("free")) {
+//
+//                        mWallet.child(p1).child("Status").child("status").setValue("busy");
+//                        mWallet.child(p1).child("Status").child("uid").setValue(selfUid);
+//
+//                        //reducing money in user wallet
+//                        int user_bal_Int = Integer.parseInt(user_bal);
+//
+//                        String user_updated_bal = Integer.toString(user_bal_Int - 50);
+//
+//                        mWallet.child(selfUid).child("balance").setValue(user_updated_bal);
+//
+//                        //adding money to parent1
+//                        String p1_bal = Objects.requireNonNull(dataSnapshot.child("Wallet").child(p1).child("balance").getValue()).toString();
+//                        int p1_bal_Int = Integer.parseInt(p1_bal);
+//
+//                        String p1_updated_bal = Integer.toString(p1_bal_Int + 50);
+//
+//                        mWallet.child(p1).child("balance").setValue(p1_updated_bal);
+//
+//
+//                        //AutoLoginCode
+//                        //String p1_email = dataSnapshot.child("Users").child(p1).child("email").getValue().toString();
+//                        //String p1_password = dataSnapshot.child("Users").child(p1).child("password").getValue().toString();
+//                        //String mEnd = dataSnapshot.child("Login").child("end").getValue().toString();
+//                        //int i = Integer.parseInt(mEnd);
+//
+//                        //mLogin.child("user" + i).child("uid").setValue(p1);
+//                        //mLogin.child("user" + i).child("email").setValue(p1_email);
+//                        //mLogin.child("user" + i).child("password").setValue(p1_password);
+//
+//                        //String endCount = Integer.toString(i + 1);
+//                        //mLogin.child("end").setValue(endCount);
+//
+//                        //MainTransactions
+//                        String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid).child("username").getValue()).toString();
+//                        String p1_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(p1).child("username").getValue()).toString();
+//                        String id = UUID.randomUUID().toString();
+//                        String childid = "PW" + id.substring(0, 5).toUpperCase();
+//                        String extraid = id.substring(0, 4).toUpperCase();
+//
+//
+//                        //Main Transactions
+//                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
+//
+//
+//                            Transaction_Class send_transaction_class = new Transaction_Class(
+//                                    "debited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    1,
+//                                    "bronze",
+//                                    ""
+//                            );
+//                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
+//
+//                        } else {
+//
+//                            Transaction_Class send_transaction_class = new Transaction_Class(
+//                                    "debited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    1,
+//                                    "bronze",
+//                                    ""
+//
+//                            );
+//                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
+//
+//
+//                        }
+//
+//
+//                        //sendTransaction in user
+//                        if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+//                                .child("history").exists()) {
+//                            long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
+//                                    .child("history").getChildrenCount();
+//
+//                            long sizeR = countR + 1;
+//
+//
+//                            Transaction_Class send_transaction_class = new Transaction_Class(
+//                                    "debited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    sizeR,
+//                                    "bronze",
+//                                    ""
+//                            );
+//                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+//
+//                        } else {
+//
+//                            Transaction_Class send_transaction_class = new Transaction_Class(
+//                                    "debited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    1,
+//                                    "bronze",
+//                                    ""
+//                            );
+//                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+//
+//
+//                        }
+//
+//
+//                        //receivedTransaction in parent1
+//                        if (dataSnapshot.child("Wallet").child(p1).child("Transactions")
+//                                .child("history").exists()) {
+//                            long countP = dataSnapshot.child("Wallet").child(p1).child("Transactions")
+//                                    .child("history").getChildrenCount();
+//
+//                            long sizeP = countP + 1;
+//                            Transaction_Class received_transaction_class = new Transaction_Class(
+//                                    "credited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    sizeP,
+//                                    "bronze",
+//                                    ""
+//
+//
+//                            );
+//                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+//
+//                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
+//                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
+//                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
+//
+//                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
+//
+//
+//                        } else {
+//                            Transaction_Class received_transaction_class = new Transaction_Class(
+//                                    "credited",
+//                                    datetime,
+//                                    timeformat,
+//                                    user_userName,
+//                                    p1_userName,
+//                                    childid,
+//                                    "50",
+//                                    1,
+//                                    "bronze",
+//                                    ""
+//
+//                            );
+//                            mWallet.child(p1).child("Transactions").child("history").child(childid).setValue(received_transaction_class);
+//
+//                            String p1_tran_count = dataSnapshot.child("Wallet").child(p1).child("Transactions").child("count").child("level1").getValue().toString();
+//                            int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
+//                            String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
+//
+//                            mWallet.child(p1).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
+//                        }
+//
+//
+//                        //Upgrading level
+//                        mUsers.child(selfUid).child("level").setValue("1");
+//
+//
+//                        mUsers.child(selfUid).child("Achievement").setValue("Bronze");
+//
+//
+//                        mWallet.child(p1).child("Status").child("status").setValue("free");
+//                        mWallet.child(p1).child("Status").child("uid").setValue("null");
+//
+//                        //Adding ReferCode
+//
+//                        mReferCodeDB.child(user_userName).child("uid").setValue(selfUid);
+//                        mReferCodeDB.child(user_userName).child("username").setValue(user_userName);
+//
+//
+//                        new Handler().postDelayed(() -> {
+//                            progressDialog.dismiss();
+//                            upgradeProgressBar.setVisibility(View.GONE);
+//                            upgradeTextView.setVisibility(View.VISIBLE);
+//                            upgradeTextView.setText("U P G R A D E D");
+//                            startActivity(new Intent(beginnerActivity.this, LevelActivity.class));
+//                            finish();
+//                        }, 1000);
+//
+//
+//
+//                    } else {
+//                        Toast.makeText(beginnerActivity.this, " Parent wallet is busy , try again in 15 seconds", Toast.LENGTH_LONG).show();
+//                        progressDialog.dismiss();
+//                        upgradeProgressBar.setVisibility(View.GONE);
+//                        upgradeTextView.setVisibility(View.VISIBLE);
+//
+//
+//                        /*new CountDownTimer(15000, 1000) {
+//
+//                            public void onTick(long millisUntilFinished) {
+//                                //progress_bar_text.setText("Refreshing in: " + millisUntilFinished / 1000);
+//                                //here you can have your logic to set text to edittext
+//                            }
+//
+//                            public void onFinish() {
+//                                //progress_bar_text.setText("done!");
+//                            }
+//
+//                        }.start();
+//
+//                        new Handler().postDelayed(() -> {
+//
+//
+//                        }, 0); */
+//
+//                    }
+//
+//
+//                } else {
+//                    progressDialog.dismiss();
+//                    upgradeProgressBar.setVisibility(View.GONE);
+//                    upgradeTextView.setVisibility(View.VISIBLE);
+//                    Toast.makeText(beginnerActivity.this, "Invalid level or balance", Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//
+//    }
 
 
     public void clickLabel(View view) {

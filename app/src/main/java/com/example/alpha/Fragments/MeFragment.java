@@ -169,7 +169,7 @@ public class MeFragment extends Fragment {
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
 
-        Query withdrawList = mTransactions.orderByChild("position").limitToLast(10);
+        Query withdrawList = mTransactions.orderByChild("strDate").limitToLast(10);
         FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
                 .setQuery(withdrawList, Transaction_Class.class)
                 .build();
@@ -184,8 +184,16 @@ public class MeFragment extends Fragment {
                 holder.transactionTime.setText(model.getTransactionTime());
 
 
-                mView.findViewById(R.id.loadMoreButton).setVisibility(View.VISIBLE);
-                mView.findViewById(R.id.loadMoreButton).setOnClickListener(v -> startActivity(new Intent(getContext(), TransactionsActivity.class)));
+                int count;
+                if (TransactionsAdapter != null) {
+                    count = TransactionsAdapter.getItemCount();
+                    if (count > 9) {
+                        mView.findViewById(R.id.loadMoreButton).setVisibility(View.VISIBLE);
+                        mView.findViewById(R.id.loadMoreButton).setOnClickListener(v -> startActivity(new Intent(getContext(), TransactionsActivity.class)));
+
+                    }
+                }
+
 
                 String transType = model.getTransactionType();
                 {

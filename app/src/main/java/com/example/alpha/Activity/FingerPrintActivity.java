@@ -1,6 +1,6 @@
 package com.example.alpha.Activity;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,8 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -193,15 +191,18 @@ public class FingerPrintActivity extends AppCompatActivity {
 
 
         loogut.setOnClickListener(v ->
-                {
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-                    String timeformat = time.format(c.getTime());
-                    String datetime = dateformat.format(c.getTime());
+                new AlertDialog.Builder(FingerPrintActivity.this)
+                        .setMessage(R.string.end_session)
+                        .setCancelable(false)
+                        .setTitle("Logout")
+                        .setPositiveButton("Yes", (dialog, id) -> {
+                            logout();
+                            //openWebView();
 
-                    Toast.makeText(this, "Date : " + timeformat + ", Time : " + datetime, Toast.LENGTH_LONG).show();
-                }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show());
 
 
                 /*new AlertDialog.Builder(FingerPrintActivity.this)
@@ -215,7 +216,7 @@ public class FingerPrintActivity extends AppCompatActivity {
 
                 })
                 .setNegativeButton("No", null)
-                .show()*/);
+                .show()*/
 
 
         //ProgressBar

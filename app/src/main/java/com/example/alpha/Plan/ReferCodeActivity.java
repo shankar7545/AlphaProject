@@ -422,12 +422,12 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 //ParentOneBalance
 
-                String parentBalance = Objects.requireNonNull(dataSnapshot.child(referUid).child("Balance").child("bronze").getValue()).toString();
+                String parentBalance = Objects.requireNonNull(dataSnapshot.child(referUid).child("Balance").child("bronzeBalance").getValue()).toString();
                 int parent_bal_Int = Integer.parseInt(parentBalance);
 
                 String parent_updated_bal = Integer.toString(parent_bal_Int + 50);
 
-                mWallet.child(referUid).child("Balance").child("bronze").setValue(parent_updated_bal);
+                mWallet.child(referUid).child("Balance").child("bronzeBalance").setValue(parent_updated_bal);
 
 
                 bar.setMessage("Updating Transactions...");
@@ -438,10 +438,14 @@ public class ReferCodeActivity extends AppCompatActivity {
                 String date = dateformat.format(c.getTime());
                 String time = timeformat.format(c.getTime());
 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+                String strDate = sdf.format(c.getTime());
+
 
                 String id = UUID.randomUUID().toString();
                 String idOne = "PV" + id.substring(0, 6).toUpperCase();
                 String idTwo = "EX" + id.substring(0, 6).toUpperCase();
+
                 //MainTransactions
                 Transaction_Class main_transaction_class = new Transaction_Class(
                         "debited",
@@ -451,7 +455,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         mReferCode,
                         idOne + idTwo,
                         "50",
-                        1,
+                        strDate,
                         "Bronze",
                         ""
                 );
@@ -459,11 +463,6 @@ public class ReferCodeActivity extends AppCompatActivity {
 
 
                 //sendTransaction in user
-                long countR = dataSnapshot.child(selfUid).child("Transactions")
-                        .child("history").getChildrenCount();
-
-                long sizeR = countR + 1;
-
 
                 Transaction_Class send_transaction_class = new Transaction_Class(
                         "debited",
@@ -473,7 +472,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         mReferCode,
                         idOne + idTwo,
                         "50",
-                        sizeR,
+                        strDate,
                         "For Upgrading to bronze",
                         ""
                 );
@@ -482,10 +481,7 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 //receivedTransaction in parent1
 
-                long countP = dataSnapshot.child(referUid).child("Transactions")
-                        .child("history").getChildrenCount();
 
-                long sizeP = countP + 1;
                 Transaction_Class received_transaction_class = new Transaction_Class(
                         "credited",
                         date,
@@ -494,7 +490,7 @@ public class ReferCodeActivity extends AppCompatActivity {
                         mReferCode,
                         idOne + idTwo,
                         "50",
-                        sizeP,
+                        strDate,
                         "Bronze",
                         ""
 
@@ -502,10 +498,10 @@ public class ReferCodeActivity extends AppCompatActivity {
                 );
                 mWallet.child(referUid).child("Transactions").child("history").child(idOne + idTwo).setValue(received_transaction_class);
                 //Parent Transaction Count
-                String p1_tran_count = dataSnapshot.child(referUid).child("Transactions").child("count").child("level1").getValue().toString();
+                String p1_tran_count = dataSnapshot.child(referUid).child("Transactions").child("count").child("bronzeCount").getValue().toString();
                 int p1_tran_count_Int = Integer.parseInt(p1_tran_count);
                 String updated_p1_tran_count = Integer.toString(p1_tran_count_Int + 1);
-                mWallet.child(referUid).child("Transactions").child("count").child("level1").setValue(updated_p1_tran_count);
+                mWallet.child(referUid).child("Transactions").child("count").child("bronzeCount").setValue(updated_p1_tran_count);
 
 
                 //Upgrading level

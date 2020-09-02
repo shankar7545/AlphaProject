@@ -49,9 +49,8 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
     String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
     String id = UUID.randomUUID().toString();
-    String childid = "PYTM" + id.substring(0, 8).toUpperCase();
-    String extraid = id.substring(0, 4).toUpperCase();
-
+    String idOne = "PV" + id.substring(0, 6).toUpperCase();
+    String idTwo = "EX" + id.substring(0, 6).toUpperCase();
 
 
     @Override
@@ -107,91 +106,44 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
                         Calendar c = Calendar.getInstance();
                         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-                        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss aa");
+                        SimpleDateFormat timeformat = new SimpleDateFormat("kk:mm:ss aa");
                         String time = timeformat.format(c.getTime());
                         String date = dateformat.format(c.getTime());
 
-
-                        if (dataSnapshot.child("Transactions").child(childid).exists()) {
-
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "added",
-                                    date,
-                                    time,
-                                    user_userName,
-                                    "Wallet",
-                                    childid,
-                                    "50",
-                                    1,
-                                    "beginner",
-                                    paymentmode
-                            );
-                            mFirebase.child("Transactions").child(childid + extraid).setValue(send_transaction_class);
-
-                        } else {
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "added",
-                                    date,
-                                    time,
-                                    user_userName,
-                                    "Wallet",
-                                    childid,
-                                    "50",
-                                    1,
-                                    "beginner",
-                                    paymentmode
-
-                            );
-                            mFirebase.child("Transactions").child(childid).setValue(send_transaction_class);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss aa");
+                        String strDate = sdf.format(c.getTime());
 
 
-                        }
+                        Transaction_Class transaction_class = new Transaction_Class(
+                                "added",
+                                date,
+                                time,
+                                user_userName,
+                                "Wallet",
+                                idOne + idTwo,
+                                "50",
+                                strDate,
+                                "beginner",
+                                paymentmode
+                        );
+                        mFirebase.child("Transactions").child(idOne + idTwo).setValue(transaction_class);
 
-                        //sendTransaction in user
-
-
-                        if (dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                                .child("history").exists()) {
-                            long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                                    .child("history").getChildrenCount();
-
-                            long sizeR = countR + 1;
-
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "added",
-                                    date,
-                                    time,
-                                    user_userName,
-                                    "Wallet",
-                                    childid,
-                                    "50",
-                                    sizeR,
-                                    "beginner",
-                                    paymentmode
-                            );
-                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
-
-                        } else {
-
-                            Transaction_Class send_transaction_class = new Transaction_Class(
-                                    "added",
-                                    date,
-                                    time,
-                                    user_userName,
-                                    "Wallet",
-                                    childid,
-                                    "50",
-                                    1,
-                                    "beginner",
-                                    paymentmode
-                            );
-                            mWallet.child(selfUid).child("Transactions").child("history").child(childid).setValue(send_transaction_class);
+                        //AddTransaction in user
 
 
-                        }
+                        Transaction_Class send_transaction_class = new Transaction_Class(
+                                "added",
+                                date,
+                                time,
+                                user_userName,
+                                "Wallet",
+                                idOne + idTwo,
+                                "50",
+                                strDate,
+                                "beginner",
+                                paymentmode
+                        );
+                        mWallet.child(selfUid).child("Transactions").child("history").child(idOne + idTwo).setValue(send_transaction_class);
 
 
                     }
@@ -272,7 +224,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
 
         //private String orderId , mid, custid, amt;
         String url = "https://khelaghorbd.in/paytm/generateChecksum.php";
-        String varifyurl = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + childid;
+        String varifyurl = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=" + idOne + idTwo;
         // "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID"+orderId;
         String CHECKSUMHASH = "";
         private ProgressDialog dialog = new ProgressDialog(ConfirmAmount.this);
@@ -290,7 +242,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
                 JSONParser jsonParser = new JSONParser(ConfirmAmount.this);
                 String param =
                         "MID=" + mid +
-                                "&ORDER_ID=" + childid +
+                                "&ORDER_ID=" + idOne + idTwo +
                                 "&CUST_ID=" + custid +
                                 "&CHANNEL_ID=WAP&TXN_AMOUNT=" + amount + "&WEBSITE=DEFAULT" +
                                 "&CALLBACK_URL=" + varifyurl + "&INDUSTRY_TYPE_ID=Retail";
@@ -332,7 +284,7 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
             HashMap<String, String> paramMap = new HashMap<String, String>();
             //these are mandatory parameters
             paramMap.put("MID", mid); //MID provided by paytm
-            paramMap.put("ORDER_ID", childid);
+            paramMap.put("ORDER_ID", idOne + idTwo);
             paramMap.put("CUST_ID", custid);
             paramMap.put("CHANNEL_ID", "WAP");
             paramMap.put("TXN_AMOUNT", amount);

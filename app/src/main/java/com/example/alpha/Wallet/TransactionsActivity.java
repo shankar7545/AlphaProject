@@ -68,6 +68,7 @@ public class TransactionsActivity extends AppCompatActivity {
         transactionsRecycler.hasFixedSize();
 
 
+//        transactionsLinearLayout = new GridLayoutManager(this,3);
         transactionsLinearLayout = new LinearLayoutManager(this);
         transactionsLinearLayout.setReverseLayout(true);
         transactionsLinearLayout.setStackFromEnd(true);
@@ -112,7 +113,7 @@ public class TransactionsActivity extends AppCompatActivity {
     private void loadTransactions() {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Transactions").child("history");
 
-        Query withdrawList = mTransactions.orderByChild("position");
+        Query withdrawList = mTransactions.orderByChild("strDate");
         FirebaseRecyclerOptions<Transaction_Class> withdrawOption = new FirebaseRecyclerOptions.Builder<Transaction_Class>()
                 .setQuery(withdrawList, Transaction_Class.class)
                 .build();
@@ -134,7 +135,7 @@ public class TransactionsActivity extends AppCompatActivity {
                             holder.transactionType.setText("Received From");
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_down_black);
                             holder.transactionStatus.setText("Credited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.indigo_700));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredFrom());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
@@ -144,7 +145,7 @@ public class TransactionsActivity extends AppCompatActivity {
                             holder.transactionType.setText("Paid To");
                             holder.transactionImage.setImageResource(R.drawable.ic_arrow_up_black);
                             holder.transactionStatus.setText("Debited");
-                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red_600));
+                            holder.transactionImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredTo());
                             holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
@@ -179,68 +180,68 @@ public class TransactionsActivity extends AppCompatActivity {
                     i.putExtras(bundle);
                     startActivity(i);
 
-                    /*final Dialog dialog = new Dialog(Objects.requireNonNull(TransactionsActivity.this));
-                    dialog.setContentView(R.layout.fragment_success_request);
+                        /*final Dialog dialog = new Dialog(Objects.requireNonNull(TransactionsActivity.this));
+                        dialog.setContentView(R.layout.fragment_success_request);
 
-                    fab = dialog.findViewById(R.id.bt_action);
+                        fab = dialog.findViewById(R.id.bt_action);
 
-                    transactionDate = dialog.findViewById(R.id.success_date);
-                    transactionTime = dialog.findViewById(R.id.success_time);
-                    transferredFrom = dialog.findViewById(R.id.success_name);
-                    transactionAmount = dialog.findViewById(R.id.success_money);
-                    transactionType = dialog.findViewById(R.id.success_type);
-                    transactionStatus = dialog.findViewById(R.id.status);
-                    transactionId = dialog.findViewById(R.id.txnorderid);
-
-
-                    String transType1 = model.getTransactionType();
-                    {
-                        switch (transType1) {
-                            case "credited":
-                                transactionDate.setText(model.getTransactionDate());
-                                transactionTime.setText(model.getTransactionTime());
-                                transactionAmount.setText(model.getTransactionAmount());
-                                transferredFrom.setText(model.getTransferredFrom());
-                                transactionType.setText("RECEIVED FROM :  ");
-                                transactionStatus.setText("CREDITED");
-                                transactionId.setText(model.getTransactionId());
-                                transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+                        transactionDate = dialog.findViewById(R.id.success_date);
+                        transactionTime = dialog.findViewById(R.id.success_time);
+                        transferredFrom = dialog.findViewById(R.id.success_name);
+                        transactionAmount = dialog.findViewById(R.id.success_money);
+                        transactionType = dialog.findViewById(R.id.success_type);
+                        transactionStatus = dialog.findViewById(R.id.status);
+                        transactionId = dialog.findViewById(R.id.txnorderid);
 
 
+                        String transType1 = model.getTransactionType();
+                        {
+                            switch (transType1) {
+                                case "credited":
+                                    transactionDate.setText(model.getTransactionDate());
+                                    transactionTime.setText(model.getTransactionTime());
+                                    transactionAmount.setText(model.getTransactionAmount());
+                                    transferredFrom.setText(model.getTransferredFrom());
+                                    transactionType.setText("RECEIVED FROM :  ");
+                                    transactionStatus.setText("CREDITED");
+                                    transactionId.setText(model.getTransactionId());
+                                    transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
 
 
-                                break;
-                            case "debited":
-                                transactionDate.setText(model.getTransactionDate());
-                                transactionTime.setText(model.getTransactionTime());
-                                transactionAmount.setText(model.getTransactionAmount());
-                                transferredFrom.setText(model.getTransferredTo());
-                                transactionType.setText("TRANSFERED TO :  ");
-                                transactionStatus.setText("DEBITED");
-                                transactionId.setText(model.getTransactionId());
-                                transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
 
 
-                                break;
-                            case "added":
-                                transactionDate.setText(model.getTransactionDate());
-                                transactionTime.setText(model.getTransactionTime());
-                                transactionAmount.setText(model.getTransactionAmount());
-                                transferredFrom.setText("Wallet");
-                                transactionType.setText("Added to:  ");
-                                transactionStatus.setText("ADDED");
-                                transactionId.setText(model.getTransactionId());
-                                transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+                                    break;
+                                case "debited":
+                                    transactionDate.setText(model.getTransactionDate());
+                                    transactionTime.setText(model.getTransactionTime());
+                                    transactionAmount.setText(model.getTransactionAmount());
+                                    transferredFrom.setText(model.getTransferredTo());
+                                    transactionType.setText("TRANSFERED TO :  ");
+                                    transactionStatus.setText("DEBITED");
+                                    transactionId.setText(model.getTransactionId());
+                                    transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
 
-                                break;
+
+                                    break;
+                                case "added":
+                                    transactionDate.setText(model.getTransactionDate());
+                                    transactionTime.setText(model.getTransactionTime());
+                                    transactionAmount.setText(model.getTransactionAmount());
+                                    transferredFrom.setText("Wallet");
+                                    transactionType.setText("Added to:  ");
+                                    transactionStatus.setText("ADDED");
+                                    transactionId.setText(model.getTransactionId());
+                                    transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+
+                                    break;
+                            }
                         }
-                    }
 
 
-                    dialog.show();
+                        dialog.show();
 
 
-                    fab.setOnClickListener(v1 -> dialog.dismiss()); */
+                        fab.setOnClickListener(v1 -> dialog.dismiss()); */
 
 
                 });

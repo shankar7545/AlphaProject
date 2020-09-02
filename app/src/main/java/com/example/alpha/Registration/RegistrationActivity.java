@@ -70,13 +70,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private static final int RC_HINT = 100;
 
-    private View parent_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        parent_view = findViewById(android.R.id.content);
 
         mCredentialsClient = Credentials.getClient(this);
 
@@ -391,6 +389,8 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void Snackbar(String text) {
+        View parent_view = findViewById(android.R.id.content);
+
         Snackbar snackbar = Snackbar.make(parent_view, Objects.requireNonNull(text), Snackbar.LENGTH_SHORT)
                 .setActionTextColor(getResources().getColor(R.color.blue_700))
                 .setAction("Okay", view -> {

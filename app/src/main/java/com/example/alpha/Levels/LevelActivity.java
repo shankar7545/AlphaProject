@@ -6,9 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.alpha.Activity.HelpActivity;
 import com.example.alpha.Fragments.MeFragment;
+import com.example.alpha.Fragments.TutorialFragments;
 import com.example.alpha.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -19,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,6 +63,10 @@ public class LevelActivity extends AppCompatActivity {
         // statusBarColor();
         initComponent();
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        String strDate = sdf.format(c.getTime());
+        Toast.makeText(this, strDate, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -114,7 +122,7 @@ public class LevelActivity extends AppCompatActivity {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(BronzeFragment.newInstance(), "Plan");
         adapter.addFragment(MeFragment.newInstance(), "Wallet");
-        //adapter.addFragment(SilverFragment.newInstance(), "CHAIN");
+        adapter.addFragment(TutorialFragments.newInstance(), "Videos");
         //adapter.addFragment(DiamondFragment.newInstance(), "Transactions");
 
         viewPager.setAdapter(adapter);

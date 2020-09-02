@@ -37,11 +37,7 @@ public class DialogLevelwiseFragment extends DialogFragment {
     private DatabaseReference mFirebase;
     private DatabaseReference mWallet;
     private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-    private Calendar c = Calendar.getInstance();
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
-    private SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
-    private String timeformat = time.format(c.getTime());
-    private String datetime = dateformat.format(c.getTime());
+
 
 
     private final int GOOGLEPAY_PAYMENT = 2;
@@ -187,6 +183,16 @@ public class DialogLevelwiseFragment extends DialogFragment {
                 String user_userName = Objects.requireNonNull(dataSnapshot.child("Users").child(selfUid)
                         .child("username").getValue()).toString();
 
+
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy");
+                SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss aa");
+                String timeformat = time.format(c.getTime());
+                String datetime = dateformat.format(c.getTime());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String strDate = sdf.format(c.getTime());
+
                 Transaction_Class send_transaction_class = new Transaction_Class(
                         "added",
                         datetime,
@@ -195,20 +201,14 @@ public class DialogLevelwiseFragment extends DialogFragment {
                         "Wallet",
                         txnIdSt,
                         "50",
-                        1,
+                        strDate,
                         "beginner",
                         "GooglePay"
                 );
                 mFirebase.child("Transactions").child(txnIdSt).setValue(send_transaction_class);
 
 
-                //sendTransaction in user
-
-
-                long countR = dataSnapshot.child("Wallet").child(selfUid).child("Transactions")
-                        .child("history").getChildrenCount();
-
-                long sizeR = countR + 1;
+                //AddTransaction in user
 
 
                 Transaction_Class send_transaction_class2 = new Transaction_Class(
@@ -219,7 +219,7 @@ public class DialogLevelwiseFragment extends DialogFragment {
                         "Wallet",
                         txnIdSt,
                         "50",
-                        sizeR,
+                        strDate,
                         "beginner",
                         "GooglePay"
                 );

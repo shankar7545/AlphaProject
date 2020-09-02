@@ -48,6 +48,7 @@
                 </TextView>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/transactions_linear"
                 android:layout_width="match_parent"
