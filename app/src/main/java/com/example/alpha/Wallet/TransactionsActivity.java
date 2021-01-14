@@ -80,10 +80,10 @@ public class TransactionsActivity extends AppCompatActivity {
         mTransactions = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-        mTransactions.child("Transactions").addValueEventListener(new ValueEventListener() {
+        mTransactions.child("history").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("history").exists()) {
+                if (dataSnapshot.child("Transactions").exists()) {
 
                     progressBarLayout.setVisibility(View.GONE);
                     transactions_linear.setVisibility(View.VISIBLE);

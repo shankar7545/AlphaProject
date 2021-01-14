@@ -45,75 +45,75 @@ public class TransactionExtender extends AppCompatActivity {
     }
 
     private void initComponent() {
-        copyTransactionID = findViewById(R.id.copyTransactionID);
+            copyTransactionID = findViewById(R.id.copyTransactionID);
 
-        findViewById(R.id.contactLayout).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
-
-
-        transactionId = findViewById(R.id.txnorderid);
-        transactionDate = findViewById(R.id.dateToolbar);
-        transferredFrom = findViewById(R.id.success_name);
-        transactionAmount = findViewById(R.id.success_money);
-        transactionType = findViewById(R.id.success_type);
-        transactionStatus = findViewById(R.id.status);
+            findViewById(R.id.contactLayout).setOnClickListener(v -> startActivity(new Intent(this, SupportActivity.class)));
 
 
-        Bundle bundle = getIntent().getExtras();
-
-        final String transactionDateS = bundle.getString("transactionDate");
-        final String transactionTimeS = bundle.getString("transactionTime");
-        final String transactionAmountS = bundle.getString("transactionAmount");
-        final String transferredFromS = bundle.getString("transferredFrom");
-        final String transferredToS = bundle.getString("transferredTo");
-        final String transactionIdS = bundle.getString("transactionId");
-        final String transactionTypeS = bundle.getString("transactionType");
-
-        assert transactionTypeS != null;
-        switch (transactionTypeS) {
-            case "credited":
-                transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
-                transactionAmount.setText(transactionAmountS);
-                transferredFrom.setText(transferredFromS);
-                transactionType.setText("Received From :  ");
-                //transactionStatus.setText("CREDITED");
-                transactionId.setText(transactionIdS);
-                //transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
-
-                break;
-            case "debited":
-                transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
-                transactionAmount.setText(transactionAmountS);
-                transferredFrom.setText(transferredToS);
-                transactionType.setText("Paid To :  ");
-                //transactionStatus.setText("DEBITED");
-                transactionId.setText(transactionIdS);
-                //transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
+            transactionId = findViewById(R.id.txnorderid);
+            transactionDate = findViewById(R.id.dateToolbar);
+            transferredFrom = findViewById(R.id.success_name);
+            transactionAmount = findViewById(R.id.success_money);
+            transactionType = findViewById(R.id.success_type);
+            transactionStatus = findViewById(R.id.status);
 
 
-                break;
-            case "added":
-                transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
-                transactionAmount.setText(transactionAmountS);
-                transferredFrom.setText("Wallet");
-                transactionType.setText("Added to :  ");
-                //transactionStatus.setText("ADDED");
-                transactionId.setText(transactionIdS);
-                //transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+            Bundle bundle = getIntent().getExtras();
 
-                break;
-        }
+            final String transactionDateS = bundle.getString("transactionDate");
+            final String transactionTimeS = bundle.getString("transactionTime");
+            final String transactionAmountS = bundle.getString("transactionAmount");
+            final String transferredFromS = bundle.getString("transferredFrom");
+            final String transferredToS = bundle.getString("transferredTo");
+            final String transactionIdS = bundle.getString("transactionId");
+            final String transactionTypeS = bundle.getString("transactionType");
+
+            assert transactionTypeS != null;
+            switch (transactionTypeS) {
+                case "credited":
+                    transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
+                    transactionAmount.setText(transactionAmountS);
+                    transferredFrom.setText(transferredFromS);
+                    transactionType.setText("Received From :  ");
+                    //transactionStatus.setText("CREDITED");
+                    transactionId.setText(transactionIdS);
+                    //transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
+
+                    break;
+                case "debited":
+                    transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
+                    transactionAmount.setText(transactionAmountS);
+                    transferredFrom.setText(transferredToS);
+                    transactionType.setText("Paid To :  ");
+                    //transactionStatus.setText("DEBITED");
+                    transactionId.setText(transactionIdS);
+                    //transactionStatus.setTextColor(getResources().getColor(R.color.colorPrimaryPink));
 
 
-        copyTransactionID.setOnClickListener(v -> {
-            ClipboardManager clipman = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            String text = transactionId.getText().toString();
-            Objects.requireNonNull(clipman).setText(text);
+                    break;
+                case "added":
+                    transactionDate.setText(transactionTimeS + "  on  " + transactionDateS);
+                    transactionAmount.setText(transactionAmountS);
+                    transferredFrom.setText("Wallet");
+                    transactionType.setText("Added to :  ");
+                    //transactionStatus.setText("ADDED");
+                    transactionId.setText(transactionIdS);
+                    //transactionStatus.setTextColor(getResources().getColor(R.color.green_500));
 
-            Snackbar snackbar = Snackbar.make(parent_view, "Transaction ID Copied", Snackbar.LENGTH_SHORT)
-                    .setAction("Okay", view -> {
-                    });
-            snackbar.show();
-        });
+                    break;
+            }
+
+
+            copyTransactionID.setOnClickListener(v -> {
+                ClipboardManager clipman = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                String text = transactionId.getText().toString();
+                Objects.requireNonNull(clipman).setText(text);
+
+                Snackbar snackbar = Snackbar.make(parent_view, "Transaction ID Copied", Snackbar.LENGTH_SHORT)
+                        .setAction("Okay", view -> {
+                        });
+                snackbar.show();
+            });
 
 
     }

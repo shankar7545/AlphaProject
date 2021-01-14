@@ -33,7 +33,7 @@
                 android:layout_marginStart="3dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_arrow_up_black"
+                android:src="@drawable/ic_wallet_transaction"
                 android:contentDescription="@string/todo">
 
             </ImageView>
@@ -159,6 +159,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Status"
+                    android:textStyle="bold"
                     android:textColor="@color/green_500"
                     android:textSize="12sp" />
 

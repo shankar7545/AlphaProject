@@ -1,5 +1,6 @@
 package com.example.alpha.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -58,8 +59,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     ImageButton help, menu;
-    private String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+    private final String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
     CircularImageView profilePic;
+    @SuppressLint("NonConstantResourceId")
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             menuItem -> {
 

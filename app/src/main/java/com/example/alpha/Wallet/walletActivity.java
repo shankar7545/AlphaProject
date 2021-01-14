@@ -49,32 +49,32 @@ public class walletActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My Wallet");
+        getSupportActionBar().setTitle("Wallet");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        progress_total = findViewById(R.id.progress_wallet);
-        progress_total.setVisibility(View.VISIBLE);
-        transactionLayout = findViewById(R.id.transactionLayout);
-        levelWiseLayout = findViewById(R.id.levelWiseLayout);
-        withdrawLayout = findViewById(R.id.withdrawLayout);
-        received_balanceT = findViewById(R.id.received_balance);
-        withdraw_balanceT = findViewById(R.id.withdrawable_balance);
-        rec_prog = findViewById(R.id.progress_depo);
-        with_prog = findViewById(R.id.progress_winning);
-        rec_prog.setVisibility(View.VISIBLE);
-        with_prog.setVisibility(View.VISIBLE);
-        total_balance = findViewById(R.id.walletBalance);
-        total_balance.setVisibility(View.GONE);
-        received_balanceT.setVisibility(View.GONE);
-        withdraw_balanceT.setVisibility(View.GONE);
-        u_walletdb = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        progress_total = findViewById(R.id.progress_wallet);
+//        progress_total.setVisibility(View.VISIBLE);
+//        transactionLayout = findViewById(R.id.transactionLayout);
+//        levelWiseLayout = findViewById(R.id.levelWiseLayout);
+//        withdrawLayout = findViewById(R.id.withdrawLayout);
+//        received_balanceT = findViewById(R.id.received_balance);
+//        withdraw_balanceT = findViewById(R.id.withdrawable_balance);
+//        rec_prog = findViewById(R.id.progress_depo);
+//        with_prog = findViewById(R.id.progress_winning);
+//        rec_prog.setVisibility(View.VISIBLE);
+//        with_prog.setVisibility(View.VISIBLE);
+//        total_balance = findViewById(R.id.walletBalance);
+//        total_balance.setVisibility(View.GONE);
+//        received_balanceT.setVisibility(View.GONE);
+//        withdraw_balanceT.setVisibility(View.GONE);
+//        u_walletdb = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
         //addMoney();
 
-        loadU_WalletCoins();
-        onClick();
+//        loadU_WalletCoins();
+//        onClick();
     }
 
 

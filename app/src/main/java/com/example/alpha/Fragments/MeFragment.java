@@ -204,7 +204,7 @@ public class MeFragment extends Fragment {
                             holder.transactionStatus.setText("Credited");
                             holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredFrom());
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
 
                             break;
@@ -214,7 +214,7 @@ public class MeFragment extends Fragment {
                             holder.transactionStatus.setText("Debited");
                             holder.transactionImage.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.indigo_600));
                             holder.transactionName.setText(model.getTransferredTo());
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.red));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
 
 
@@ -224,7 +224,7 @@ public class MeFragment extends Fragment {
                             holder.transactionImage.setImageResource(R.drawable.ic_wallet_transaction);
                             holder.transactionStatus.setText("Added");
                             holder.transactionName.setText("Wallet");
-                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.black));
+                            holder.transactionStatus.setTextColor(getResources().getColor(R.color.green));
                             holder.transactionAmount.setTextColor(getResources().getColor(R.color.black));
                             break;
                     }

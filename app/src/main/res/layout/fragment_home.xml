@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
@@ -19,31 +20,29 @@
             android:orientation="vertical">
 
 
-            <com.glide.slider.library.SliderLayout
-                android:id="@+id/slider"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
+                app:cardCornerRadius="6dp"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_marginTop="2dp"
-                android:visibility="visible" />
+                >
+
+                <com.glide.slider.library.SliderLayout
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:visibility="visible" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <include layout="@layout/layout_functions" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:fontFamily="@font/ubuntu"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="5dp"
-                android:text="Referal Plans"
-                android:textColor="@color/grey_80"
-                android:textSize="16sp">
 
-            </TextView>
 
             <include layout="@layout/layout_card" />
 

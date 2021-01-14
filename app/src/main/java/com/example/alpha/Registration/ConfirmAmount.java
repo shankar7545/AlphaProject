@@ -71,8 +71,6 @@ public class ConfirmAmount extends AppCompatActivity implements PaytmPaymentTran
             if (!mid.isEmpty() && !amount.isEmpty() && !custid.isEmpty()) {
                 sendUserDetailTOServerdd dl = new sendUserDetailTOServerdd();
                 dl.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else {
-
             }
 
             myWalletAmount = FirebaseDatabase.getInstance().getReference("Wallet").child(FirebaseAuth.getInstance().getCurrentUser().getUid());

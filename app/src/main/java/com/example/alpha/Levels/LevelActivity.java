@@ -48,6 +48,9 @@ public class LevelActivity extends AppCompatActivity {
     DatabaseReference mUser;
     private final String selfUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
+    public LevelActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

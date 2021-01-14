@@ -13,9 +13,9 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="220dp"
+            android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:src="@drawable/img_number_verification" />
+            android:src="@drawable/login_screen_image" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,6 +23,7 @@
             android:text="Verify Your Number"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
             android:textColor="@color/grey_80"
+            android:fontFamily="@font/ubuntu"
             android:textStyle="bold" />
 
         <TextView
@@ -39,7 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xlarge"
             android:layout_marginBottom="@dimen/spacing_large"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,15 +59,14 @@
 
             <EditText
                 android:id="@+id/phone_number"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@color/grey_900"
-                android:textStyle="bold">
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="@color/grey_900">
 
                 <requestFocus />
 
@@ -77,9 +78,9 @@
             android:id="@+id/continueBtn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
             android:background="@drawable/btn_rounded_red"
-            android:text="CONTINUE"
+            android:text="Request OTP"
+            android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
 

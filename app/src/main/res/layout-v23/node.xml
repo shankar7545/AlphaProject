@@ -8,6 +8,7 @@
     app:cardCornerRadius="6dp"
     android:padding="8dp">
 
+
     <LinearLayout
         android:id="@+id/chainLayoutUser"
         android:paddingStart="15dp"

@@ -1,90 +1,1 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-
-android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
-    defaultConfig {
-        applicationId "com.example.alpha"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "4.5"
-        multiDexEnabled true
-        android.defaultConfig.vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        compileOptions {
-            sourceCompatibility 1.8
-            targetCompatibility 1.8
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-}
-
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-    implementation 'androidx.cardview:cardview:1.0.0' //cardView
-    implementation 'com.google.android.material:material:1.2.0' //Material
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0' //Support
-    implementation 'com.mikhaellopez:circularimageview:3.2.0'  // circle image view
-
-    //Glide  (Image slider)
-    implementation "com.github.bumptech.glide:glide:4.11.0"
-    annotationProcessor "com.github.bumptech.glide:compiler:4.10.0"
-    implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
-
-
-    //Firebase
-    implementation 'com.firebaseui:firebase-ui-database:4.0.1'
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
-    implementation 'com.google.firebase:firebase-database:19.3.1'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
-
-    def retrofit_version = "2.6.2"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
-
-    implementation 'com.razorpay:checkout:1.5.16'   //Razorpay
-    implementation 'com.airbnb.android:lottie:3.4.1' //Lottie
-    implementation 'androidx.biometric:biometric:1.0.1' //FingerPrint
-    implementation 'com.balysv:material-ripple:1.0.2'   // ripple effect
-    implementation 'com.chaos.view:pinview:1.3.2'     //PinView
-    implementation 'de.blox:graphview:0.6.1'  //GraphView
-    implementation 'com.github.d-max:spots-dialog:1.1@aar'  //Spots Dialog
-    implementation 'com.github.jakebonk:NotifyMe:1.0.1' //Notifications
-    implementation 'com.hootsuite.android:nachos:1.1.1' // material chips
-    implementation 'com.google.android:flexbox:0.3.2'   // google flexible box
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'  //shimmer layout
-    implementation 'com.github.tiagohm:CodeView:0.4.0' //Codeview
-
-    implementation 'com.tuyenmonkey:mkloader:1.4.0'  //Custom Loaders
-
-    implementation 'androidx.browser:browser:1.2.0' //Chrome CustomLinks
-    implementation 'com.google.android.gms:play-services-auth:18.1.0' //HintPicker
-    implementation 'com.squareup.picasso:picasso:2.71828'  //Picasso Image Loader URL
-    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7' //Bubble Navigation
-    implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'//Sticky scrollView
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5' //Video Player
-
-
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-    implementation 'android.arch.navigation:navigation-ui:1.0.0'
-
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'\
-
-    implementation('com.paytm:pgplussdk:1.4.4') {
-        transitive = true
-    }
-
-}
+apply plugin: 'com.android.application'apply plugin: 'com.google.gms.google-services'android {    compileSdkVersion 29    buildToolsVersion "29.0.3"    defaultConfig {        applicationId "com.example.alpha"        minSdkVersion 21        targetSdkVersion 29        versionCode 1        versionName "4.5"        multiDexEnabled true        android.defaultConfig.vectorDrawables.useSupportLibrary = true        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"        compileOptions {            sourceCompatibility 1.8            targetCompatibility 1.8        }    }    buildTypes {        release {            minifyEnabled false            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'        }    }}dependencies {    implementation 'androidx.appcompat:appcompat:1.2.0'    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'    implementation 'androidx.cardview:cardview:1.0.0' //cardView    implementation 'com.google.android.material:material:1.2.0' //Material    implementation 'androidx.legacy:legacy-support-v4:1.0.0' //Support    implementation 'com.mikhaellopez:circularimageview:3.2.0'  // circle image view    //Glide  (Image slider)    implementation "com.github.bumptech.glide:glide:4.11.0"    annotationProcessor "com.github.bumptech.glide:compiler:4.10.0"    implementation "com.github.firdausmaulan:GlideSlider:1.5.1"    //Firebase    implementation 'com.firebaseui:firebase-ui-database:4.0.1'    implementation 'com.google.firebase:firebase-auth:19.4.0'    implementation 'com.google.firebase:firebase-database:19.3.1'    implementation 'com.google.firebase:firebase-messaging:20.2.4'    implementation 'com.google.firebase:firebase-storage:19.1.1'    def retrofit_version = "2.6.2"    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"    implementation 'com.razorpay:checkout:1.5.16'   //Razorpay    implementation 'com.airbnb.android:lottie:3.4.1' //Lottie    implementation 'androidx.biometric:biometric:1.0.1' //FingerPrint    implementation 'com.balysv:material-ripple:1.0.2'   // ripple effect    implementation 'com.chaos.view:pinview:1.3.2'     //PinView    implementation 'de.blox:graphview:0.6.1'  //GraphView    implementation 'com.github.d-max:spots-dialog:1.1@aar'  //Spots Dialog    implementation 'com.github.jakebonk:NotifyMe:1.0.1' //Notifications    implementation 'com.hootsuite.android:nachos:1.1.1' // material chips    implementation 'com.google.android:flexbox:0.3.2'   // google flexible box    implementation 'com.facebook.shimmer:shimmer:0.5.0'  //shimmer layout    implementation 'com.github.tiagohm:CodeView:0.4.0' //Codeview    implementation 'com.tuyenmonkey:mkloader:1.4.0'  //Custom Loaders    implementation 'androidx.browser:browser:1.2.0' //Chrome CustomLinks    implementation 'com.google.android.gms:play-services-auth:18.1.0' //HintPicker    implementation 'com.squareup.picasso:picasso:2.71828'  //Picasso Image Loader URL    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7' //Bubble Navigation    implementation 'com.github.didikk:sticky-nestedscrollview:1.0.1'//Sticky scrollView    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5' //Video Player    implementation 'android.arch.navigation:navigation-fragment:1.0.0'    implementation 'android.arch.navigation:navigation-ui:1.0.0'    testImplementation 'junit:junit:4.13'    androidTestImplementation 'androidx.test:runner:1.2.0'    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'    implementation('com.paytm:pgplussdk:1.4.4') {        transitive = true    }}

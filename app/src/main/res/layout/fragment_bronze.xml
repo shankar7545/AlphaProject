@@ -898,7 +898,7 @@
                                     android:layout_height="20dp"
                                     android:layout_marginRight="6dp"
                                     android:src="@drawable/ic_arrow_up_black"
-                                    android:tint="@color/white" />
+                                    app:tint="@color/white" />
 
                                 <TextView
                                     android:layout_width="wrap_content"

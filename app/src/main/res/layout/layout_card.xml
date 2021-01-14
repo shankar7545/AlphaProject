@@ -5,6 +5,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:fontFamily="@font/ubuntu"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="5dp"
+        android:text="Referal Plans"
+        android:textColor="@color/grey_80"
+        android:textSize="16sp"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +143,7 @@
                     android:layout_width="@dimen/spacing_xmlarge"
                     android:layout_height="@dimen/spacing_xmlarge"
                     android:padding="@dimen/spacing_middle"
-                    android:tint="@color/grey_60"
+                    app:tint="@color/grey_60"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_favorite_border" />
 
@@ -139,7 +151,7 @@
                     android:layout_width="@dimen/spacing_xmlarge"
                     android:layout_height="@dimen/spacing_xmlarge"
                     android:padding="@dimen/spacing_middle"
-                    android:tint="@color/grey_60"
+                    app:tint="@color/grey_60"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_subject" />
 
@@ -274,7 +286,7 @@
                     android:layout_width="@dimen/spacing_xmlarge"
                     android:layout_height="@dimen/spacing_xmlarge"
                     android:padding="@dimen/spacing_middle"
-                    android:tint="@color/grey_60"
+                    app:tint="@color/grey_60"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_favorite_border" />
 
@@ -282,7 +294,7 @@
                     android:layout_width="@dimen/spacing_xmlarge"
                     android:layout_height="@dimen/spacing_xmlarge"
                     android:padding="@dimen/spacing_middle"
-                    android:tint="@color/grey_60"
+                    app:tint="@color/grey_60"
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_subject" />
 
